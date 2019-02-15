@@ -1,0 +1,22 @@
+{
+    "plugins": ["react"],
+    "extends": "airbnb",
+    "env": {
+      "browser": true,
+      "node": true
+    },
+    "globals": {
+      "after": true,
+      "assert": true,
+      "beforeEach": true,
+      "describe": true,
+      "browser": true,
+      "it": true,
+      "value": true
+    },
+    "rules": {
+      "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+      "react/prefer-stateless-function": [0],
+      "quotes": ["error", "double"]
+    }
+}
