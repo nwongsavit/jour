@@ -1,5 +1,5 @@
-import React, { PureComponent } from "react";
-import "./Calendar.css";
+import React, { PureComponent } from 'react';
+import './Calendar.css';
 
 class Calendar extends PureComponent {
   render() {

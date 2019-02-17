@@ -17,6 +17,7 @@
     "rules": {
       "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
       "react/prefer-stateless-function": [0],
-      "quotes": ["error", "double"]
+      "quotes": ["error", "single"],
+      "indent": ["error", 2]
     }
 }
