@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
@@ -14,7 +14,7 @@ import './App.css';
 
 library.add(faPencilAlt, faHome, faCalendar, faChartBar, faCog, faSignOutAlt);
 
-class App extends PureComponent {
+class App extends Component {
   render() {
     return (
       <div className="App">
