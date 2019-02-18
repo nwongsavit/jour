@@ -4,7 +4,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import {
   faPencilAlt, faHome, faCalendar, faChartBar, faCog, faSignOutAlt,
 } from '@fortawesome/free-solid-svg-icons';
-import NavBar from '../NavBar';
+import NavBar from '../NavBar/NavBar';
 import Home from '../Home/Home';
 import Calendar from '../Calendar/Calendar';
 import Statistics from '../Statistics/Statistics';

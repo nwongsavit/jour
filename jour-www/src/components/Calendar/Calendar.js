@@ -1,7 +1,7 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import './Calendar.css';
 
-class Calendar extends PureComponent {
+class Calendar extends Component {
   render() {
     return (
       <div className="Calendar">

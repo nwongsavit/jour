@@ -9,7 +9,7 @@ const NavBar = () => (
       <aside className="col-12 col-md-2 p-0 bg-dark fixed-bottom">
         <nav className="navbar navbar-expand navbar-dark bg-dark flex-md-column flex-row align-items-start py-2">
           <div className="collapse navbar-collapse align-items-start">
-            <ul className="flex-md-column flex-row navbar-nav w-100 justify-content-between">
+            <ul className="flex-md-column flex-row navbar-nav w-100">
               <li className="nav-item">
                 <Link className="navbar-brand pl-0 text-nowrap" to="/home">
                   <FontAwesomeIcon icon="pencil-alt" />
