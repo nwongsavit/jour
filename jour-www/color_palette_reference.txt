@@ -1,0 +1,10 @@
+darkblue	text	#124155
+paleblue	containerbg	#c7dce4
+skyblue	applicationbg	#6fb6d3
+darkskyblue	accentcolor	#4a8aa4
+mediumgrey	idk	#abb7bb
+white	buttonbg	#ffffff
+yellow	idk	#feef67
+orange	headerbg	#edb954
+beige	idk	#dcccac
+
