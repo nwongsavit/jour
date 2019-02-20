@@ -5,44 +5,243 @@
     <title>jour API documentation</title>
 </head>
 <body>
-<h3>Request: isUser</h3>
-<p>required parameters:</p>
-<ul>
-    <li>email</li>
-</ul>
-<p>Sample call: <b>https://www.jour.life/api/api.php?request=isUser&email=no@unlv.nevada.edu</b><br>
-    Sample response: <b> { "result": "true", "message": "An account with email address: no@unlv.nevada.edu already exists." } </b>
+<div style="background-color:lightgray">
+    <h4>Request: isUser</h4>
+    <p>required parameters:</p>
+    <ul>
+        <li>email</li>
+    </ul>
+    <p>Sample call: <b>https://www.jour.life/api/api.php?request=isUser&email=no@unlv.nevada.edu</b><br>
+        Sample response:
+        <b>
+        <pre>
+            {
+                "result": "true", "message": "An account with email address: no@unlv.nevada.edu already exists."
+            }
+        </pre>
+        </b>
+    </p>
+</div>
+<hr>
+<div style="background-color:whitesmoke">
+    <h4>Request: isWaitingConf</h4>
+    <p>required parameters:</p>
+    <ul>
+        <li>email</li>
+    </ul>
+    <p>Sample call: <b>https://www.jour.life/api/api.php?request=isWaitingConf&email=no@unlv.nevada.edu</b><br>
+        Sample response:
+        <b>
+        <pre>
+            {
+                "result": "false",
+                "message": "No associated email is waiting confirmation."
+            }
+        </pre>
+        </b>
+        Sample response:
+        <b>
+        <pre>
+            {
+                "result": "true",
+                "message": "An account with email address: no@unlv.nevada.edu is waiting for confirmation."
+            }
+        </pre>
+        </b>
+    </p>
+</div>
+<hr>
+<div style="background-color:lightgray">
+    <h4>Request: registerUser</h4>
+    <p>required parameters:</p>
+    <ul>
+        <li>email</li>
+        <li>name</li>
+        <li>password</li>
+    </ul>
+    <p>Sample call: <b>https://www.jour.life/api/api.php?request=registerUser&name=shawn&email=no@unlv.nevada.edu&password=password01</b><br>
+        Sample response:
+        <b>
+        <pre>
+            {
+                "result": "false",
+                "message": "Error: Missing required data. Please provide an email address, name, and password.",
+                "needed": [
+                    "Email Address",
+                    "Password"
+                ]
+            }
+        </pre>
+        </b>
+        Sample response:
+        <b>
+        <pre>
+            {
+                "result": "false",
+                "message": "Error: Missing required data. Please provide an email address, name, and password.",
+                "needed": [
+                    "Email Address",
+                    "Password",
+                    "Name"
+                ]
+            }
+        </pre>
+        </b>
+        Sample response:
+        <b>
+        <pre>
+            {
+                "result": "true",
+                "message": "Account created for no@unlv.nevada.edu."
+            }
+        </pre>
+        </b>
+    </p>
+</div>
+<hr>
+<div style="background-color:whitesmoke">
+    <h4>Request: confirmEmail</h4>
+    <p>required parameters:</p>
+    <ul>
+        <li>email</li>
+        <li>key</li>
+    </ul>
+    <p>Sample call:
+        <b>https://www.jour.life/api/api.php?request=confirmEmail&email=no@unlv.nevada.edu&key=password01</b><br>
+        Sample response:
+        <b>
+        <pre>
+            {
+                "result": "false",
+                "message": "Unable to confirm the email address."
+            }
+        </pre>
+        </b>
+        Sample response:
+        <b>
+        <pre>
+            {
+                "result": "false",
+                "message": "Error: Missing required data. Please provide an email address, name, and password.",
+                "needed": [
+                    "Email Address",
+                    "Password",
+                    "Name"
+                ]
+            }
+        </pre>
+        </b>
+        Sample response:
+        <b>
+        <pre>
+           {
+                "result": "false",
+                "message": "Error: Missing required data. Please provide an email address and key",
+                "needed": [
+                    "Key"
+                ]
+            }
+        </pre>
+        </b>
+        Sample response:
+        <b>
+        <pre>
+           {
+                "result": "false",
+                "message": "This email is not in the confirmation queue."
+           }
+        </pre>
+        </b>
+        Sample response:
+        <b>
+        <pre>
+            {
+                "result": "true",
+                "message": "The account with email address: no@unlv.nevada.edu has been confirmed."
 
-</p>
-<h3>Request: registerUser</h3>
-<p>required parameters:</p>
-<ul>
-    <li>email</li>
-    <li>name</li>
-    <li>password</li>
-</ul>
-<p>Sample call: <b>https://www.jour.life/api/api.php?request=registerUser&name=shawn&email=no@unlv.nevada.edu&password=password01</b><br>
-    Sample response: <b> {
-        "result": "false",
-        "message": "Error: Missing required data. Please provide an email address, name, and password.",
-        "needed": [
-        "Email Address",
-        "Password"
-        ]
-        } </b><br>
-
-    Sample response: <b> {
-        "result": "false",
-        "message": "Error: Missing required data. Please provide an email address, name, and password.",
-        "needed": [
-        "Email Address",
-        "Password"
-        ]
-        } </b><br>
-    Sample response: <b>{
-        "result": "true",
-        "message": "Account created for no@unlv.nevada.edu."
-        } </b>
-</p>
+           }
+        </pre>
+        </b>
+    </p>
+</div>
+<hr>
+<div style="background-color:lightgray">
+    <h4>Request: authUser</h4>
+    <p>required parameters:</p>
+    <ul>
+        <li>email</li>
+        <li>password</li>
+    </ul>
+    <p>Sample call:
+        <b>https://www.jour.life/api/api.php?request=authUser&email=no@unlv.nevada.edu&password=password01</b><br>
+        Sample response:
+        <b>
+        <pre>
+            {
+                "result": "false",
+                "message": "This email is not associated with a valid account."
+            }
+        </pre>
+        </b>
+        Sample response:
+        <b>
+        <pre>
+            {
+                "result": "false",
+                "message": "This email address still needs to be confirmed."
+            }
+        </pre>
+        </b>
+        Sample response:
+        <b>
+        <pre>
+           {
+                "result": "false",
+                "message": "Error: Missing required data. Please provide an email address and key",
+                "needed": [
+                    "Key"
+                ]
+            }
+        </pre>
+        </b>
+        Sample response:
+        <b>
+        <pre>
+           {
+                "result": "false",
+                "message": "Error: Missing required data. Please provide an email address and password",
+                "needed": [
+                    "Password"
+                ]
+           }
+        </pre>
+        </b>
+        Sample response:
+        <b>
+        <pre>
+            {
+                "result": "false",
+                "message": "Login failed: Email/Password mismatch."
+            }
+        </pre>
+        </b>
+        Sample response:
+        <b>
+        <pre>
+            {
+                "result": "true",
+                "message": "Success.",
+                "account_info": {
+                    "id": 2,
+                    "name": "shawn",
+                    "joinDate": "2019-02-20",
+                    "email": "no@unlv.nevada.edu"
+                }
+            }
+        </pre>
+        </b>
+    </p>
+</div>
+<hr>
 </body>
 </html>
