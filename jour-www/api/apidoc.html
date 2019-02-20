@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jour API documentation</title>
+</head>
+<body>
+<h3>Request: isUser</h3>
+<p>required parameters:</p>
+<ul>
+    <li>email</li>
+</ul>
+<p>Sample call: <b>https://www.jour.life/api/api.php?request=isUser&email=no@unlv.nevada.edu</b><br>
+    Sample response: <b> { "result": "true", "message": "An account with email address: no@unlv.nevada.edu already exists." } </b>
+
+</p>
+<h3>Request: registerUser</h3>
+<p>required parameters:</p>
+<ul>
+    <li>email</li>
+    <li>name</li>
+    <li>password</li>
+</ul>
+<p>Sample call: <b>https://www.jour.life/api/api.php?request=registerUser&name=shawn&email=no@unlv.nevada.edu&password=password01</b><br>
+    Sample response: <b> {
+        "result": "false",
+        "message": "Error: Missing required data. Please provide an email address, name, and password.",
+        "needed": [
+        "Email Address",
+        "Password"
+        ]
+        } </b><br>
+
+    Sample response: <b> {
+        "result": "false",
+        "message": "Error: Missing required data. Please provide an email address, name, and password.",
+        "needed": [
+        "Email Address",
+        "Password"
+        ]
+        } </b><br>
+    Sample response: <b>{
+        "result": "true",
+        "message": "Account created for no@unlv.nevada.edu."
+        } </b>
+</p>
+</body>
+</html>
