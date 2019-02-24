@@ -98,7 +98,7 @@ if (isset($_GET['request']) && $_GET['request'] == "registerUser") {
             1 number
             1 symbol (@#-_$%^&+=!?* space)
         */
-        $error = array('result' => 'false', 'message' => "Error: The password provided does meet requirements.");
+        $error = array('result' => 'false', 'message' => "Error: The password provided doesn't meet requirements.");
         echo json_encode($error);
         return;
     }
