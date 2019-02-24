@@ -18,8 +18,8 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <NavBar />
         <div className="container">
+          <NavBar />
           <Switch>
             <Route path="/home" component={Home} />
             <Route path="/calendar" component={Calendar} />

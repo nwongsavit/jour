@@ -1,0 +1,9 @@
+.NavBrand.navbar-brand .navIcon {
+  color: lightgray;
+}
+
+.NavBrand.navbar-brand span {
+  padding-left: 5px;
+  font-weight: bold;
+  color: lightgray;
+}
