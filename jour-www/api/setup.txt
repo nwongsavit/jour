@@ -1,0 +1,6 @@
+To setup the databases follow these steps...
+
+1) Create a database and database user via cpanel, and add the user to the database you create (cpanel).
+2) Edit /api/config.php so it has the proper info to log into your new database.
+3) Edit /api/db.php with the database information of the database you created in step 1.
+4) Run /setup.php
