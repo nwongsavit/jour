@@ -8,18 +8,23 @@ class NavBar extends Component {
   render() {
     return (
       <div className="NavBar">
+
+        <div className="container-fluid h-100">
+          <div className="row h-100">
+            <aside className="col-12 col-md-2 p-0 bg-dark">
+            Test
+            </aside>
+          </div>
+        </div>
+
         <Nav expand="sm" fixed="bottom" className="">
           <NavBrand name="Jour" icon="pencil-alt" to="/home" />
-          <Nav.Toggle aria-controls="basic-navbar-nav" />
-          <Nav.Collapse id="basic-navbar-nav">
-            <Nav className="mr-auto">
-              <NavItem name="Home" icon="home" to="/home" />
-              <NavItem name="Calendar" icon="calendar" to="/calendar" />
-              <NavItem name="Settings" icon="cog" to="/settings" />
-              <NavItem name="Sign out" icon="sign-out-alt" to="/login" />
-            </Nav>
-          </Nav.Collapse>
+          <NavItem name="Home" icon="home" to="/home" />
+          <NavItem name="Calendar" icon="calendar" to="/calendar" />
+          <NavItem name="Settings" icon="cog" to="/settings" />
+          <NavItem name="Sign out" icon="sign-out-alt" to="/login" />
         </Nav>
+
       </div>
     );
   }
