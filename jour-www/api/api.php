@@ -18,7 +18,7 @@ if (!isset($link)) {
 //check to make sure the api key is a valid key. currently only one key, but this can be expanded in the future
 //$api_key is defined in config.php
 if (!isset($_GET['key']) || $_GET['key'] != $api_key) {
-    $error = array('result' => 'false', 'message' => "Error: API key is missing on invalid.");
+    $error = array('result' => 'false', 'message' => "Error: API key is missing on invaliid.");
     echo json_encode($error);
     return;
 }
@@ -140,12 +140,12 @@ if (isset($_GET['request']) && $_GET['request'] == "registerUser") {
 //confirm the users email address
 if (isset($_GET['request']) && $_GET['request'] == "confirmEmail") {
     //make sure api call requirements are met.
-    if (!isset($_GET['email']) || !isset($_GET['key'])) {
+    if (!isset($_GET['email']) || !isset($_GET['emailKey'])) {
         if (!isset($_GET['email'])) {
             $neededParams[] = "Email Address";
         }
-        if (!isset($_GET['key'])) {
-            $neededParams[] = "Key";
+        if (!isset($_GET['emailKey'])) {
+            $neededParams[] = "emailKey";
         }
         $error = array('result' => 'false', 'message' => "Error: Missing required data. Please provide an email address and key", 'needed' => $neededParams);
         echo json_encode($error);
@@ -160,7 +160,7 @@ if (isset($_GET['request']) && $_GET['request'] == "confirmEmail") {
         return;
     }
     //there is an email match waiting, try to confirm.
-    if (!$user->confirmEmail($_GET['email'], $_GET['key'])) {
+    if (!$user->confirmEmail($_GET['email'], $_GET['emailKey'])) {
         $result = array('result' => 'false', 'message' => "Unable to confirm the email address.");
         echo json_encode($result);
         return;
@@ -212,7 +212,7 @@ if (isset($_GET['request']) && $_GET['request'] == "authUser") {
         $account['name'] = $user->getName();
         $account['joinDate'] = $user->getJoinDate();
         $account['email'] = $user->getEmail();
-        //this will be used to  authenticate user when thwy attempt an action that needs authorization, like post journal.
+        //this will be used to  authenticate user when they attempt an action that needs authorization, like post journal.
         $account['authKey'] = password_hash($user->getId() . $user->getName() . $user->getJoinDate() . $user->getEmail(), PASSWORD_DEFAULT);
 
         $result = array('result' => 'true', 'message' => "Success.", 'account_info' => $account);
