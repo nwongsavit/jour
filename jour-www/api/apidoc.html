@@ -107,27 +107,13 @@
         <li>key</li>
     </ul>
     <p>Sample call:
-        <b>https://www.jour.life/api/api.php?key=apikey&request=confirmEmail&email=no@unlv.nevada.edu&key=password01</b><br>
+        <b>https://www.jour.life/api/api.php?key=apikey&request=confirmEmail&email=no@unlv.nevada.edu&emailKey=password01</b><br>
         Sample response:
         <b>
         <pre>
             {
                 "result": "false",
                 "message": "Unable to confirm the email address."
-            }
-        </pre>
-        </b>
-        Sample response:
-        <b>
-        <pre>
-            {
-                "result": "false",
-                "message": "Error: Missing required data. Please provide an email address, name, and password.",
-                "needed": [
-                    "Email Address",
-                    "Password",
-                    "Name"
-                ]
             }
         </pre>
         </b>
