@@ -15,6 +15,15 @@ if (!isset($link)) {
     return;
 }
 
+//check to make sure the api key is a valid key. currently only one key, but this can be expanded in the future
+//$api_key is defined in config.php
+if (!isset($_GET['key']) || $_GET['key'] != $api_key) {
+    $error = array('result' => 'false', 'message' => "Error: API key is missing on invalid.");
+    echo json_encode($error);
+    return;
+}
+
+
 //error if no request is made and send the result.
 if (!isset($_GET['request'])) {
     $error = array('result' => 'false', 'message' => "Error: Request required.");
@@ -203,6 +212,8 @@ if (isset($_GET['request']) && $_GET['request'] == "authUser") {
         $account['name'] = $user->getName();
         $account['joinDate'] = $user->getJoinDate();
         $account['email'] = $user->getEmail();
+        //this will be used to  authenticate user when thwy attempt an action that needs authorization, like post journal.
+        $account['authKey'] = password_hash($user->getId() . $user->getName() . $user->getJoinDate() . $user->getEmail(), PASSWORD_DEFAULT);
 
         $result = array('result' => 'true', 'message' => "Success.", 'account_info' => $account);
         echo json_encode($result);
