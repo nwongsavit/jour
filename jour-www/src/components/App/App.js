@@ -9,7 +9,8 @@ import Home from '../Home/Home';
 import Calendar from '../Calendar/Calendar';
 import Statistics from '../Statistics/Statistics';
 import Settings from '../Settings/Settings';
-import Login from '../Login/Login';
+import Login from '../User/Login';
+import Register from '../User/Register';
 import './App.css';
 
 library.add(faPencilAlt, faHome, faCalendar, faChartBar, faCog, faSignOutAlt);
@@ -26,6 +27,7 @@ class App extends Component {
             <Route path="/statistics" component={Statistics} />
             <Route path="/settings" component={Settings} />
             <Route path="/login" component={Login} />
+            <Route path="/register" component={Register} />
             <Redirect path="/" exact to="/home" />
           </Switch>
         </div>
