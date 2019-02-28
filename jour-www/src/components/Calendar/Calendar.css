@@ -1,0 +1,26 @@
+.Calendar {
+    margin: 50px;
+}
+
+.col {
+    padding: 0px !important;
+}
+
+.dateCol:nth-last-child(1) {
+    border-right: grey 1px solid;
+}
+
+.row:nth-last-child(1) {
+    border-bottom: grey 1px solid;
+}
+
+#calendarHeader {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+#monthText {
+    padding: 0px 10px;
+    width: 300px;
+}
