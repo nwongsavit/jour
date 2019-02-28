@@ -4,7 +4,8 @@
 //requires PHP 7.3 or higher
 //include necessary files.
 include('db.php');
-include ('users.php');
+include('users.php');
+include('journal.php');
 
 //jour API
 
@@ -30,6 +31,11 @@ if (!isset($_GET['request'])) {
     echo json_encode($error);
     return;
 }
+
+
+//**********************************************USER RELATED API CALLS*************************************************************
+
+
 
 //check to see if the email address is already in the users database.
 if (isset($_GET['request']) && $_GET['request'] == "isUser") {
@@ -212,12 +218,84 @@ if (isset($_GET['request']) && $_GET['request'] == "authUser") {
         $account['name'] = $user->getName();
         $account['joinDate'] = $user->getJoinDate();
         $account['email'] = $user->getEmail();
-        //this will be used to  authenticate user when they attempt an action that needs authorization, like post journal.
-        $account['authKey'] = password_hash($user->getId() . $user->getName() . $user->getJoinDate() . $user->getEmail(), PASSWORD_DEFAULT);
-
+        $account['authKey'] = $user->getAuthKey();
         $result = array('result' => 'true', 'message' => "Success.", 'account_info' => $account);
         echo json_encode($result);
         return;
     }
 }
+
+//**********************************************END USER RELATED API CALLS*************************************************************
+
+
+//**********************************************JOURNAL RELATED API CALLS**************************************************************
+
+if ($_GET['request'] == "addJournal") {
+    //make sure api call requirements are met.
+    if (!isset($_GET['uid']) || !isset($_GET['journal']) || !isset($_GET['mood']) || !isset($_GET['authKey'])) {
+        if (!isset($_GET['uid'])) {
+            $neededParams[] = "uid";
+        }
+        if (!isset($_GET['journal'])) {
+            $neededParams[] = "journal";
+        }
+        if (!isset($_GET['mood'])) {
+            $neededParams[] = "mood";
+        }
+        if (!isset($_GET['authKey'])) {
+            $neededParams[] = "authKey";
+        }
+        $error = array('result' => 'false', 'message' => "Error: Missing required data. Please provide an email address and password", 'needed' => $neededParams);
+        echo json_encode($error);
+        return;
+    }
+
+    //all required params have been provided.
+    //auth the user...
+    //check the auth key
+    $user = new users();
+    if(!$user->confirmAuthKey($_GET['uid'],$_GET['authKey'])) {
+
+        $error = array('result' => 'false', 'message' => "Unable to authenticate user.");
+        echo json_encode($error);
+        return;
+
+    }
+
+    $journal = new journal();
+
+    //the user passed auth, check journal length
+    if (!$journal->checkJournalLength($_GET['journal'])) {
+
+        $error = array('result' => 'false', 'message' => "Journal length not valid.");
+        echo json_encode($error);
+        return;
+
+    }
+    //check the mood requirements...
+    if (!$journal->checkMood($_GET['mood'])) {
+
+        $error = array('result' => 'false', 'message' => "invalid mood.");
+        echo json_encode($error);
+        return;
+
+    }
+    //every thing checks out, add the journal.
+    if (!$journal->addJournal($_GET['uid'], $_GET['journal'],$_GET['mood'], $_GET['authKey'])) {
+
+        $error = array('result' => 'false', 'message' => "Unable to add journal entry.");
+        echo json_encode($error);
+        return;
+
+    }
+    else {
+
+        $result = array('result' => 'true', 'message' => "Success. Journal Added.");
+        echo json_encode($result);
+        return;
+
+    }
+
+}
+
 ?>

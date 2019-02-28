@@ -15,7 +15,8 @@ if (!$users_table_state->num_rows) {
       `first_name` VARCHAR(25) NOT NULL , 
       `email` VARCHAR(60) NOT NULL , 
       `join_date` DATE NOT NULL , 
-      `password` VARCHAR(255) NOT NULL , 
+      `password` VARCHAR(255) NOT NULL ,
+      `authKey` VARCHAR(255) NOT NULL ,
       PRIMARY KEY (`id`)
       ) ENGINE = MyISAM;";
 
@@ -43,28 +44,48 @@ if (!$conf_table_state->num_rows) {
         die("Error creating confirmation table: " . $link->error . " Fix this error and run setup.php again.");
     }
     echo("Create email confirmation table...success<br>");
-    setupDone();
+
 }
+
+//journals table
+$journals_table_state = $link->query("SELECT * FROM information_schema.tables WHERE table_schema = 'jour_jour' AND table_name= 'jour_journals' LIMIT 1");
+if (!$journals_table_state->num_rows) {
+    //the user table does not exist, create it....
+    $create_journals_table = "CREATE TABLE `jour_jour`.`jour_journals` ( 
+      `id` INT(22) NOT NULL AUTO_INCREMENT ,
+      `uid` INT(11) NOT NULL ,
+      `mood` VARCHAR(50) NOT NULL , 
+      `journal` VARCHAR(255) NOT NULL , 
+      `postDate` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ,
+      `editDate` TIMESTAMP DEFAULT NULL,
+      PRIMARY KEY (`id`)
+      ) ENGINE = MyISAM;";
+
+    if (!$link->query($create_journals_table)) {
+        die("Error creating journals table: " . $link->error . " Fix this error and run setup.php again.");
+    }
+    echo("Create journals table...success<br>");
+
+}
+
 
 //the tables are all setup, we can delete this file...
 //tested and it is deleted if it makes it here.
 
-function setupDone()
-{
-    if (unlink("./setup.php") && unlink("./setup.txt")) {
+if (unlink("./setup.php") && unlink("./setup.txt")) {
 
-        echo("Setup file has been executed and deleted. Setup instructions have been deleted. You will now be redirected...");
+    echo("Setup file has been executed and deleted. Setup instructions have been deleted. You will now be redirected...");
 
-        ?>
+    ?>
 
-        <meta http-equiv="refresh" content="10;url=../">
+    <meta http-equiv="refresh" content="10;url=../">
 
-        <?php
+    <?php
 
-    } else {
+} else {
 
-        echo("Unknown Error - Setup files were not deleted. ");
+    echo("Unknown Error - Setup files were not deleted. ");
 
-    }
 }
+
 ?>

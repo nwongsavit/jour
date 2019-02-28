@@ -229,5 +229,70 @@
     </p>
 </div>
 <hr>
+<div style="background-color:whitesmoke">
+    <h4>Request: addJournal</h4>
+    <p>required parameters:</p>
+    <ul>
+        <li>uid</li>
+        <li>journal</li>
+        <li>mood</li>
+        <li>authKey</li>
+    </ul>
+    <p>Sample call:
+        <b>https://www.jour.life/api/api.php?key=apikey&request=addJournal&uid=2&journal=blah&mood=blah&authKey=blah</b><br>
+        Sample response:
+        <b>
+        <pre>
+            {
+                "result": "false",
+                "message": "Error: Missing required data. Please provide an email address and password",
+                "needed": [
+                     "uid",
+                     "journal",
+                     "mood",
+                     "authKey"
+                ]
+            }
+        </pre>
+        </b>
+        Sample response:
+        <b>
+        <pre>
+            {
+                "result": "false",
+                "message": "User Authentication failed,"
+            }
+        </pre>
+        </b>
+        Sample response:
+        <b>
+        <pre>
+            {
+                "result": "false",
+                "message": "Journal length not valid."
+            }
+        </pre>
+        </b>
+        Sample response:
+        <b>
+        <pre>
+            {
+                 "result": "false",
+                "message": "invalid mood."
+            }
+        </pre>
+        </b>
+        Sample response:
+        <b>
+        <pre>
+            {
+                "result": "true",
+                "message": "Success. Journal Added."
+            }
+        </pre>
+        </b>
+    </p>
+</div>
+<hr>
 </body>
 </html>
