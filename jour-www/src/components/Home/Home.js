@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import './Home.css';
-import Textbox2 from '../Textbox/Textbox2';
+import Textbox from '../Textbox/Textbox';
 
 class Home extends Component {
   render() {
     return (
       <div className="Home">
         Home
-      <Textbox2 />
+        <Textbox />
       </div>
     );
   }
