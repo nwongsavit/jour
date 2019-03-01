@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  height: 100vh;
 }
 
 .App-logo {
@@ -23,6 +24,10 @@
   color: #61dafb;
 }
 
+.container {
+  height: 100%;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -30,4 +35,8 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.smallText {
+  font-size: 0.8em;
 }
