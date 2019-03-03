@@ -2,6 +2,12 @@
 
 //jour api
 //requires PHP 7.3 or higher
+
+
+//Set the headers to allow api to communicate cross browser from local machines during development.
+header('Access-Control-Allow-Origin: *');
+header('Content-Type: application/json');
+
 //include necessary files.
 include('db.php');
 include('users.php');
