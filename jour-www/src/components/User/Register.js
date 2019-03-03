@@ -31,8 +31,8 @@ class Register extends Component {
   handleSubmit(e) {
     e.preventDefault();
     this.setState({ first: e.target.first.value });
-    this.setState({ pass: e.target.password.value });
-    this.setState({ emailAddress: e.target.email.value });
+    this.setState({ pass: e.target.pass.value });
+    this.setState({ emailAddress: e.target.emailAddress.value });
     const { first } = this.state;
     const { pass } = this.state;
     const { emailAddress } = this.state;
