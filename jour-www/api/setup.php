@@ -57,7 +57,7 @@ if (!$journals_table_state->num_rows) {
       `mood` VARCHAR(50) NOT NULL , 
       `journal` VARCHAR(255) NOT NULL , 
       `postDate` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ,
-      `editDate` TIMESTAMP DEFAULT NULL,
+      `editDate` TIMESTAMP NULL DEFAULT NULL ,
       PRIMARY KEY (`id`)
       ) ENGINE = MyISAM;";
 
