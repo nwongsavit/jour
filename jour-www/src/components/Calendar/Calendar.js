@@ -73,13 +73,13 @@ class Calendar extends Component {
       <div className="Calendar">
         <div id="calendarHeader">
           {/* <div id="prev" class="" onClick={this.setPreviousMonth}>prev month</div>  */}
-          <FontAwesomeIcon icon="pencil-alt" onClick={this.setPreviousMonth} />
+          <FontAwesomeIcon id="prev" icon="angle-left" onClick={this.setPreviousMonth} />
           <div id="monthText">
             {' '}
             { format(currentMonth, 'MMMM YYYY') }
             {' '}
           </div>
-          <FontAwesomeIcon icon="pencil-alt" onClick={this.setNextMonth} />
+          <FontAwesomeIcon id="next" icon="angle-right" onClick={this.setNextMonth} />
         </div>
 
         <Row>

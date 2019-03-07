@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
-  faPencilAlt, faHome, faCalendar, faChartBar, faCog, faSignOutAlt,
+  faPencilAlt, faHome, faCalendar, faChartBar, faCog, faSignOutAlt, faAngleLeft, faAngleRight,
 } from '@fortawesome/free-solid-svg-icons';
 import NavBar from '../NavBar/NavBar';
 import Home from '../Home/Home';
@@ -13,7 +13,8 @@ import Login from '../User/Login';
 import Register from '../User/Register';
 import './App.css';
 
-library.add(faPencilAlt, faHome, faCalendar, faChartBar, faCog, faSignOutAlt);
+library.add(faPencilAlt, faHome, faCalendar, faChartBar, faCog, faSignOutAlt, faAngleLeft,
+  faAngleRight);
 
 class App extends Component {
   render() {

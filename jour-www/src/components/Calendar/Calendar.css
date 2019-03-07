@@ -24,3 +24,11 @@
     padding: 0px 10px;
     width: 300px;
 }
+
+#prev, #next {
+    cursor: pointer;
+}
+
+.newGreenColor {
+  background-color: green;
+}
