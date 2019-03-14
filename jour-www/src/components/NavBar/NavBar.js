@@ -3,21 +3,21 @@ import { Link, NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './NavBar.css';
 
+const bg = require('../../assets/jourlogo200w.png');
+
 class NavBar extends Component {
   render() {
     return (
       <div className="NavBar">
         <div className="container-fluid h-100">
           <div className="row h-100">
-            <aside className="col-12 col-md-2 p-0 bg-dark fixed-bottom">
-              <nav className="navbar navbar-expand navbar-dark bg-dark flex-md-column flex-row align-items-start py-2">
+            <aside className="col-12 col-md-2 p-0 css-navbar-bg fixed-bottom">
+              <nav className="navbar navbar-expand navbar-dark css-navbar-bg flex-md-column flex-row align-items-start py-2">
                 <div className="collapse navbar-collapse align-items-start">
                   <ul className="flex-md-column flex-row navbar-nav w-100 justify-content-between">
                     <li className="nav-item">
                       <Link className="navbar-brand pl-0 text-nowrap" to="/home">
-                        <FontAwesomeIcon icon="pencil-alt" />
-                        &nbsp;&nbsp;
-                        <span className="font-weight-bold">Jour</span>
+                        <img height="20em" src={bg} alt="Jour" />
                       </Link>
                     </li>
                     <li className="nav-item">
