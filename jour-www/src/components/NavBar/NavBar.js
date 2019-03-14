@@ -3,6 +3,8 @@ import { Link, NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './NavBar.css';
 
+const bg = require('../../assets/jourlogo200w.png');
+
 class NavBar extends Component {
   render() {
     return (
@@ -15,7 +17,7 @@ class NavBar extends Component {
                   <ul className="flex-md-column flex-row navbar-nav w-100 justify-content-between">
                     <li className="nav-item">
                       <Link className="navbar-brand pl-0 text-nowrap" to="/home">
-                        <img height="20em" src={require("../../assets/jourlogo200w.png")} alt="Jour"></img>
+                        <img height="20em" src={bg} alt="Jour" />
                       </Link>
                     </li>
                     <li className="nav-item">
