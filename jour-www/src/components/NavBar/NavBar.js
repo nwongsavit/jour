@@ -15,9 +15,7 @@ class NavBar extends Component {
                   <ul className="flex-md-column flex-row navbar-nav w-100 justify-content-between">
                     <li className="nav-item">
                       <Link className="navbar-brand pl-0 text-nowrap" to="/home">
-                        <FontAwesomeIcon icon="pencil-alt" />
-                        &nbsp;&nbsp;
-                        <span className="font-weight-bold">Jour</span>
+                        <img height="20em" src={require("../../assets/jourlogo200w.png")} alt="Jour"></img>
                       </Link>
                     </li>
                     <li className="nav-item">
