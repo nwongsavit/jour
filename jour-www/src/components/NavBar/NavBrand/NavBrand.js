@@ -9,7 +9,7 @@ class NavBrand extends Component {
 
     return (
       <Link className="NavBrand navbar-brand" to={to}>
-        <img height="20em" src={icon} alt="Jour" />
+        <img height="30em" src={icon} alt="Jour" />
       </Link>
     );
   }

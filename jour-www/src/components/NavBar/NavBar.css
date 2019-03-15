@@ -1,4 +1,8 @@
 .css-navbar-bg
 {
-	background-color: #4a8aa4;
+  background-color: #4a8aa4;
+}
+
+.nav-item {
+  padding-bottom: 8px;
 }

@@ -13,8 +13,8 @@ class NavBar extends Component {
           <div className="row h-100">
             <aside className="col-12 col-md-2 p-0 css-navbar-bg fixed-bottom">
               <nav className="navbar navbar-expand navbar-dark css-navbar-bg flex-md-column flex-row align-items-start py-2">
-                <div className="collapse navbar-collapse align-items-start">
-                  <ul className="flex-md-column flex-row navbar-nav w-100 justify-content-between">
+                <div className="collapse navbar-collapse">
+                  <ul className="flex-md-column flex-row navbar-nav w-100 align-items-start justify-content-between">
                     <li className="nav-item">
                       <NavBrand name="Jour" icon={bg} to="/home" />
                     </li>
@@ -31,7 +31,7 @@ class NavBar extends Component {
                       <NavItem name="Settings" icon="cog" to="/settings" />
                     </li>
                     <li className="nav-item">
-                      <NavItem name="Sign out" icon="sign-out-alt" to="/login" />
+                      <NavItem name="Log In" icon="sign-out-alt" to="/login" />
                     </li>
                   </ul>
                 </div>
