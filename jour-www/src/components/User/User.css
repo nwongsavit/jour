@@ -1,0 +1,18 @@
+.User {
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.form {
+    width: 400px;
+    padding: 20px;
+}
+
+.form > * { margin-bottom: 20px; }
+
+.submitButton {
+    background-color: #4a8aa4 !important;
+}
