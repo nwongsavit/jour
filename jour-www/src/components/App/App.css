@@ -3,6 +3,7 @@
   height: 100vh;
   background-color: #6fb6d3;
   color: #124155;
+  display: flex;
 }
 
 .App-logo {
