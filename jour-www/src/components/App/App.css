@@ -3,6 +3,8 @@
   height: 100vh;
   display: flex;
   flex-direction: row;
+  background-color: #6fb6d3;
+  color: #124155;
 }
 
 .App-logo {
@@ -41,4 +43,17 @@
 
 .smallText {
   font-size: 0.8em;
+}
+
+.btn-primary
+{
+	color: #124155 !important;
+}
+
+textarea, select, input, .btn-primary
+{
+
+	background-color: #c7dce4 !important;
+	border-width: 0.1em !important;
+	border-color: #124155 !important;
 }
