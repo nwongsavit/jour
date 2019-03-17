@@ -9,7 +9,7 @@ class NavItem extends Component {
     const { name, icon, to } = this.props;
 
     return (
-      <NavLink className="NavItem nav-link" activeClassName="NavItem nav-link active" to={to}>
+      <NavLink className="NavItem nav-link" activeClassName="active" to={to}>
         <FontAwesomeIcon className="navIcon" icon={icon} />
         <span className="d-none d-md-inline">{name}</span>
       </NavLink>

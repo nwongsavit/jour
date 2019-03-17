@@ -37,9 +37,9 @@ class NavBar extends Component {
     }
     return (
       <div className={`${navClasses} NavBar`}>
-        <nav className="navbar navbar-expand navbar-dark">
+        <nav className="navbar navbar-expand">
           <div className="navbar-collapse">
-            <ul className="flex-md-column navbar-nav w-100 test">
+            <ul className="flex-md-column navbar-nav w-100 navFlex">
               <NavBrand name="Jour" icon={bg} to="/home" />
               <NavItem name="Home" icon="home" to="/home" />
               <NavItem name="Calendar" icon="calendar" to="/calendar" />

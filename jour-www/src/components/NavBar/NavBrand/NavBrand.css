@@ -1,9 +1,11 @@
-.NavBrand.navbar-brand .navIcon {
-  color: lightgray;
+.NavBrand {
+  text-align: center;
+  width: 100%;
+  align-self: center;
 }
 
-.NavBrand.navbar-brand img {
-  padding-left: 8px;
-  font-weight: bold;
-  color: lightgray;
+@media (min-width: 768px) {
+	.NavBrand {
+		padding: 20px;
+	}
 }

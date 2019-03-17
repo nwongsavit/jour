@@ -8,7 +8,7 @@ class NavBrand extends Component {
     const { icon, to } = this.props;
 
     return (
-      <Link className="NavBrand navbar-brand" to={to}>
+      <Link className="NavBrand" to={to}>
         <img height="30em" src={icon} alt="Jour" />
       </Link>
     );

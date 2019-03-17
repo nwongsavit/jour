@@ -8,38 +8,6 @@ nav {
 	padding: 0px !important;
 }
 
-.nav-item {
-	padding: 20px !important;
-	width: 100%;
-	text-align: left;
-	cursor: pointer;
-}
-
-@media (min-width: 768px) {
-	#logo {
-		padding: 20px;
-	}
-
-	.icon {
-		margin-right: 10px;
-		width: 20px !important;
-	}
-}
-
-@media (max-width: 767px) {
-	.nav-item {
-		text-align: center;
-	}
-
-	.icon {
-		font-size: 1.2em;
-	}
-}
-
-.active {
-	background-color: #124155;
-}
-
 .navFlex {
 	display: flex;
 	flex-direction: row;
@@ -49,10 +17,3 @@ nav {
 .navFlex > * {
 	flex: 1 100%;
   }
-
-#logo {
-	height: 100%;
-	text-align: center;
-	align-self: center;
-	width: 100%;
-}
