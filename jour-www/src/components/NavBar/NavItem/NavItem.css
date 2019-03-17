@@ -1,5 +1,5 @@
 span {
-  padding-left: 5px;
+  padding-left: 10px;
 }
 
 .nav-link:link {
@@ -26,7 +26,6 @@ span {
 
 @media (min-width: 768px) {
 	.navIcon {
-		margin-right: 10px;
 		width: 20px !important;
 	}
 }
