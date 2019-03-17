@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Link, NavLink } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import NavItem from './NavItem/NavItem';
+import NavBrand from './NavBrand/NavBrand';
 import './NavBar.css';
 
 const bg = require('../../assets/jourlogo200w.png');
@@ -40,29 +40,12 @@ class NavBar extends Component {
         <nav className="navbar navbar-expand navbar-dark">
           <div className="navbar-collapse">
             <ul className="flex-md-column navbar-nav w-100 test">
-              <Link id="logo" to="/home">
-                <img height="30em" src={bg} alt="Jour" />
-              </Link>
-              <NavLink className="nav-item nav-link" activeClassName="active" to="/home">
-                <FontAwesomeIcon className="icon" icon="home" />
-                <span className="d-none d-md-inline">Home</span>
-              </NavLink>
-              <NavLink className="nav-item nav-link" activeClassName="active" to="/calendar">
-                <FontAwesomeIcon className="icon" icon="calendar" />
-                <span className="d-none d-md-inline">Calendar</span>
-              </NavLink>
-              <NavLink className="nav-item nav-link" activeClassName="active" to="/statistics">
-                <FontAwesomeIcon className="icon" icon="chart-bar" />
-                <span className="d-none d-md-inline">Statistics</span>
-              </NavLink>
-              <NavLink className="nav-item nav-link" activeClassName="active" to="/settings">
-                <FontAwesomeIcon className="icon" icon="cog" />
-                <span className="d-none d-md-inline">Settings</span>
-              </NavLink>
-              <NavLink className="nav-item nav-link" activeClassName="active" to="/login">
-                <FontAwesomeIcon className="icon" icon="sign-out-alt" />
-                <span className="d-none d-md-inline">Sign out</span>
-              </NavLink>
+              <NavBrand name="Jour" icon={bg} to="/home" />
+              <NavItem name="Home" icon="home" to="/home" />
+              <NavItem name="Calendar" icon="calendar" to="/calendar" />
+              <NavItem name="Statistics" icon="chart-bar" to="/statistics" />
+              <NavItem name="Settings" icon="cog" to="/settings" />
+              <NavItem name="Log In" icon="sign-out-alt" to="/login" />
             </ul>
           </div>
         </nav>
