@@ -1,4 +1,19 @@
-.css-navbar-bg
-{
+.NavBar {
 	background-color: #4a8aa4;
+	padding: 0px !important;
+	font-size: .9em;
 }
+
+nav {
+	padding: 0px !important;
+}
+
+.navFlex {
+	display: flex;
+	flex-direction: row;
+	align-items: flex-start;
+}
+
+.navFlex > * {
+	flex: 1 100%;
+  }
