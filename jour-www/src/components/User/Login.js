@@ -20,6 +20,11 @@ class Login extends Component {
             {' '}
             <a href="/register">Create an account</a>
           </div>
+          <div id="forgot-password" className="smallText">
+            Forgot password?
+            {' '}
+            <a href="/forgot-password">Click here</a>
+          </div>
         </Form>
       </div>
     );
