@@ -1,9 +1,7 @@
 .App {
-  text-align: center;
   height: 100vh;
   display: flex;
-  flex-direction: row;
-  background-color: #6fb6d3;
+  /* background-color: #6fb6d3; */
   color: #124155;
   display: flex;
 }
@@ -31,6 +29,7 @@
 
 .container {
   height: 100%;
+  flex: 1 0 0;
 }
 
 @keyframes App-logo-spin {
@@ -47,11 +46,12 @@
 }
 
 .btn-primary {
-	color: #124155 !important;
+  border: none !important;
+  background-color: #4a8aa4 !important;
 }
 
-textarea, select, input, .btn-primary {
+/* textarea, select, input, .btn-primary {
 	background-color: #c7dce4 !important;
 	border-width: 0.1em !important;
 	border-color: #124155 !important;
-}
+} */

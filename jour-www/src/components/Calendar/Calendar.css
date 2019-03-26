@@ -1,34 +1,74 @@
 .Calendar {
-    margin: 50px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  width: 80%;
 }
 
 .col {
-    padding: 0px !important;
+  padding: 0px !important;
 }
 
 .dateCol:nth-last-child(1) {
-    border-right: grey 1px solid;
+  border-right: lightgrey 1px solid;
 }
 
 .row:nth-last-child(1) {
-    border-bottom: grey 1px solid;
+  border-bottom: lightgrey 1px solid;
 }
 
 #calendarHeader {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.daysOfTheWeek {
+  margin: 20px;
 }
 
 #monthText {
-    padding: 0px 10px;
-    width: 300px;
+  padding: 0px 10px;
+  width: 300px;
 }
 
-#prev, #next {
-    cursor: pointer;
+#prev,
+#next {
+  cursor: pointer;
 }
 
-.newGreenColor {
-  background-color: green;
+.agenda {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.agenda > * {
+  margin-bottom: 20px;
+}
+
+.viewSelector {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.viewSelector > * {
+  margin: 20px 0 20px 20px;
+  cursor: pointer;
+}
+
+.tasks {
+  display: flex;
+  flex-direction: column;
+}
+
+.moodHeader {
+  display: flex;
+  align-items: baseline;
+}
+
+.moodHeader h3 {
+  flex: 1 0 0;
 }

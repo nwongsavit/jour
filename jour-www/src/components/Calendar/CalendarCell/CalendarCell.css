@@ -1,8 +1,18 @@
 .CalendarCell {
-    height: 100px;
-    border-top: grey 1px solid;
-    border-left: grey 1px solid;
-    text-align: right;
-    padding: 10px;
-    cursor: pointer;
+  height: 90px;
+  border-top: lightgrey 1px solid;
+  border-left: lightgrey 1px solid;
+  border-bottom: lightgrey 1px solid;
+  text-align: right;
+  padding: 10px;
+  cursor: pointer;
+}
+
+#today {
+  border-radius: 50%;
+  height: 90px;
+  width: 90px;
+  padding: 10px;
+  background-color: #4a8aa4;
+  color: white;
 }

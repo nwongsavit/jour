@@ -23,7 +23,7 @@ class NavBar extends Component {
 
   handleWindowSizeChange = () => {
     this.setState({ width: window.innerWidth });
-  }
+  };
 
   render() {
     const { width } = this.state;
@@ -35,12 +35,13 @@ class NavBar extends Component {
     } else {
       navClasses = 'col-10 col-md-2';
     }
+
     return (
       <div className={`${navClasses} NavBar`}>
         <nav className="navbar navbar-expand">
           <div className="navbar-collapse">
             <ul className="flex-md-column navbar-nav w-100 navFlex">
-              <NavBrand name="Jour" icon={bg} to="/home" />
+              {!isMobile && <NavBrand name="Jour" icon={bg} to="/home" />}
               <NavItem name="Home" icon="home" to="/home" />
               <NavItem name="Calendar" icon="calendar" to="/calendar" />
               <NavItem name="Statistics" icon="chart-bar" to="/statistics" />
