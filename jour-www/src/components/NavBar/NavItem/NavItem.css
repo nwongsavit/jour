@@ -2,17 +2,11 @@ span {
   padding-left: 10px;
 }
 
-.nav-link:link {
-  color: silver;
-  text-decoration: none;
-}
-
 .nav-link:hover {
   color: white;
 }
 
 .active {
-  color: gray;
   background-color: #124155;
 }
 
