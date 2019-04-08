@@ -32,7 +32,7 @@ class users
             echo("ERROR:" . $link->error);
             die();
         }
-        $stmt->bind_param(s, $email);
+        $stmt->bind_param('s', $email);
         $stmt->execute();
         $stmt = $stmt->get_result();
         //if there are any rows the user already has an account.
@@ -55,7 +55,7 @@ class users
             echo("ERROR:" . $link->error);
             die();
         }
-        $stmt->bind_param(s, $email);
+        $stmt->bind_param('s', $email);
         $stmt->execute();
         $stmt = $stmt->get_result();
         //if there are any rows the user already has an account.
@@ -85,7 +85,7 @@ class users
         //info on the password hashing
         $password = password_hash($_GET['password'], PASSWORD_DEFAULT);
         $email_hash = password_hash($_GET['email'], PASSWORD_DEFAULT);
-        $stmt->bind_param(ssss, $email, $name, $password, $email_hash);
+        $stmt->bind_param('ssss', $email, $name, $password, $email_hash);
         if (!$stmt->execute()) {
             $result = false;
         } else {
@@ -116,7 +116,7 @@ class users
             echo("ERROR:" . $link->error);
             die();
         }
-        $stmt->bind_param(ss, $email, $conf_hash);
+        $stmt->bind_param('ss', $email, $conf_hash);
         $stmt->execute();
         $stmt = $stmt->get_result();
         //if there are any rows the user already has an account.
@@ -136,7 +136,7 @@ class users
                 //lets set default timezone for las vegas
                 date_default_timezone_set('America/Los_Angeles');
                 $join_date = date('Y-m-d');
-                $stmt->bind_param(ssss, $row['first_name'], $row['email'], $join_date, $row['password']);
+                $stmt->bind_param('ssss', $row['first_name'], $row['email'], $join_date, $row['password']);
                 if (!$stmt->execute()) {
                     //there was an error during the transfer
                     echo("ERROR:" . $link->error);
@@ -150,7 +150,7 @@ class users
                     //mysql date format 'YYYY-MM-DD'
                     //lets set default timezone for las vegas
 
-                    $stmt->bind_param(i, $row['id']);
+                    $stmt->bind_param('i', $row['id']);
                     if (!$stmt->execute()) {
                         //there was an error during the transfer
                         echo("ERROR:" . $link->error);
@@ -178,7 +178,7 @@ class users
             die();
         }
 
-        $stmt->bind_param(s, $email);
+        $stmt->bind_param('s', $email);
         $stmt->execute();
         $stmt = $stmt->get_result();
 
@@ -220,7 +220,7 @@ class users
             echo("ERROR GETTING USER DATA:" . $link->error);
             die();
         }
-        $stmt->bind_param(s, $email);
+        $stmt->bind_param('s', $email);
         $stmt->execute();
         $stmt = $stmt->get_result();
         //if there are any rows we have a user with that email, now we check to see if the password hashes match
@@ -244,7 +244,7 @@ class users
                     echo("ERROR UPDATING AUTHKEY:" . $link->error);
                     die();
                 }
-                $stmt->bind_param(si, $this->getAuthKey(), $this->getId());
+                $stmt->bind_param('si', $this->getAuthKey(), $this->getId());
 
                 if(!$stmt->execute()) {
                     echo("ERROR UPDATING AUTHKEY IN USERS DATABASE:" . $link->error);
@@ -276,7 +276,7 @@ class users
             echo("ERROR GETTING USER DATA:" . $link->error);
             die();
         }
-        $stmt->bind_param(i, $id);
+        $stmt->bind_param('i', $id);
         $stmt->execute();
         $stmt = $stmt->get_result();
         //if there are any rows we have a user with that email, now we check to see if the password hashes match

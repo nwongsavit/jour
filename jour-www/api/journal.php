@@ -9,6 +9,9 @@ class journal
     private $mood;
     private $postDate;
     private $link;
+    private $journalLengthMin = 1;
+    private $journalLengthMax = 140;
+
 
     public function __construct()
     {
@@ -55,7 +58,7 @@ class journal
             die();
 
         }
-        $stmt->bind_param(iss, $uid, $journal, $mood);
+        $stmt->bind_param('iss', $uid, $journal, $mood);
         if (!$stmt->execute()) {
 
             //there was an error adding the journal
@@ -97,18 +100,38 @@ class journal
 
         }
 
-        //everything is good, update the journal and mood to the database
-        if (!$stmt = $link->prepare("UPDATE jour_journals set mood = ?, journal = ?, editDate = current_timestamp  WHERE id = ? and uid = ?")) {
+        //make sure that this user owns this journal
+        if (!$stmt = $link->prepare("SELECT * FROM jour_journals WHERE id = ? and uid = ?")) {
 
-            echo("ERROR:" . $link->error);
-            die();
+           return false;
 
         }
-        $stmt->bind_param(iss, $uid, $journal, $mood);
+
+        $stmt->bind_param('ii', $id, $uid);
         if (!$stmt->execute()) {
 
             //there was an error updating the journal
-            echo("ERROR:" . $link->error);
+            return false;
+
+        }
+
+        $stmt = $stmt->get_result();
+        if (!$stmt->num_rows) {
+
+            //there was an error updating the journal
+            return false;
+        }
+
+        //everything is good, update the journal and mood to the database
+        if (!$stmt = $link->prepare("UPDATE jour_journals set mood = ?, journal = ?, editDate = current_timestamp  WHERE id = ? and uid = ?")) {
+
+            return false;
+
+        }
+        $stmt->bind_param('ssii', $mood, $journal, $id, $uid);
+        if (!$stmt->execute()) {
+
+
             $result = false;
 
         } else {
@@ -124,13 +147,35 @@ class journal
         return $result;
     }
 
-    function deleteJournal($uid, $id, $authKey)
+    function deleteJournal($uid, $id)
     {
 
         //delete a journal entry by its id
 
         //get database link
         $link = $this->getLink();
+
+        //make sure that this user owns this journal
+        if (!$stmt = $link->prepare("SELECT * FROM jour_journals WHERE id = ? and uid = ?")) {
+
+            return false;
+
+        }
+
+        $stmt->bind_param('ii', $id, $uid);
+        if (!$stmt->execute()) {
+
+            //there was an error updating the journal
+            return false;
+
+        }
+
+        $stmt = $stmt->get_result();
+        if (!$stmt->num_rows) {
+
+            //there was an error updating the journal
+            return false;
+        }
 
         //everything is good, delete the journal and mood from the database
         if (!$stmt = $link->prepare("DELETE from jour_journals where id = ? AND uid = ?")) {
@@ -139,7 +184,7 @@ class journal
             die();
 
         }
-        $stmt->bind_param(ii, $id, $uid);
+        $stmt->bind_param('ii', $id, $uid);
         if (!$stmt->execute()) {
 
             //there was an error updating the journal
@@ -159,20 +204,22 @@ class journal
         return $result;
     }
 
-    function getJournals($uid, $authKey)
+    function getJournalsByDate($uid, $date)
     {
 
         //get database link
         $link = $this->getLink();
 
-        //everything is good, grab the journals.
-        if (!$stmt = $link->prepare("SELECT id, mood, postDate, editDate FROM jour_journals WHERE uid = ?")) {
+        //date must be in yyyy-mm-dd format. for example march 27th, 2019 = 2019-03-27
+
+        //grab all the journals by date
+        if (!$stmt = $link->prepare("SELECT * FROM jour_journals WHERE uid = ? and DATE(postDate) = ?")) {
 
             echo("ERROR:" . $link->error);
             die();
 
         }
-        $stmt->bind_param(i, $uid);
+        $stmt->bind_param('is', $uid, $date);
         if (!$stmt->execute()) {
 
             //there was an error grabbing the journals
@@ -181,9 +228,17 @@ class journal
 
         } else {
 
-            //the journal was updated
-            $result = $stmt->fetch_assoc();
+            $result = $stmt->get_result();
 
+            $journals[] = array();
+            $i = 0;
+            while ($row = $result->fetch_assoc()) {
+
+                $journals[$i] = $row;
+                $i++;
+
+            }
+            $result = $journals;
         }
 
         //close the stmt and the link and return the result
@@ -198,7 +253,7 @@ class journal
     {
 
         //make sure the journal entry and mood are set according to rules we create at some point.
-        if (strlen($journal) == 0 || strlen($journal) > 160) {
+        if (strlen($journal) < $this->journalLengthMin || strlen($journal) > $this->journalLengthMax) {
 
             return false;
 

@@ -25,7 +25,7 @@ if (!isset($link)) {
 //check to make sure the api key is a valid key. currently only one key, but this can be expanded in the future
 //$api_key is defined in config.php
 if (!isset($_GET['key']) || $_GET['key'] != $api_key) {
-    $error = array('result' => false, 'message' => "Error: API key is missing on invaliid.");
+    $error = array('result' => false, 'message' => "Error: API key is missing on invalid.");
     echo json_encode($error);
     return;
 }
@@ -286,7 +286,7 @@ if ($_GET['request'] == "addJournal") {
 
     }
     //every thing checks out, add the journal.
-    if (!$journal->addJournal($_GET['uid'], $_GET['journal'],$_GET['mood'], $_GET['authKey'])) {
+    if (!$journal->addJournal($_GET['uid'], $_GET['journal'],$_GET['mood'])) {
 
         $error = array('result' => false, 'message' => "Unable to add journal entry.");
         echo json_encode($error);
@@ -296,6 +296,169 @@ if ($_GET['request'] == "addJournal") {
     else {
 
         $result = array('result' => true, 'message' => "Success. Journal Added.");
+        echo json_encode($result);
+        return;
+
+    }
+
+}
+if ($_GET['request'] == "editJournal") {
+    //make sure api call requirements are met.
+    if (!isset($_GET['uid']) || !isset($_GET['journal']) || !isset($_GET['mood']) || !isset($_GET['jid']) || !isset($_GET['authKey'])) {
+        if (!isset($_GET['uid'])) {
+            $neededParams[] = "uid";
+        }
+        if (!isset($_GET['journal'])) {
+            $neededParams[] = "journal";
+        }
+        if (!isset($_GET['mood'])) {
+            $neededParams[] = "mood";
+        }
+        if (!isset($_GET['authKey'])) {
+            $neededParams[] = "authKey";
+        }
+        if (!isset($_GET['jid'])) {
+            $neededParams[] = "jid";
+        }
+        $error = array('result' => false, 'message' => "Error: Missing required data. Please provide user id, edited journal, mood, authKey, and journal id", 'needed' => $neededParams);
+        echo json_encode($error);
+        return;
+    }
+    //all required params have been provided.
+    //auth the user...
+    //check the auth key
+    $user = new users();
+    if(!$user->confirmAuthKey($_GET['uid'],$_GET['authKey'])) {
+
+        $error = array('result' => false, 'message' => "Unable to authenticate user.");
+        echo json_encode($error);
+        return;
+
+    }
+
+    $journal = new journal();
+
+    //the user passed auth, check journal length
+    if (!$journal->checkJournalLength($_GET['journal'])) {
+
+        $error = array('result' => false, 'message' => "Journal length not valid.");
+        echo json_encode($error);
+        return;
+
+    }
+    //check the mood requirements...
+    if (!$journal->checkMood($_GET['mood'])) {
+
+        $error = array('result' => false, 'message' => "invalid mood.");
+        echo json_encode($error);
+        return;
+
+    }
+    //every thing checks out, add the journal.
+    if (!$journal->editJournal($_GET['uid'], $_GET['jid'] ,$_GET['journal'],$_GET['mood'])) {
+
+        $error = array('result' => false, 'message' => "Unable to edit journal entry.");
+        echo json_encode($error);
+        return;
+
+    }
+    else {
+
+        $result = array('result' => true, 'message' => "Success. Journal Edited.");
+        echo json_encode($result);
+        return;
+
+    }
+
+}
+if ($_GET['request'] == "deleteJournal") {
+    //make sure api call requirements are met.
+    if (!isset($_GET['uid']) || !isset($_GET['jid']) || !isset($_GET['authKey'])) {
+        if (!isset($_GET['uid'])) {
+            $neededParams[] = "uid";
+        }
+        if (!isset($_GET['authKey'])) {
+            $neededParams[] = "authKey";
+        }
+        if (!isset($_GET['jid'])) {
+            $neededParams[] = "jid";
+        }
+        $error = array('result' => false, 'message' => "Error: Missing required data. Please provide user id, edited journal, mood, authKey, and journal id", 'needed' => $neededParams);
+        echo json_encode($error);
+        return;
+    }
+    //all required params have been provided.
+    //auth the user...
+    //check the auth key
+    $user = new users();
+    if(!$user->confirmAuthKey($_GET['uid'],$_GET['authKey'])) {
+
+        $error = array('result' => false, 'message' => "Unable to authenticate user.");
+        echo json_encode($error);
+        return;
+
+    }
+
+    $journal = new journal();
+
+    //every thing checks out, add the journal.
+    if (!$journal->deleteJournal($_GET['uid'], $_GET['jid'])) {
+
+        $error = array('result' => false, 'message' => "Unable to delete journal entry.");
+        echo json_encode($error);
+        return;
+
+    }
+    else {
+
+        $result = array('result' => true, 'message' => "Success. Journal deleted.");
+        echo json_encode($result);
+        return;
+
+    }
+
+}
+if ($_GET['request'] == "getJournalsByDate") {
+    //make sure api call requirements are met.
+    if (!isset($_GET['uid']) || !isset($_GET['date']) || !isset($_GET['authKey'])) {
+        if (!isset($_GET['uid'])) {
+            $neededParams[] = "uid";
+        }
+        if (!isset($_GET['authKey'])) {
+            $neededParams[] = "authKey";
+        }
+        if (!isset($_GET['date'])) {
+            $neededParams[] = "date";
+        }
+        $error = array('result' => false, 'message' => "Error: Missing required data. Please provide user id, date, and authKey.", 'needed' => $neededParams);
+        echo json_encode($error);
+        return;
+    }
+    //all required params have been provided.
+    //auth the user...
+    //check the auth key
+    $user = new users();
+    if(!$user->confirmAuthKey($_GET['uid'],$_GET['authKey'])) {
+
+        $error = array('result' => false, 'message' => "Unable to authenticate user.");
+        echo json_encode($error);
+        return;
+
+    }
+
+    $journal = new journal();
+
+    //every thing checks out, add the journal.
+    if (!$result = $journal->getJournalsByDate($_GET['uid'], $_GET['date'])) {
+
+        $error = array('result' => false, 'message' => "No journals for this user on this date.");
+        echo json_encode($error);
+        return;
+
+    }
+    else {
+
+        $result = array('result' => true, 'message' => "Success.", 'journals' => $result);
         echo json_encode($result);
         return;
 
