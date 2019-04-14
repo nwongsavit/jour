@@ -11,7 +11,7 @@
     <ul>
         <li>email</li>
     </ul>
-    <p>Sample call: <b>https://www.jour.life/api/api.php?request=isUser&email=no@unlv.nevada.edu</b><br>
+    <p>Sample call: <b>https://www.jour.life/api/api.php?key=apikey&request=isUser&email=no@unlv.nevada.edu</b><br>
         Sample response:
         <b>
         <pre>
@@ -29,7 +29,7 @@
     <ul>
         <li>email</li>
     </ul>
-    <p>Sample call: <b>https://www.jour.life/api/api.php?request=isWaitingConf&email=no@unlv.nevada.edu</b><br>
+    <p>Sample call: <b>https://www.jour.life/api/api.php?key=apikey&request=isWaitingConf&email=no@unlv.nevada.edu</b><br>
         Sample response:
         <b>
         <pre>
@@ -59,7 +59,7 @@
         <li>name</li>
         <li>password</li>
     </ul>
-    <p>Sample call: <b>https://www.jour.life/api/api.php?request=registerUser&name=shawn&email=no@unlv.nevada.edu&password=password01</b><br>
+    <p>Sample call: <b>https://www.jour.life/api/api.php?key=apikey&request=registerUser&name=shawn&email=no@unlv.nevada.edu&password=password01</b><br>
         Sample response:
         <b>
         <pre>
@@ -107,7 +107,7 @@
         <li>key</li>
     </ul>
     <p>Sample call:
-        <b>https://www.jour.life/api/api.php?request=confirmEmail&email=no@unlv.nevada.edu&key=password01</b><br>
+        <b>https://www.jour.life/api/api.php?key=apikey&request=confirmEmail&email=no@unlv.nevada.edu&emailKey=password01</b><br>
         Sample response:
         <b>
         <pre>
@@ -120,25 +120,11 @@
         Sample response:
         <b>
         <pre>
-            {
-                "result": "false",
-                "message": "Error: Missing required data. Please provide an email address, name, and password.",
-                "needed": [
-                    "Email Address",
-                    "Password",
-                    "Name"
-                ]
-            }
-        </pre>
-        </b>
-        Sample response:
-        <b>
-        <pre>
            {
                 "result": "false",
                 "message": "Error: Missing required data. Please provide an email address and key",
                 "needed": [
-                    "Key"
+                    "emailKey"
                 ]
             }
         </pre>
@@ -173,7 +159,7 @@
         <li>password</li>
     </ul>
     <p>Sample call:
-        <b>https://www.jour.life/api/api.php?request=authUser&email=no@unlv.nevada.edu&password=password01</b><br>
+        <b>https://www.jour.life/api/api.php?key=apikey&request=authUser&email=no@unlv.nevada.edu&password=password01</b><br>
         Sample response:
         <b>
         <pre>
@@ -243,5 +229,253 @@
     </p>
 </div>
 <hr>
+<div style="background-color:whitesmoke">
+    <h4>Request: addJournal</h4>
+    <p>required parameters:</p>
+    <ul>
+        <li>uid</li>
+        <li>journal</li>
+        <li>mood</li>
+        <li>authKey</li>
+    </ul>
+    <p>Sample call:
+        <b>https://www.jour.life/api/api.php?key=apikey&request=addJournal&uid=2&journal=blah&mood=blah&authKey=blah</b><br>
+        Sample response:
+        <b>
+        <pre>
+            {
+                "result": "false",
+                "message": "Error: Missing required data. Please provide an email address and password",
+                "needed": [
+                     "uid",
+                     "journal",
+                     "mood",
+                     "authKey"
+                ]
+            }
+        </pre>
+        </b>
+        Sample response:
+        <b>
+        <pre>
+            {
+                "result": "false",
+                "message": "User Authentication failed,"
+            }
+        </pre>
+        </b>
+        Sample response:
+        <b>
+        <pre>
+            {
+                "result": "false",
+                "message": "Journal length not valid."
+            }
+        </pre>
+        </b>
+        Sample response:
+        <b>
+        <pre>
+            {
+                 "result": "false",
+                "message": "invalid mood."
+            }
+        </pre>
+        </b>
+        Sample response:
+        <b>
+        <pre>
+            {
+                "result": "true",
+                "message": "Success. Journal Added."
+            }
+        </pre>
+        </b>
+    </p>
+</div>
+<hr>
+<div style="background-color:lightgrey">
+    <h4>Request: editJournal</h4>
+    <p>required parameters:</p>
+    <ul>
+        <li>uid</li>
+        <li>jid</li>
+        <li>journal</li>
+        <li>mood</li>
+        <li>authKey</li>
+    </ul>
+    <p>Sample call:
+        <b>https://www.jour.life/api/api.php?key=apikey&request=editJournal&uid=2&jid=2&journal=editedtext&mood=editedmood&authKey=blah</b><br>
+        Sample response:
+        <b>
+        <pre>
+            {
+                "result": "false",
+                "message": "Error: Missing required data. Please provide an email address and password",
+                "needed": [
+                     "uid",
+                     "jid",
+                     "journal",
+                     "mood",
+                     "authKey"
+                ]
+            }
+        </pre>
+        </b>
+        Sample response:
+        <b>
+        <pre>
+            {
+                "result": "false",
+                "message": "User Authentication failed,"
+            }
+        </pre>
+        </b>
+        Sample response:
+        <b>
+        <pre>
+            {
+                "result": "false",
+                "message": "Journal length not valid."
+            }
+        </pre>
+        </b>
+        Sample response:
+        <b>
+        <pre>
+            {
+                 "result": "false",
+                "message": "invalid mood."
+            }
+        </pre>
+        </b>
+        Sample response:
+        <b>
+        <pre>
+            {
+                "result": "true",
+                "message": "Success. Journal edited."
+            }
+        </pre>
+        </b>
+    </p>
+</div>
+<hr>
+<div style="background-color:whitesmoke">
+    <h4>Request: deleteJournal</h4>
+    <p>required parameters:</p>
+    <ul>
+        <li>uid</li>
+        <li>jid</li>
+        <li>authKey</li>
+    </ul>
+    <p>Sample call:
+        <b>https://www.jour.life/api/api.php?key=apikey&request=deleteJournal&uid=2&jid=2&&authKey=blah</b><br>
+        Sample response:
+        <b>
+        <pre>
+            {
+                "result": "false",
+                "message": "Error: Missing required data. Please provide an email address and password",
+                "needed": [
+                     "uid",
+                     "jid",
+                     "authKey"
+                ]
+            }
+        </pre>
+        </b>
+        Sample response:
+        <b>
+        <pre>
+            {
+                "result": "false",
+                "message": "User Authentication failed,"
+            }
+        </pre>
+        </b>
+        Sample response:
+        <b>
+        <pre>
+            {
+                "result": "true",
+                "message": "Success. Journal deleted."
+            }
+        </pre>
+        </b>
+    </p>
+</div>
+<hr>
+<div style="background-color:lightgrey">
+    <h4>Request: getJournalsByDate</h4>
+    <p>required parameters:</p>
+    <ul>
+        <li>uid</li>
+        <li>authKey</li>
+        <li>date - required format: yyyy-mm-dd</li>
+    </ul>
+    <p>Sample call:
+        <b>https://www.jour.life/api/api.php?key=apikey&request=getJournalsByDate&uid=2&date=2019-03-27&authKey=blah</b><br>
+        Sample response:
+        <b>
+        <pre>
+            {
+                "result": "false",
+                "message": "Error: Missing required data. Please provide an email address and password",
+                "needed": [
+                     "uid",
+                     "date",
+                     "authKey"
+                ]
+            }
+        </pre>
+        </b>
+        Sample response:
+        <b>
+        <pre>
+            {
+                "result": "false",
+                "message": "User Authentication failed,"
+            }
+        </pre>
+        </b>
+        Sample response:
+        <b>
+        <pre>
+            {
+                "result": "false",
+                "message": "Error: No journals for this date."
+            }
+        </pre>
+        </b>
+        Sample response:
+        <b>
+        <pre>
+            {
+                "result": true,
+                "message": "Success.",
+                "journals": [
+                    {
+                        "id": 1,
+                        "uid": 1,
+                        "mood": "fsf",
+                        "journal": "fsrf",
+                        "postDate": "2019-03-27 22:49:59",
+                        "editDate": "2019-04-03 19:00:46"
+                    },
+                    {
+                        "id": 4,
+                        "uid": 1,
+                        "mood": "blah",
+                        "journal": "qewfadsf",
+                        "postDate": "2019-03-27 00:00:00",
+                         "editDate": null
+                     }
+                ]
+            }
+        </pre>
+        </b>
+    </p>
+</div>
 </body>
 </html>

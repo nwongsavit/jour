@@ -7,6 +7,7 @@ class users
     private $name;
     private $joinDate;
     private $link;
+    private $authKey;
 
     public function __construct()
     {
@@ -31,7 +32,7 @@ class users
             echo("ERROR:" . $link->error);
             die();
         }
-        $stmt->bind_param(s, $email);
+        $stmt->bind_param('s', $email);
         $stmt->execute();
         $stmt = $stmt->get_result();
         //if there are any rows the user already has an account.
@@ -54,7 +55,7 @@ class users
             echo("ERROR:" . $link->error);
             die();
         }
-        $stmt->bind_param(s, $email);
+        $stmt->bind_param('s', $email);
         $stmt->execute();
         $stmt = $stmt->get_result();
         //if there are any rows the user already has an account.
@@ -84,7 +85,7 @@ class users
         //info on the password hashing
         $password = password_hash($_GET['password'], PASSWORD_DEFAULT);
         $email_hash = password_hash($_GET['email'], PASSWORD_DEFAULT);
-        $stmt->bind_param(ssss, $email, $name, $password, $email_hash);
+        $stmt->bind_param('ssss', $email, $name, $password, $email_hash);
         if (!$stmt->execute()) {
             $result = false;
         } else {
@@ -115,7 +116,7 @@ class users
             echo("ERROR:" . $link->error);
             die();
         }
-        $stmt->bind_param(ss, $email, $conf_hash);
+        $stmt->bind_param('ss', $email, $conf_hash);
         $stmt->execute();
         $stmt = $stmt->get_result();
         //if there are any rows the user already has an account.
@@ -135,7 +136,7 @@ class users
                 //lets set default timezone for las vegas
                 date_default_timezone_set('America/Los_Angeles');
                 $join_date = date('Y-m-d');
-                $stmt->bind_param(ssss, $row['first_name'], $row['email'], $join_date, $row['password']);
+                $stmt->bind_param('ssss', $row['first_name'], $row['email'], $join_date, $row['password']);
                 if (!$stmt->execute()) {
                     //there was an error during the transfer
                     echo("ERROR:" . $link->error);
@@ -149,7 +150,7 @@ class users
                     //mysql date format 'YYYY-MM-DD'
                     //lets set default timezone for las vegas
 
-                    $stmt->bind_param(i, $row['id']);
+                    $stmt->bind_param('i', $row['id']);
                     if (!$stmt->execute()) {
                         //there was an error during the transfer
                         echo("ERROR:" . $link->error);
@@ -171,14 +172,13 @@ class users
 
     function sendConfEmail($email)
     {
-        $link = $this->getLink();
-        //get key for confirmation from the database
+        $link = $this->getLink();//get key for confirmation from the database
         if (!$stmt = $link->prepare("SELECT email_hash FROM jour_confirm WHERE email = ? LIMIT 1")) {
             echo("ERROR:" . $link->error);
             die();
         }
 
-        $stmt->bind_param(s, $email);
+        $stmt->bind_param('s', $email);
         $stmt->execute();
         $stmt = $stmt->get_result();
 
@@ -220,7 +220,7 @@ class users
             echo("ERROR GETTING USER DATA:" . $link->error);
             die();
         }
-        $stmt->bind_param(s, $email);
+        $stmt->bind_param('s', $email);
         $stmt->execute();
         $stmt = $stmt->get_result();
         //if there are any rows we have a user with that email, now we check to see if the password hashes match
@@ -237,6 +237,20 @@ class users
               $this->name = $row['first_name'];
               $this->email = $row['email'];
               $this->id = $row['id'];
+              $this->authKey = password_hash($this->getId() . $this->getName() . $this->getJoinDate() . $this->getEmail() . time(), PASSWORD_DEFAULT);
+
+              //update the users table for this user with the auth key so they can use that to post to their account.
+                if (!$stmt = $link->prepare("UPDATE jour_users set authKey = ? WHERE id = ?")) {
+                    echo("ERROR UPDATING AUTHKEY:" . $link->error);
+                    die();
+                }
+                $stmt->bind_param('si', $this->getAuthKey(), $this->getId());
+
+                if(!$stmt->execute()) {
+                    echo("ERROR UPDATING AUTHKEY IN USERS DATABASE:" . $link->error);
+                    die();
+                }
+
               return true;
             }
         } else {
@@ -247,6 +261,51 @@ class users
         $link->close();
         return $result;
     }
+
+
+    function confirmAuthKey($id, $authKey)
+    {
+
+        //get the database link
+        $link = $this->getLink();
+
+        //check for email/password match, and if so, set all private vars.
+
+        //get the users data so we can check the password
+        if (!$stmt = $link->prepare("SELECT authKey FROM jour_users WHERE id = ?")) {
+            echo("ERROR GETTING USER DATA:" . $link->error);
+            die();
+        }
+        $stmt->bind_param('i', $id);
+        $stmt->execute();
+        $stmt = $stmt->get_result();
+        //if there are any rows we have a user with that email, now we check to see if the password hashes match
+        if ($stmt->num_rows) {
+            //set the row as associative array
+            $row = $stmt->fetch_assoc();
+
+            //just double check authkey provided matches the hash in the database. this will change on every login.
+            if ($authKey != $row['authKey']) {
+
+                //no match return false
+                return false;
+
+            }
+            else {
+                return true;
+            }
+        }
+        else {
+            $result = false;
+        }
+        //close the stmt and the link and return the result
+        $stmt->close();
+        $link->close();
+        return $result;
+
+
+    }
+
 
     function resetPassword($email, $auth_hash)
     {
@@ -279,6 +338,13 @@ class users
     {
 
         return $this->joinDate;
+
+    }
+
+    public function getAuthKey()
+    {
+
+        return $this->authKey;
 
     }
 }
