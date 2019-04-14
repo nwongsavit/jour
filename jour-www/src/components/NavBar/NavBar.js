@@ -1,66 +1,55 @@
 import React, { Component } from 'react';
-import { Link, NavLink } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import NavItem from './NavItem/NavItem';
+import NavBrand from './NavBrand/NavBrand';
 import './NavBar.css';
 
+const bg = require('../../assets/jourlogo200w.png');
+
 class NavBar extends Component {
+  constructor() {
+    super();
+    this.state = {
+      width: window.innerWidth,
+    };
+  }
+
+  componentWillMount() {
+    window.addEventListener('resize', this.handleWindowSizeChange);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleWindowSizeChange);
+  }
+
+  handleWindowSizeChange = () => {
+    this.setState({ width: window.innerWidth });
+  };
+
   render() {
+    const { width } = this.state;
+    const isMobile = width <= 767;
+
+    let navClasses;
+    if (isMobile) {
+      navClasses = 'fixed-bottom';
+    } else {
+      navClasses = 'col-10 col-md-2';
+    }
+
     return (
-      <div className="NavBar">
-        <div className="container-fluid h-100">
-          <div className="row h-100">
-            <aside className="col-12 col-md-2 p-0 bg-dark fixed-bottom">
-              <nav className="navbar navbar-expand navbar-dark bg-dark flex-md-column flex-row align-items-start py-2">
-                <div className="collapse navbar-collapse align-items-start">
-                  <ul className="flex-md-column flex-row navbar-nav w-100 justify-content-between">
-                    <li className="nav-item">
-                      <Link className="navbar-brand pl-0 text-nowrap" to="/home">
-                        <FontAwesomeIcon icon="pencil-alt" />
-                        &nbsp;&nbsp;
-                        <span className="font-weight-bold">Jour</span>
-                      </Link>
-                    </li>
-                    <li className="nav-item">
-                      <NavLink className="nav-link pl-0" to="/home">
-                        <FontAwesomeIcon icon="home" />
-                        &nbsp;&nbsp;
-                        <span className="d-none d-md-inline">Home</span>
-                      </NavLink>
-                    </li>
-                    <li className="nav-item">
-                      <NavLink className="nav-link pl-0" to="/calendar">
-                        <FontAwesomeIcon icon="calendar" />
-                        &nbsp;&nbsp;
-                        <span className="d-none d-md-inline">Calendar</span>
-                      </NavLink>
-                    </li>
-                    <li className="nav-item">
-                      <NavLink className="nav-link pl-0" to="/statistics">
-                        <FontAwesomeIcon icon="chart-bar" />
-                        &nbsp;&nbsp;
-                        <span className="d-none d-md-inline">Statistics</span>
-                      </NavLink>
-                    </li>
-                    <li className="nav-item">
-                      <NavLink className="nav-link pl-0" to="/settings">
-                        <FontAwesomeIcon icon="cog" />
-                        &nbsp;&nbsp;
-                        <span className="d-none d-md-inline">Settings</span>
-                      </NavLink>
-                    </li>
-                    <li className="nav-item">
-                      <NavLink className="nav-link pl-0" to="/login">
-                        <FontAwesomeIcon icon="sign-out-alt" />
-                        &nbsp;&nbsp;
-                        <span className="d-none d-md-inline">Sign out</span>
-                      </NavLink>
-                    </li>
-                  </ul>
-                </div>
-              </nav>
-            </aside>
+      <div className={`${navClasses} NavBar`}>
+        <nav className="navbar navbar-expand">
+          <div className="navbar-collapse">
+            <ul className="flex-md-column navbar-nav w-100 navFlex">
+              {!isMobile && <NavBrand name="Jour" icon={bg} to="/home" />}
+              <NavItem name="Home" icon="home" to="/home" />
+              <NavItem name="Calendar" icon="calendar" to="/calendar" />
+              <NavItem name="Statistics" icon="chart-bar" to="/statistics" />
+              <NavItem name="Settings" icon="cog" to="/settings" />
+              <NavItem name="Log In" icon="sign-out-alt" to="/login" />
+            </ul>
           </div>
-        </div>
+        </nav>
       </div>
     );
   }

@@ -190,7 +190,7 @@ class users
         $subject = "Account Confirmation";
         $message = '<html><body>';
         $message .= '<h1>Confirm Your Account</h1>';
-        $message .= "<a href=https://jour.life/confirm.html?email=$_GET[email]&key=$key[0]>Confirm your account</a>";
+        $message .= "<a href=https://jour.life/confirm?email=$_GET[email]&emailKey=$key[0]>Confirm your account</a>";
         $message .= '</body></html>';
         $headers = "From: no-reply@jour.life " . "\r\n";
         $headers .= "Reply-To: no-reply@jour.life " . "\r\n";

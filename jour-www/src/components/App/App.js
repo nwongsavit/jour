@@ -2,7 +2,15 @@ import React, { Component } from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
-  faPencilAlt, faHome, faCalendar, faChartBar, faCog, faSignOutAlt,
+  faPencilAlt,
+  faHome,
+  faCalendar,
+  faChartBar,
+  faCog,
+  faSignOutAlt,
+  faAngleLeft,
+  faAngleRight,
+  faThLarge,
 } from '@fortawesome/free-solid-svg-icons';
 import NavBar from '../NavBar/NavBar';
 import Home from '../Home/Home';
@@ -11,9 +19,21 @@ import Statistics from '../Statistics/Statistics';
 import Settings from '../Settings/Settings';
 import Login from '../User/Login';
 import Register from '../User/Register';
+import Confirm from '../User/Confirm';
+import ForgotPassword from '../User/ForgotPassword';
 import './App.css';
 
-library.add(faPencilAlt, faHome, faCalendar, faChartBar, faCog, faSignOutAlt);
+library.add(
+  faPencilAlt,
+  faHome,
+  faCalendar,
+  faChartBar,
+  faCog,
+  faSignOutAlt,
+  faAngleLeft,
+  faAngleRight,
+  faThLarge,
+);
 
 class App extends Component {
   render() {
@@ -28,6 +48,8 @@ class App extends Component {
             <Route path="/settings" component={Settings} />
             <Route path="/login" component={Login} />
             <Route path="/register" component={Register} />
+            <Route path="/confirm" component={Confirm} />
+            <Route path="/forgot-password" component={ForgotPassword} />
             <Redirect path="/" exact to="/home" />
           </Switch>
         </div>

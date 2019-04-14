@@ -1,0 +1,35 @@
+span {
+  padding-left: 10px;
+}
+
+.nav-link:hover {
+  color: white;
+}
+
+.active {
+  background-color: #124155;
+}
+
+.NavItem {
+	padding: 20px !important;
+	width: 100%;
+	text-align: left;
+  cursor: pointer;
+  color: white;
+}
+
+@media (min-width: 768px) {
+	.navIcon {
+		width: 20px !important;
+	}
+}
+
+@media (max-width: 767px) {
+	.NavItem {
+		text-align: center;
+	}
+
+	.navIcon {
+		font-size: 1.2em;
+	}
+}

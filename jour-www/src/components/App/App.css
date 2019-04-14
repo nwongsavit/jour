@@ -1,6 +1,9 @@
 .App {
-  text-align: center;
   height: 100vh;
+  display: flex;
+  /* background-color: #6fb6d3; */
+  color: #124155;
+  display: flex;
 }
 
 .App-logo {
@@ -26,6 +29,7 @@
 
 .container {
   height: 100%;
+  flex: 1 0 0;
 }
 
 @keyframes App-logo-spin {
@@ -40,3 +44,14 @@
 .smallText {
   font-size: 0.8em;
 }
+
+.btn-primary {
+  border: none !important;
+  background-color: #4a8aa4 !important;
+}
+
+/* textarea, select, input, .btn-primary {
+	background-color: #c7dce4 !important;
+	border-width: 0.1em !important;
+	border-color: #124155 !important;
+} */
