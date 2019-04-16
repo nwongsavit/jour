@@ -57,15 +57,14 @@ class Login extends Component {
   render() {
     const { results } = this.state;
     const { message } = this.state;
-
     if (!results) {
       return (
         <div className="User">
           <Form className="form" onSubmit={this.handleSubmit}>
             <h3>Welcome back!</h3>
             <span id="errors" style={{ float: 'left', fontSize: 'x-small', color: 'red' }}>{message}</span>
-            <Form.Control type="email" placeholder="Username" onChange={this.handleEmailChange} required />
-            <Form.Control type="password" placeholder="Password" onChange={this.handlePasswordChange} required />
+            <Form.Control id="email" type="email" placeholder="Username" onChange={this.handleEmailChange} required />
+            <Form.Control id="password" type="password" placeholder="Password" onChange={this.handlePasswordChange} required />
             <Button type="submit" block>
               Submit
             </Button>
