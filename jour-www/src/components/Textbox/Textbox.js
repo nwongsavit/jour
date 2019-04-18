@@ -1,16 +1,64 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import { Form, Button } from 'react-bootstrap';
 import './Textbox.css';
 import Task from '../Task/Task';
+import Textarea from '../Textarea/Textarea';
+
+const apiKey = process.env.REACT_APP_API_KEY;
 
 class Textbox extends Component {
+  constructor() {
+    super();
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleJournalChange = this.handleJournalChange.bind(this);
+    this.handleMoodChange = this.handleMoodChange.bind(this);
+    this.state = {
+      journal: '',
+      mood: '',
+      results: '',
+      message: ''
+    };
+  }
+
+  handleSubmit(e) {
+    const { journal, mood } = this.state;
+
+    axios.get('https://jour.life/api/api.php', {
+      params: {
+        key: apiKey,
+        request: 'addJournal',
+        uid: '2',
+        journal,
+        mood,
+        authKey: '2',
+      },
+    })
+      .then(result => this.setState({
+        results: result.data.result,
+        message: result.data.message,
+      }, () => {
+        // console.log('this.state.results :', this.state.results, this.state.message);
+      }));
+
+    e.preventDefault();
+  }
+
+  handleJournalChange(e) {
+    this.setState({ journal: e.target.value });
+  }
+
+  handleMoodChange(e) {
+    this.setState({ mood: e.target.value });
+  }
+
   render() {
     return (
       <div className="Textbox">
-        <Form className="textboxForm">
-          <h3>Welcome Jane!</h3>
-          <textarea rows="1" placeholder="How are you feeling today?" />
-          <Form.Control as="select">
+        <Form className="textboxForm" onSubmit={this.handleSubmit}>
+          <h3>Welcome, Jane!</h3>
+          <Textarea rows={3} placeholder="How are you feeling today?" onChange={this.handleJournalChange} />
+          <Form.Control as="select" onChange={this.handleMoodChange}>
             <option value="happy">Happy</option>
             <option value="sad">Sad</option>
             <option value="angry">Angry</option>

@@ -35,11 +35,11 @@ class CalendarCell extends Component {
 }
 
 CalendarCell.propTypes = {
-  date: PropTypes.string,
+  date: PropTypes.number,
 };
 
 CalendarCell.defaultProps = {
-  date: '',
+  date: 0,
 };
 
 export default CalendarCell;

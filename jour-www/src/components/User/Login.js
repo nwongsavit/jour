@@ -16,6 +16,7 @@ class Login extends Component {
     this.state = {
       results: false,
       message: '',
+      account_info: {},
       email: '',
       password: '',
     };
@@ -41,8 +42,11 @@ class Login extends Component {
       .then(result => this.setState({
         results: result.data.result,
         message: result.data.message,
+        account_info: result.data.account_info,
         //  this is an array of missing params, not needed here because the form has required set.
         //  needed: result.data.needed,
+      }, () => {
+        console.log('this.state.account_ifno :', this.state.account_ifno);
       }));
   }
 
