@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './UserBar.css';
-import PropTypes from 'prop-types';
-import { Dropdown } from 'react-bootstrap';
 import NavBrand from '../NavBar/NavBrand/NavBrand';
 
 const bg = require('../../assets/jourlogo200w.png');
@@ -26,6 +25,10 @@ class UserBar extends Component {
     this.setState({ width: window.innerWidth });
   };
 
+  // renderDropdown() {
+  //   console.log();
+  // }
+
   render() {
     const { width } = this.state;
     const isMobile = width <= 767;
@@ -39,7 +42,12 @@ class UserBar extends Component {
             className="profile-picture"
             alt="profile"
           />
-          {!isMobile && <div className="username smallText">Harry Potter</div>}
+          {!isMobile && (
+            // <div className="user-dropdown" onClick={this.renderDropdown}>
+            <div className="username smallText">Harry Potter</div>
+            //   <FontAwesomeIcon id="next" icon="angle-down" />
+            // </div>
+          )}
         </div>
       </div>
     );

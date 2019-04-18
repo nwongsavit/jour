@@ -10,6 +10,7 @@ import {
   faSignOutAlt,
   faAngleLeft,
   faAngleRight,
+  faAngleDown,
   faThLarge,
 } from '@fortawesome/free-solid-svg-icons';
 import NavBar from '../NavBar/NavBar';
@@ -33,7 +34,8 @@ library.add(
   faSignOutAlt,
   faAngleLeft,
   faAngleRight,
-  faThLarge
+  faThLarge,
+  faAngleDown
 );
 
 class App extends Component {
