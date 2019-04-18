@@ -1,7 +1,5 @@
 .Task {
   flex: 0 0 40px;
-  padding: 20px;
-  border-bottom: 1px solid lightgrey;
 }
 
 .checkbox {

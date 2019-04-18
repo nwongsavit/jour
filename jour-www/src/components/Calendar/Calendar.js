@@ -14,6 +14,7 @@ import {
 } from 'date-fns';
 import CalendarCell from './CalendarCell/CalendarCell';
 import Task from '../Task/Task';
+import Textarea from '../Textarea/Textarea';
 
 const FEELING_TEXT = 'I\'m feeling...';
 
@@ -151,11 +152,7 @@ class Calendar extends Component {
               <h3 className="moodTitle">{FEELING_TEXT}</h3>
               <FontAwesomeIcon id="next" icon="pencil-alt" />
             </div>
-            <textarea rows="4">
-              {
-                'In psychology, a mood is an emotional state. In contrast to emotions, feelings, or affects, moods are less specific, less intense and less likely to be provoked or instantiated by a particular stimulus or event. Moods are typically described as having either a positive or negative valence. In other words, people usually talk about being in a good mood or a bad mood.'
-              }
-            </textarea>
+            <Textarea rows={4} content="In psychology, a mood is an emotional state. In contrast to emotions, feelings, or affects, moods are less specific, less intense and less likely to be provoked or instantiated by a particular stimulus or event. Moods are typically described as having either a positive or negative valence. In other words, people usually talk about being in a good mood or a bad mood." />
           </div>
           <div className="tasks">
             <h3>I need to...</h3>
@@ -177,31 +174,30 @@ class Calendar extends Component {
     let days = [];
     let day = weekStart;
 
+    let i = 0;
+
     while (day <= weekEnd) {
       if (day.getMonth() !== weekStart.getMonth()) {
         days.push(
-          <Col className="dateCol">
-            <CalendarCell />
+          <Col className="dateCol" key={i}>
+            <CalendarCell key={i} />
           </Col>,
         ); // push an empty calendar cell
       } else {
         days.push(
-          <Col className="dateCol" key={day.getDate()}>
-            <CalendarCell date={day.getDate()} />
+          <Col className="dateCol" key={i}>
+            <CalendarCell date={day.getDate()} key={i} />
           </Col>,
         );
         day = addDays(day, 1);
       }
+      i += 1;
     }
-    rows.push(<Row>{days}</Row>);
+    rows.push(<Row key={i}>{days}</Row>);
     days = [];
 
     return rows;
   }
-
-  // renderDayView() {
-  //   return <div id="todaysTasksHeader">Today's Tasks</div>;
-  // }
 
   render() {
     const { monthView, weekView } = this.state;

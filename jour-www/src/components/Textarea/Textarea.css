@@ -1,0 +1,18 @@
+.Textarea {
+  padding: 20px;
+  border-bottom: 1px solid lightgrey;
+}
+
+.Textarea:focus-within {
+  border-bottom: 1px solid #6fb6d3;
+}
+
+textarea {
+  resize: none !important;
+  border: none;
+  width: 100%;
+}
+
+textarea:focus {
+  outline: none;
+}
