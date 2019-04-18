@@ -1,11 +1,11 @@
 .NavBrand {
   text-align: center;
-  width: 100%;
   align-self: center;
+  justify-content: flex-start;
+  padding: 20px;
 }
 
-@media (min-width: 768px) {
+/* @media (min-width: 768px) {
   .NavBrand {
-    padding: 20px;
   }
-}
+} */
