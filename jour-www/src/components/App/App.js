@@ -21,6 +21,7 @@ import Login from '../User/Login';
 import Register from '../User/Register';
 import Confirm from '../User/Confirm';
 import ForgotPassword from '../User/ForgotPassword';
+import UserBar from '../UserBar/UserBar';
 import './App.css';
 
 library.add(
@@ -32,7 +33,7 @@ library.add(
   faSignOutAlt,
   faAngleLeft,
   faAngleRight,
-  faThLarge,
+  faThLarge
 );
 
 class App extends Component {
@@ -40,18 +41,21 @@ class App extends Component {
     return (
       <div className="App">
         <NavBar />
-        <div className="container">
-          <Switch>
-            <Route path="/home" component={Home} />
-            <Route path="/calendar" component={Calendar} />
-            <Route path="/statistics" component={Statistics} />
-            <Route path="/settings" component={Settings} />
-            <Route path="/login" component={Login} />
-            <Route path="/register" component={Register} />
-            <Route path="/confirm" component={Confirm} />
-            <Route path="/forgot-password" component={ForgotPassword} />
-            <Redirect path="/" exact to="/home" />
-          </Switch>
+        <div className="content">
+          <UserBar />
+          <div className="container">
+            <Switch>
+              <Route path="/home" component={Home} />
+              <Route path="/calendar" component={Calendar} />
+              <Route path="/statistics" component={Statistics} />
+              <Route path="/settings" component={Settings} />
+              <Route path="/login" component={Login} />
+              <Route path="/register" component={Register} />
+              <Route path="/confirm" component={Confirm} />
+              <Route path="/forgot-password" component={ForgotPassword} />
+              <Redirect path="/" exact to="/home" />
+            </Switch>
+          </div>
         </div>
       </div>
     );

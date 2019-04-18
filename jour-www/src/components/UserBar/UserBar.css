@@ -1,0 +1,28 @@
+.UserBar {
+  display: flex;
+  border-bottom: 1px solid #ededed;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-right: 30px;
+}
+
+.user-info > * {
+  margin-right: 10px;
+}
+
+.username {
+  font-weight: bold;
+}
+
+.profile-picture {
+  border: 1px solid #ededed;
+  border-radius: 50%;
+  height: 35px;
+  width: 35px;
+}

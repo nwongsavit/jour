@@ -2,10 +2,20 @@
   background-color: #4a8aa4;
   padding: 0px !important;
   font-size: 0.9em;
+  position: fixed;
 }
 
 nav {
   padding: 0px !important;
+}
+
+@media (min-width: 768px) {
+  .NavBar {
+    height: 100%;
+  }
+  nav {
+    margin-top: 100px;
+  }
 }
 
 .navFlex {
