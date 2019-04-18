@@ -29,25 +29,31 @@ class Login extends Component {
     const { email } = this.state;
     const { password } = this.state;
     //  make the get request and set the message/result
-    axios.get('https://jour.life/api/api.php', {
-      params: {
-        //  THIS IS WHERE THE REQUIRED PARAMS FOR A CALL GO:
-        //  for auth, that includes key, request, email, and password
-        key: apiKey,
-        request: 'authUser',
-        email,
-        password,
-      },
-    })
-      .then(result => this.setState({
-        results: result.data.result,
-        message: result.data.message,
-        account_info: result.data.account_info,
-        //  this is an array of missing params, not needed here because the form has required set.
-        //  needed: result.data.needed,
-      }, () => {
-        console.log('this.state.account_ifno :', this.state.account_ifno);
-      }));
+    axios
+      .get('https://jour.life/api/api.php', {
+        params: {
+          //  THIS IS WHERE THE REQUIRED PARAMS FOR A CALL GO:
+          //  for auth, that includes key, request, email, and password
+          key: apiKey,
+          request: 'authUser',
+          email,
+          password,
+        },
+      })
+      .then(result =>
+        this.setState(
+          {
+            results: result.data.result,
+            message: result.data.message,
+            account_info: result.data.account_info,
+            //  this is an array of missing params, not needed here because the form has required set.
+            //  needed: result.data.needed,
+          },
+          () => {
+            console.log('this.state.account_ifno :', this.state.account_ifno);
+          }
+        )
+      );
   }
 
   handleEmailChange(e) {
@@ -66,21 +72,34 @@ class Login extends Component {
         <div className="User">
           <Form className="form" onSubmit={this.handleSubmit}>
             <h3>Welcome back!</h3>
-            <span id="errors" style={{ float: 'left', fontSize: 'x-small', color: 'red' }}>{message}</span>
-            <Form.Control id="email" type="email" placeholder="Username" onChange={this.handleEmailChange} required />
-            <Form.Control id="password" type="password" placeholder="Password" onChange={this.handlePasswordChange} required />
+            <span
+              id="errors"
+              style={{ float: 'left', fontSize: 'x-small', color: 'red' }}
+            >
+              {message}
+            </span>
+            <Form.Control
+              id="email"
+              type="email"
+              placeholder="Username"
+              onChange={this.handleEmailChange}
+              required
+            />
+            <Form.Control
+              id="password"
+              type="password"
+              placeholder="Password"
+              onChange={this.handlePasswordChange}
+              required
+            />
             <Button type="submit" block>
               Submit
             </Button>
             <div id="register" className="smallText">
-              Not registered?
-              {' '}
-              <a href="/register">Create an account</a>
+              Not registered? <a href="/register">Create an account</a>
             </div>
             <div id="forgot-password" className="smallText">
-              Forgot password?
-              {' '}
-              <a href="/forgot-password">Click here</a>
+              Forgot password? <a href="/forgot-password">Click here</a>
             </div>
           </Form>
         </div>

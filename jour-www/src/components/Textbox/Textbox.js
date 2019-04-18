@@ -17,29 +17,35 @@ class Textbox extends Component {
       journal: '',
       mood: '',
       results: '',
-      message: ''
+      message: '',
     };
   }
 
   handleSubmit(e) {
     const { journal, mood } = this.state;
 
-    axios.get('https://jour.life/api/api.php', {
-      params: {
-        key: apiKey,
-        request: 'addJournal',
-        uid: '2',
-        journal,
-        mood,
-        authKey: '2',
-      },
-    })
-      .then(result => this.setState({
-        results: result.data.result,
-        message: result.data.message,
-      }, () => {
-        // console.log('this.state.results :', this.state.results, this.state.message);
-      }));
+    axios
+      .get('https://jour.life/api/api.php', {
+        params: {
+          key: apiKey,
+          request: 'addJournal',
+          uid: '2',
+          journal,
+          mood,
+          authKey: '2',
+        },
+      })
+      .then(result =>
+        this.setState(
+          {
+            results: result.data.result,
+            message: result.data.message,
+          },
+          () => {
+            // console.log('this.state.results :', this.state.results, this.state.message);
+          }
+        )
+      );
 
     e.preventDefault();
   }
@@ -56,8 +62,12 @@ class Textbox extends Component {
     return (
       <div className="Textbox">
         <Form className="textboxForm" onSubmit={this.handleSubmit}>
-          <h3>Welcome, Jane!</h3>
-          <Textarea rows={3} placeholder="How are you feeling today?" onChange={this.handleJournalChange} />
+          {/* <h3>Welcome, Jane!</h3> */}
+          <Textarea
+            rows={3}
+            placeholder="How are you feeling today?"
+            onChange={this.handleJournalChange}
+          />
           <Form.Control as="select" onChange={this.handleMoodChange}>
             <option value="happy">Happy</option>
             <option value="sad">Sad</option>
