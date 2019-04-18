@@ -35,6 +35,12 @@
   flex: 1 0 0;
 }
 
+.content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -52,9 +58,3 @@
   border: none !important;
   background-color: #4a8aa4 !important;
 }
-
-/* textarea, select, input, .btn-primary {
-	background-color: #c7dce4 !important;
-	border-width: 0.1em !important;
-	border-color: #124155 !important;
-} */

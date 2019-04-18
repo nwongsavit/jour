@@ -11,7 +11,8 @@ class NavItem extends Component {
     return (
       <NavLink className="NavItem nav-link" activeClassName="active" to={to}>
         <FontAwesomeIcon className="navIcon" icon={icon} />
-        <span className="d-none d-md-inline">{name}</span>
+        {/* <span className="d-none d-md-inline">{name}</span> */}
+        <span className="d-none">{name}</span>
       </NavLink>
     );
   }

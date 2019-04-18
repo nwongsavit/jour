@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import NavItem from './NavItem/NavItem';
-import NavBrand from './NavBrand/NavBrand';
 import './NavBar.css';
-
-const bg = require('../../assets/jourlogo200w.png');
 
 class NavBar extends Component {
   constructor() {
@@ -29,19 +26,17 @@ class NavBar extends Component {
     const { width } = this.state;
     const isMobile = width <= 767;
 
-    let navClasses;
+    let navClasses = 'NavBar';
     if (isMobile) {
-      navClasses = 'fixed-bottom';
-    } else {
-      navClasses = 'col-10 col-md-2';
+      navClasses = 'fixed-bottom NavBar';
     }
 
     return (
-      <div className={`${navClasses} NavBar`}>
+      <div className={`${navClasses}`}>
         <nav className="navbar navbar-expand">
           <div className="navbar-collapse">
             <ul className="flex-md-column navbar-nav w-100 navFlex">
-              {!isMobile && <NavBrand name="Jour" icon={bg} to="/home" />}
+              {/* {!isMobile && <NavBrand name="Jour" icon={bg} to="/home" />} */}
               <NavItem name="Home" icon="home" to="/home" />
               <NavItem name="Calendar" icon="calendar" to="/calendar" />
               <NavItem name="Statistics" icon="chart-bar" to="/statistics" />
