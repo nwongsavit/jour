@@ -306,6 +306,42 @@ class users
 
     }
 
+    function getUser($uid) {
+
+        //get the database link
+        $link = $this->getLink();
+
+
+        //get the users data
+        if (!$stmt = $link->prepare("SELECT * FROM jour_users WHERE id = ?")) {
+            echo("ERROR GETTING USER DATA:" . $link->error);
+            die();
+        }
+        $stmt->bind_param('s', $uid);
+        $stmt->execute();
+        $stmt = $stmt->get_result();
+        //if there are any rows we have a user, we can send that info back without an authKey
+        if ($stmt->num_rows) {
+            //set the row as associative array
+            $row = $stmt->fetch_assoc();
+
+                //set private vars and return true
+                $this->joinDate = $row['join_date'];
+                $this->name = $row['first_name'];
+                $this->email = $row['email'];
+                $this->id = $row['id'];
+                $this->authKey = "Not Authorized";
+                return true;
+
+        } else {
+            $result = false;
+        }
+        //close the stmt and the link and return the result
+        $stmt->close();
+        $link->close();
+        return $result;
+
+    }
 
     function resetPassword($email, $auth_hash)
     {
