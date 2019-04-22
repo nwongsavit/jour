@@ -231,6 +231,37 @@ if (isset($_GET['request']) && $_GET['request'] == "authUser") {
     }
 }
 
+if (isset($_GET['request']) && $_GET['request'] == "getUser") {
+    //make sure api call requirements are met.
+    if (!isset($_GET['uid'])) {
+        if (!isset($_GET['uid'])) {
+            $neededParams[] = "uid";
+        }
+        $error = array('result' => false, 'message' => "Error: Missing required data.", 'needed' => $neededParams);
+        echo json_encode($error);
+        return;
+    }
+
+
+    $user = new users();
+
+    if(!$user->getUser($_GET['uid'])){
+        $error = array('result' => false, 'message' => "Error getting data for user id " . $_GET['uid'] . ".");
+        echo json_encode($error);
+        return;
+    }
+    else {
+        $account['id'] = $user->getId();
+        $account['name'] = $user->getName();
+        $account['joinDate'] = $user->getJoinDate();
+        $account['email'] = $user->getEmail();
+        $account['authKey'] = $user->getAuthKey();
+        $result = array('result' => true, 'message' => "Success.", 'account_info' => $account);
+        echo json_encode($result);
+        return;
+    }
+}
+
 //**********************************************END USER RELATED API CALLS*************************************************************
 
 
