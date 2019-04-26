@@ -16,7 +16,7 @@ class Textbox extends Component {
     this.handleMoodChange = this.handleMoodChange.bind(this);
     this.state = {
       journal: '',
-      mood: '',
+      mood: 'happy',
       results: '',
       message: '',
     };
@@ -24,31 +24,31 @@ class Textbox extends Component {
 
   handleSubmit(e) {
     const { journal, mood } = this.state;
+    const { uid, authKey } = this.props;
 
     console.log('this.props. :', this.props.authKey);
+    console.log('journal, mood :', journal, mood);
 
-    // axios
-    //   .get("https://jour.life/api/api.php", {
-    //     params: {
-    //       key: apiKey,
-    //       request: "addJournal",
-    //       uid: "2",
-    //       journal,
-    //       mood,
-    //       authKey: "2"
-    //     }
-    //   })
-    //   .then(result =>
-    //     this.setState(
-    //       {
-    //         results: result.data.result,
-    //         message: result.data.message
-    //       },
-    //       () => {
-    //         // console.log('this.state.results :', this.state.results, this.state.message);
-    //       }
-    //     )
-    //   );
+    axios
+      .get('https://jour.life/api/api.php', {
+        params: {
+          key: apiKey,
+          request: 'addJournal',
+          uid,
+          journal,
+          mood,
+          authKey,
+        },
+      })
+      .then(result => this.setState(
+        {
+          results: result.data.result,
+          message: result.data.message,
+        },
+        () => {
+          console.log('this.state.results :', this.state.results, this.state.message);
+        },
+      ));
 
     e.preventDefault();
   }
@@ -71,7 +71,7 @@ class Textbox extends Component {
             placeholder="How are you feeling today?"
             onChange={this.handleJournalChange}
           />
-          <Form.Control as="select" onChange={this.handleMoodChange}>
+          <Form.Control as="select" onChange={this.handleMoodChange} defaultValue={this.state.mood}>
             <option value="happy">Happy</option>
             <option value="sad">Sad</option>
             <option value="angry">Angry</option>
@@ -99,6 +99,7 @@ class Textbox extends Component {
 }
 
 const mapStateToProps = state => ({
+  uid: state.account_info.id,
   authKey: state.account_info.authKey,
 });
 

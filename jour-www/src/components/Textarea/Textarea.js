@@ -4,10 +4,17 @@ import PropTypes from 'prop-types';
 
 class Textarea extends Component {
   render() {
-    const { rows, placeholder, content } = this.props;
+    const {
+      rows, placeholder, content, onChange,
+    } = this.props;
     return (
       <div className="Textarea">
-        <textarea rows={rows} placeholder={placeholder} defaultValue={content} />
+        <textarea
+          rows={rows}
+          placeholder={placeholder}
+          defaultValue={content}
+          onChange={onChange}
+        />
       </div>
     );
   }
