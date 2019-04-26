@@ -35,7 +35,7 @@ library.add(
   faAngleLeft,
   faAngleRight,
   faThLarge,
-  faAngleDown
+  faAngleDown,
 );
 
 class App extends Component {

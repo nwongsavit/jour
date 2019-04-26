@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Form, Button } from 'react-bootstrap';
 import './Textbox.css';
+import { connect } from 'react-redux';
 import Task from '../Task/Task';
 import Textarea from '../Textarea/Textarea';
 
@@ -17,29 +18,37 @@ class Textbox extends Component {
       journal: '',
       mood: '',
       results: '',
-      message: ''
+      message: '',
     };
   }
 
   handleSubmit(e) {
     const { journal, mood } = this.state;
 
-    axios.get('https://jour.life/api/api.php', {
-      params: {
-        key: apiKey,
-        request: 'addJournal',
-        uid: '2',
-        journal,
-        mood,
-        authKey: '2',
-      },
-    })
-      .then(result => this.setState({
-        results: result.data.result,
-        message: result.data.message,
-      }, () => {
-        // console.log('this.state.results :', this.state.results, this.state.message);
-      }));
+    console.log('this.props. :', this.props.authKey);
+
+    // axios
+    //   .get("https://jour.life/api/api.php", {
+    //     params: {
+    //       key: apiKey,
+    //       request: "addJournal",
+    //       uid: "2",
+    //       journal,
+    //       mood,
+    //       authKey: "2"
+    //     }
+    //   })
+    //   .then(result =>
+    //     this.setState(
+    //       {
+    //         results: result.data.result,
+    //         message: result.data.message
+    //       },
+    //       () => {
+    //         // console.log('this.state.results :', this.state.results, this.state.message);
+    //       }
+    //     )
+    //   );
 
     e.preventDefault();
   }
@@ -57,7 +66,11 @@ class Textbox extends Component {
       <div className="Textbox">
         <Form className="textboxForm" onSubmit={this.handleSubmit}>
           <h3>Welcome, Jane!</h3>
-          <Textarea rows={3} placeholder="How are you feeling today?" onChange={this.handleJournalChange} />
+          <Textarea
+            rows={3}
+            placeholder="How are you feeling today?"
+            onChange={this.handleJournalChange}
+          />
           <Form.Control as="select" onChange={this.handleMoodChange}>
             <option value="happy">Happy</option>
             <option value="sad">Sad</option>
@@ -85,4 +98,8 @@ class Textbox extends Component {
   }
 }
 
-export default Textbox;
+const mapStateToProps = state => ({
+  authKey: state.account_info.authKey,
+});
+
+export default connect(mapStateToProps)(Textbox);
