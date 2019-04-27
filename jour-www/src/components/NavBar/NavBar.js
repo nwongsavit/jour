@@ -1,12 +1,17 @@
 import React, { Component } from 'react';
-import NavItem from './NavItem/NavItem';
+import { connect } from 'react-redux';
+import { store } from '../../store/configureStore';
+import NavItem from "./NavItem/NavItem";
 import './NavBar.css';
 
 class NavBar extends Component {
   constructor() {
     super();
+    this.handleLogInClick = this.handleLogInClick.bind(this);
+
     this.state = {
       width: window.innerWidth,
+      isLoggedIn: store.getState().isLoggedIn
     };
   }
 
@@ -20,7 +25,17 @@ class NavBar extends Component {
 
   handleWindowSizeChange = () => {
     this.setState({ width: window.innerWidth });
-  };
+  }
+
+  handleLogInClick(e) {
+    e.preventDefault();
+    const { isLoggedIn } = this.state;
+    if (isLoggedIn) {
+      this.props.dispatch({
+        type: 'LOGOUT',
+      });
+    }
+  }
 
   render() {
     const { width } = this.state;
@@ -41,7 +56,7 @@ class NavBar extends Component {
               <NavItem name="Calendar" icon="calendar" to="/calendar" />
               <NavItem name="Statistics" icon="chart-bar" to="/statistics" />
               <NavItem name="Settings" icon="cog" to="/settings" />
-              <NavItem name="Log In" icon="sign-out-alt" to="/login" />
+              <div onClick={this.handleLogInClick}><NavItem name="Log In" icon="sign-out-alt" to="/login" onClick={this.handleLogInClick} /></div>
             </ul>
           </div>
         </nav>
@@ -50,4 +65,8 @@ class NavBar extends Component {
   }
 }
 
-export default NavBar;
+const mapStateToProps = state => ({
+  isLoggedIn: state.isLoggedIn,
+});
+
+export default connect(mapStateToProps)(NavBar);
