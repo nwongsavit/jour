@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './User.css';
 import axios from 'axios';
 import { Form, Button } from 'react-bootstrap';
-
 import { connect } from 'react-redux';
 
 //  api key from .env file.
@@ -55,7 +54,6 @@ class Login extends Component {
             type: 'LOGIN',
             account_info: this.state.account_info,
           });
-          console.log('this.state.account_ifno :', this.state.account_info);
         },
       ));
   }

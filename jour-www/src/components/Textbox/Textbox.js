@@ -26,9 +26,6 @@ class Textbox extends Component {
     const { journal, mood } = this.state;
     const { uid, authKey } = this.props;
 
-    console.log('this.props. :', this.props.authKey);
-    console.log('journal, mood :', journal, mood);
-
     axios
       .get('https://jour.life/api/api.php', {
         params: {

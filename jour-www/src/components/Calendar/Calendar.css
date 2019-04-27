@@ -17,25 +17,8 @@
   border-bottom: lightgrey 1px solid;
 }
 
-#calendarHeader {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  margin-top: 20px;
-}
-
 .daysOfTheWeek {
   margin: 20px;
-}
-
-#monthText {
-  padding: 0px 10px;
-  width: 300px;
-}
-
-#prev,
-#next {
-  cursor: pointer;
 }
 
 .agenda {

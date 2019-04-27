@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './CalendarCell.css';
+import { connect } from 'react-redux';
 
 import PropTypes from 'prop-types';
 
@@ -7,26 +8,34 @@ class CalendarCell extends Component {
   constructor() {
     super();
     this.state = {
-      today: false,
+      selected: false,
     };
   }
 
   componentDidMount() {
-    const { date } = this.props;
-    if (date === new Date().getDate()) {
+    const { date, selectedDate } = this.props;
+    if (date === selectedDate) {
       this.setState({
-        today: true,
+        selected: true,
       });
     }
   }
 
+  setSelectedDate = () => {
+    const { date } = this.props;
+    this.props.dispatch({
+      type: 'SELECTED_STATE',
+      selectedDate: date,
+    });
+  };
+
   render() {
     const { date } = this.props;
-    const { today } = this.state;
+    const { selected } = this.state;
 
     return (
-      <div className="CalendarCell">
-        <span className="smallText date" id={today ? 'today' : ''}>
+      <div className="CalendarCell" onClick={this.setSelectedDate}>
+        <span className="smallText date" className={selected ? 'selected' : ''}>
           {date}
         </span>
       </div>
@@ -42,4 +51,8 @@ CalendarCell.defaultProps = {
   date: 0,
 };
 
-export default CalendarCell;
+const mapStateToProps = state => ({
+  selectedDate: state.selectedDate,
+});
+
+export default connect(mapStateToProps)(CalendarCell);
