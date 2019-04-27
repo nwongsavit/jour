@@ -6,10 +6,10 @@ import PropTypes from 'prop-types';
 
 class NavItem extends Component {
   render() {
-    const { name, icon, to } = this.props;
+    const { name, icon, to, onClick } = this.props;
 
     return (
-      <NavLink className="NavItem nav-link" activeClassName="active" to={to}>
+      <NavLink className="NavItem nav-link" activeClassName="active" to={to} onClick={onClick}>
         <FontAwesomeIcon className="navIcon" icon={icon} />
         {/* <span className="d-none d-md-inline">{name}</span> */}
         <span className="d-none">{name}</span>

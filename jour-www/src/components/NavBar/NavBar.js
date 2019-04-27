@@ -56,7 +56,7 @@ class NavBar extends Component {
               <NavItem name="Calendar" icon="calendar" to="/calendar" />
               <NavItem name="Statistics" icon="chart-bar" to="/statistics" />
               <NavItem name="Settings" icon="cog" to="/settings" />
-              <div onClick={this.handleLogInClick}><NavItem name="Log In" icon="sign-out-alt" to="/login" onClick={this.handleLogInClick} /></div>
+              <NavItem name="Log In" icon="sign-out-alt" to="/login" onClick={this.handleLogInClick} />
             </ul>
           </div>
         </nav>
