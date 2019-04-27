@@ -35,7 +35,7 @@ class CalendarCell extends Component {
 
     return (
       <div className="CalendarCell" onClick={this.setSelectedDate}>
-        <span className="smallText date" className={selected ? 'selected' : ''}>
+        <span className="small-text date" className={selected ? 'selected' : ''}>
           {date}
         </span>
       </div>

@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Form, Button } from 'react-bootstrap';
 import './Textbox.css';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 import Task from '../Task/Task';
 import Textarea from '../Textarea/Textarea';
 
@@ -43,9 +44,13 @@ class Textbox extends Component {
           message: result.data.message,
         },
         () => {
-          console.log('this.state.results :', this.state.results, this.state.message);
+          console.log('this.state.results :', this.state.results);
+          this.props.history.push('/calendar');
         },
-      ));
+      ))
+      .catch((error) => {
+        console.log('error :', error);
+      });
 
     e.preventDefault();
   }
@@ -62,7 +67,7 @@ class Textbox extends Component {
     return (
       <div className="Textbox">
         <Form className="textboxForm" onSubmit={this.handleSubmit}>
-          <h3>Welcome, Jane!</h3>
+          <h3>Add Entry</h3>
           <Textarea
             rows={3}
             placeholder="How are you feeling today?"
@@ -81,7 +86,7 @@ class Textbox extends Component {
             <Task title="Finish presentation script" />
             <Task title="Practice presentation" />
             <Task title="Talk to team about homework" />
-            <div className="addTask smallText">
+            <div className="addTask small-text">
               <div className="plus">+</div>
               <div className="addText">Add task</div>
             </div>
@@ -100,4 +105,4 @@ const mapStateToProps = state => ({
   authKey: state.account_info.authKey,
 });
 
-export default connect(mapStateToProps)(Textbox);
+export default withRouter(connect(mapStateToProps)(Textbox));

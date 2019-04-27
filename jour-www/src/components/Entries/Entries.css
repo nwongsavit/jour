@@ -1,0 +1,8 @@
+.Entries {
+  display: flex;
+  flex-direction: column;
+}
+
+.Entry:first-child {
+  border-top: 1px solid lightgrey;
+}

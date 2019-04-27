@@ -1,16 +1,9 @@
 import React, { Component } from 'react';
 import './MonthView.css';
-import PropTypes from 'prop-types';
 import { Col, Row } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  startOfMonth,
-  endOfMonth,
-  addMonths,
-  format,
-  addDays,
-  startOfWeek,
-  endOfWeek,
+  startOfMonth, endOfMonth, addMonths, format, addDays,
 } from 'date-fns';
 import CalendarCell from '../CalendarCell/CalendarCell';
 
@@ -56,6 +49,20 @@ class MonthView extends Component {
     return rows;
   }
 
+  next = () => {
+    const { currentMonth } = this.state;
+    this.setState({
+      currentMonth: addMonths(currentMonth, 1),
+    });
+  };
+
+  previous = () => {
+    const { currentMonth } = this.state;
+    this.setState({
+      currentMonth: addMonths(currentMonth, -1),
+    });
+  };
+
   render() {
     const { currentMonth } = this.state;
     return (
@@ -70,7 +77,7 @@ class MonthView extends Component {
           <FontAwesomeIcon id="next" icon="angle-right" onClick={this.next} />
         </div>
 
-        <Row className="daysOfTheWeek smallText">
+        <Row className="daysOfTheWeek small-text">
           <Col>Sunday</Col>
           <Col>Monday</Col>
           <Col>Tuesday</Col>
@@ -85,9 +92,5 @@ class MonthView extends Component {
     );
   }
 }
-
-MonthView.propTypes = {};
-
-MonthView.defaultProps = {};
 
 export default MonthView;

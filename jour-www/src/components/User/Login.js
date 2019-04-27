@@ -94,12 +94,12 @@ class Login extends Component {
             <Button type="submit" block>
               Submit
             </Button>
-            <div id="register" className="smallText">
+            <div id="register" className="small-text">
               Not registered?
               {' '}
               <a href="/register">Create an account</a>
             </div>
-            <div id="forgot-password" className="smallText">
+            <div id="forgot-password" className="small-text">
               Forgot password?
               {' '}
               <a href="/forgot-password">Click here</a>

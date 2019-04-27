@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './UserBar.css';
 import NavBrand from '../NavBar/NavBrand/NavBrand';
 
@@ -44,7 +44,7 @@ class UserBar extends Component {
           />
           {!isMobile && (
             // <div className="user-dropdown" onClick={this.renderDropdown}>
-            <div className="username smallText">Harry Potter</div>
+            <div className="username small-text">Harry Potter</div>
             //   <FontAwesomeIcon id="next" icon="angle-down" />
             // </div>
           )}

@@ -1,0 +1,6 @@
+.Entry {
+  flex: 0 0 80px;
+  border-bottom: 1px solid lightgrey;
+  padding: 10px;
+  cursor: pointer;
+}
