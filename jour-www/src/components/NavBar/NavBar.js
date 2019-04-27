@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { store } from '../../store/configureStore';
-import NavItem from "./NavItem/NavItem";
+import NavItem from './NavItem/NavItem';
 import './NavBar.css';
 
 class NavBar extends Component {
   constructor() {
     super();
     this.handleLogInClick = this.handleLogInClick.bind(this);
-
     this.state = {
       width: window.innerWidth,
       isLoggedIn: store.getState().isLoggedIn
@@ -28,7 +28,6 @@ class NavBar extends Component {
   }
 
   handleLogInClick(e) {
-    e.preventDefault();
     const { isLoggedIn } = this.state;
     if (isLoggedIn) {
       this.props.dispatch({
@@ -69,4 +68,4 @@ const mapStateToProps = state => ({
   isLoggedIn: state.isLoggedIn,
 });
 
-export default connect(mapStateToProps)(NavBar);
+export default withRouter(connect(mapStateToProps)(NavBar));
