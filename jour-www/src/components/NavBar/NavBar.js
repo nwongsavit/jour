@@ -28,9 +28,10 @@ class NavBar extends Component {
   }
 
   handleLogInClick(e) {
+    e.preventDefault();
+    this.props.history.push('/login');
     const { isLoggedIn } = this.state;
     if (isLoggedIn) {
-      e.preventDefault();
       this.props.dispatch({
         type: 'LOGOUT',
       });
