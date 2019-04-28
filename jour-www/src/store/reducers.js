@@ -1,6 +1,8 @@
 const initialState = {
   account_info: {},
-  selectedDate: new Date().getDate(),
+  selectedDate: new Date(),
+  modalType: null,
+  modalProps: {},
 };
 
 const reducer = (state = initialState, action) => {
@@ -12,6 +14,16 @@ const reducer = (state = initialState, action) => {
   case 'SELECTED_STATE':
     return Object.assign({}, state, {
       selectedDate: action.selectedDate,
+    });
+  case 'OPEN_MODAL':
+    return Object.assign({}, state, {
+      modalType: action.modalType,
+      modalProps: action.modalProps,
+    });
+  case 'CLOSE_MODAL':
+    return Object.assign({}, state, {
+      modalType: initialState.modalType,
+      modalProps: initialState.modalProps,
     });
   default:
     return state;

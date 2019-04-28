@@ -18,7 +18,10 @@ class Entries extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.selectedDate !== this.props.selectedDate) this.getJournalEntries();
+    if (
+      prevProps.selectedDate !== this.props.selectedDate
+      || prevProps.modalType !== this.props.modalType
+    ) this.getJournalEntries();
   }
 
   componentDidMount() {
@@ -35,10 +38,7 @@ class Entries extends Component {
           request: 'getJournalsByDate',
           uid,
           authKey,
-          date: format(
-            new Date(currentMonth.getFullYear(), currentMonth.getMonth(), selectedDate),
-            'YYYY-MM-DD',
-          ),
+          date: format(new Date(selectedDate), 'YYYY-MM-DD'),
         },
       })
       .then(result => this.setState({
@@ -50,12 +50,18 @@ class Entries extends Component {
 
   renderJournalEntries() {
     const { journalInfo } = this.state;
-    return journalInfo.map(journal => <Entry journalInfo={journal} key={journal.id} />);
+    if (journalInfo[0].id) {
+      return journalInfo.map(journal => <Entry journalInfo={journal} key={journal.id} />);
+    }
   }
 
   render() {
     const { journalInfo } = this.state;
-    return <div className="Entries">{journalInfo.length && this.renderJournalEntries()}</div>;
+    return (
+      <div className="Entries">
+        {journalInfo && journalInfo.length && this.renderJournalEntries()}
+      </div>
+    );
   }
 }
 
@@ -63,6 +69,7 @@ const mapStateToProps = state => ({
   uid: state.account_info.id,
   authKey: state.account_info.authKey,
   selectedDate: state.selectedDate,
+  modalType: state.modalType,
 });
 
 export default connect(mapStateToProps)(Entries);

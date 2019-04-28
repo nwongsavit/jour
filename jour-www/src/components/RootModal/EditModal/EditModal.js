@@ -1,32 +1,27 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import { Modal } from 'react-bootstrap';
 import './EditModal.css';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
-import Task from '../Task/Task';
-import Textarea from '../Textarea/Textarea';
+import EntryForm from '../../EntryForm/EntryForm';
 
 class EditModal extends Component {
-  handleJournalChange(e) {
-    this.setState({ journal: e.target.value });
-  }
+  closeModal = () => {
+    this.props.dispatch({
+      type: 'CLOSE_MODAL',
+    });
+  };
 
   render() {
-    const { show, onHide, journalInfo } = this.props;
+    const { journalInfo } = this.props;
+
     return (
       <div className="EditModal">
-        <Modal show={show} onHide={onHide}>
+        <Modal show onHide={this.closeModal}>
           <Modal.Header closeButton>
-            <Modal.Title>Edit Entry</Modal.Title>
+            <Modal.Title>Edit Modal</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            {' '}
-            <Textarea
-              key={journalInfo.id}
-              content={journalInfo.journal}
-              onChange={this.handleJournalChange}
-            />
+            <EntryForm journalInfo={journalInfo} closeModal={this.closeModal} />
           </Modal.Body>
           <Modal.Footer />
         </Modal>

@@ -25,22 +25,13 @@ class MonthView extends Component {
     let day = monthStart;
 
     while (day <= monthEnd) {
-      // const cloneDay = day;
       for (let i = 0; i < 7; i += 1) {
-        if (day.getDay() !== i || day.getMonth() !== monthStart.getMonth()) {
-          days.push(
-            <Col className="dateCol">
-              <CalendarCell />
-            </Col>,
-          ); // push an empty calendar cell
-        } else {
-          days.push(
-            <Col className="dateCol" key={day.getDate()}>
-              <CalendarCell date={day.getDate()} />
-            </Col>,
-          );
-          day = addDays(day, 1);
-        }
+        days.push(
+          <Col className="dateCol">
+            <CalendarCell date={day} />
+          </Col>,
+        );
+        day = addDays(day, 1);
       }
       rows.push(<Row>{days}</Row>);
       days = [];

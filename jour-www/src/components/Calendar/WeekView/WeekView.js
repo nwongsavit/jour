@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import './WeekView.css';
 import { Col, Row } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { connect } from 'react-redux';
 import {
   format, addDays, startOfWeek, endOfWeek,
 } from 'date-fns';
-import CalendarCell from '../CalendarCell/CalendarCell';
+import CalendarCellWeek from '../CalendarCellWeek/CalendarCellWeek';
 import Task from '../../Task/Task';
 import Entries from '../../Entries/Entries';
 
@@ -23,41 +22,32 @@ class WeekView extends Component {
     const weekEnd = endOfWeek(weekStart);
 
     const rows = [];
-    let days = [];
+    const days = [];
     let day = weekStart;
 
     let i = 0;
 
     while (day <= weekEnd) {
-      if (day.getMonth() !== weekStart.getMonth()) {
-        days.push(
-          <Col className="dateCol" key={i}>
-            <CalendarCell key={i} />
-          </Col>,
-        ); // push an empty calendar cell
-      } else {
-        days.push(
-          <Col className="dateCol" key={i}>
-            <CalendarCell date={day.getDate()} key={i} />
-          </Col>,
-        );
-        day = addDays(day, 1);
-      }
+      days.push(
+        <Col className="dateCol" key={i}>
+          <CalendarCellWeek date={day} key={i} />
+        </Col>,
+      );
+      day = addDays(day, 1);
       i += 1;
     }
     rows.push(<Row key={i}>{days}</Row>);
-    days = [];
 
     return rows;
   }
 
   render() {
-    const { currentMonth } = this.state;
+    const { selectedDate } = this.props;
     return (
       <div className="WeekView">
         {this.renderWeekDays()}
         <div className="agenda">
-          <div className="small-text agendaDate">{format(currentMonth, 'MMMM DD, YYYY')}</div>
+          <div className="small-text agendaDate">{format(selectedDate, 'MMMM DD, YYYY')}</div>
           <div className="mood">
             <Entries />
           </div>
@@ -73,4 +63,8 @@ class WeekView extends Component {
   }
 }
 
-export default WeekView;
+const mapStateToProps = state => ({
+  selectedDate: state.selectedDate,
+});
+
+export default connect(mapStateToProps)(WeekView);

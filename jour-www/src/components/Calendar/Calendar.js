@@ -47,7 +47,6 @@ class Calendar extends Component {
 const mapStateToProps = state => ({
   uid: state.account_info.id,
   authKey: state.account_info.authKey,
-  selectedDate: state.selectedDate,
 });
 
 export default connect(mapStateToProps)(Calendar);

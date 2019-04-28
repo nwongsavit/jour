@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import './CalendarCell.css';
+import './CalendarCellWeek.css';
 import { connect } from 'react-redux';
 
 import PropTypes from 'prop-types';
 
-class CalendarCell extends Component {
+class CalendarCellWeek extends Component {
   constructor() {
     super();
   }
@@ -19,14 +19,12 @@ class CalendarCell extends Component {
 
   render() {
     const { date, selectedDate } = this.props;
-    console.log('Object.keys(date).length :', Object.keys(date).length);
 
     return (
-      <div className="CalendarCell" onClick={this.setSelectedDate}>
+      <div className="CalendarCellWeek" onClick={this.setSelectedDate}>
         <span
           className="smallText date"
           className={selectedDate.getDate() === date.getDate() ? 'selected' : ''}
-          className={new Date().getMonth() !== date.getMonth() ? 'overflow' : ''}
         >
           {date.getDate()}
         </span>
@@ -35,11 +33,11 @@ class CalendarCell extends Component {
   }
 }
 
-CalendarCell.propTypes = {
+CalendarCellWeek.propTypes = {
   date: PropTypes.object,
 };
 
-CalendarCell.defaultProps = {
+CalendarCellWeek.defaultProps = {
   date: {},
 };
 
@@ -47,4 +45,4 @@ const mapStateToProps = state => ({
   selectedDate: state.selectedDate,
 });
 
-export default connect(mapStateToProps)(CalendarCell);
+export default connect(mapStateToProps)(CalendarCellWeek);
