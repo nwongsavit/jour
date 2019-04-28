@@ -28,7 +28,7 @@ class Entry extends Component {
   };
 
   render() {
-    const { journalInfo, modalType } = this.props;
+    const { journalInfo } = this.props;
     return (
       <div className="Entry" onClick={this.open}>
         <div className="content">{journalInfo.journal}</div>

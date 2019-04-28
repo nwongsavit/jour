@@ -8,10 +8,6 @@
 .col {
   padding: 0px !important;
 }
-/* 
-.dateCol:nth-last-child(1) {
-  border-right: lightgrey 1px solid;
-} */
 
 .row:nth-last-child(1) {
   border-bottom: lightgrey 1px solid;
@@ -30,16 +26,6 @@
 
 .agenda > * {
   margin-bottom: 20px;
-}
-
-.viewSelector {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.viewSelector > * {
-  margin: 20px 0 20px 20px;
-  cursor: pointer;
 }
 
 .tasks {

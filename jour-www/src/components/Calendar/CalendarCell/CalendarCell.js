@@ -5,10 +5,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 class CalendarCell extends Component {
-  constructor() {
-    super();
-  }
-
   setSelectedDate = () => {
     const { date } = this.props;
     this.props.dispatch({

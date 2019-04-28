@@ -8,12 +8,17 @@
   border-bottom: 1px solid lightgrey;
 }
 
+.week-day {
+  font-weight: bold;
+}
+
 .week-date {
   color: grey;
   font-size: 0.7em;
 }
 
 .selected {
+  color: blue;
 }
 
 .week-content {

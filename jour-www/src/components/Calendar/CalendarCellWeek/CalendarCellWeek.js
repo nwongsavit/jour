@@ -1,16 +1,10 @@
 import React, { Component } from 'react';
 import './CalendarCellWeek.css';
 import { connect } from 'react-redux';
-import {
-  startOfMonth, endOfMonth, addMonths, format, addDays,
-} from 'date-fns';
+import { format } from 'date-fns';
 import PropTypes from 'prop-types';
 
 class CalendarCellWeek extends Component {
-  constructor() {
-    super();
-  }
-
   setSelectedDate = () => {
     const { date } = this.props;
     this.props.dispatch({
@@ -19,8 +13,17 @@ class CalendarCellWeek extends Component {
     });
   };
 
+  getJournalLength = () => {
+    // const { date, journalInfo } = this.props;
+    // console.log('journalInfo :', date.getDate(), journalInfo);
+    // if (journalInfo[0] === 0) {
+    //   return 'inside';
+    // }
+    // return 'empty';
+  };
+
   render() {
-    const { date, selectedDate } = this.props;
+    const { date, selectedDate, journalInfo } = this.props;
 
     return (
       <div className="CalendarCellWeek" onClick={this.setSelectedDate}>
@@ -30,15 +33,10 @@ class CalendarCellWeek extends Component {
           }
         >
           <div className="small-text week-day">{format(date, 'dddd')}</div>
-          <div
-            className="week-date"
-            //   className={selectedDate.getDate() === date.getDate() ? 'selected' : ''}
-          >
-            {format(date, 'MM/DD')}
-          </div>
+          <div className="week-date">{format(date, 'MM/DD')}</div>
         </div>
 
-        <div className="week-content">asdf</div>
+        <div className="week-content">{this.getJournalLength()}</div>
       </div>
     );
   }
