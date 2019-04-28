@@ -8,14 +8,14 @@
   cursor: pointer;
 }
 
-.selected {
+/* .selected {
   border-radius: 50%;
   height: 90px;
   width: 90px;
   padding: 10px;
   background-color: #4a8aa4;
   color: white;
-}
+} */
 
 .overflow {
   color: lightgrey;

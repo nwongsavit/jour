@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import './CalendarCellWeek.css';
 import { connect } from 'react-redux';
-
+import {
+  startOfMonth, endOfMonth, addMonths, format, addDays,
+} from 'date-fns';
 import PropTypes from 'prop-types';
 
 class CalendarCellWeek extends Component {
@@ -22,12 +24,21 @@ class CalendarCellWeek extends Component {
 
     return (
       <div className="CalendarCellWeek" onClick={this.setSelectedDate}>
-        <span
-          className="smallText date"
-          className={selectedDate.getDate() === date.getDate() ? 'selected' : ''}
+        <div
+          className={
+            selectedDate.getDate() === date.getDate() ? 'week-header selected' : 'week-header'
+          }
         >
-          {date.getDate()}
-        </span>
+          <div className="small-text week-day">{format(date, 'dddd')}</div>
+          <div
+            className="week-date"
+            //   className={selectedDate.getDate() === date.getDate() ? 'selected' : ''}
+          >
+            {format(date, 'MM/DD')}
+          </div>
+        </div>
+
+        <div className="week-content">asdf</div>
       </div>
     );
   }

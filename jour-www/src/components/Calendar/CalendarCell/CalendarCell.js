@@ -24,7 +24,7 @@ class CalendarCell extends Component {
     return (
       <div className="CalendarCell" onClick={this.setSelectedDate}>
         <span
-          className="smallText date"
+          className="small-text date"
           className={selectedDate.getDate() === date.getDate() ? 'selected' : ''}
           className={new Date().getMonth() !== date.getMonth() ? 'overflow' : ''}
         >

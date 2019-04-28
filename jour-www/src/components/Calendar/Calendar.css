@@ -8,10 +8,10 @@
 .col {
   padding: 0px !important;
 }
-
+/* 
 .dateCol:nth-last-child(1) {
   border-right: lightgrey 1px solid;
-}
+} */
 
 .row:nth-last-child(1) {
   border-bottom: lightgrey 1px solid;

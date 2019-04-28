@@ -42,14 +42,14 @@ class WeekView extends Component {
   }
 
   render() {
-    const { selectedDate } = this.props;
+    const { selectedDate, journalInfo } = this.props;
     return (
       <div className="WeekView">
         {this.renderWeekDays()}
         <div className="agenda">
           <div className="small-text agendaDate">{format(selectedDate, 'MMMM DD, YYYY')}</div>
           <div className="mood">
-            <Entries />
+            <Entries journalInfo={journalInfo} />
           </div>
           <div className="tasks">
             <h3>I need to...</h3>

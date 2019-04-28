@@ -1,3 +1,24 @@
 .CalendarCellWeek {
   cursor: pointer;
 }
+
+.week-header {
+  text-align: center !important;
+  padding-bottom: 15px;
+  border-bottom: 1px solid lightgrey;
+}
+
+.week-date {
+  color: grey;
+  font-size: 0.7em;
+}
+
+.selected {
+}
+
+.week-content {
+  padding: 15px;
+  border-left: 1px solid lightgrey;
+  border-right: 1px solid lightgrey;
+  border-bottom: 1px solid lightgrey;
+}

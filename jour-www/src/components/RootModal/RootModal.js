@@ -15,12 +15,7 @@ class RootModal extends Component {
 
   render() {
     const { modalType } = this.props;
-    return (
-      <div className="RootModal">
-        {!modalType ? '' : this.openSpecificModal()}
-        {/* <EditModal show={show} onHide={this.close} journalInfo={journalInfo} /> */}
-      </div>
-    );
+    return <div className="RootModal">{!modalType ? '' : this.openSpecificModal()}</div>;
   }
 }
 
