@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { connect } from 'react-redux';
 import './UserBar.css';
 import NavBrand from '../NavBar/NavBrand/NavBrand';
 
 const bg = require('../../assets/jourlogo200w.png');
 
 class UserBar extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       width: window.innerWidth,
+      name: this.props.name,
     };
   }
 
@@ -31,6 +33,7 @@ class UserBar extends Component {
 
   render() {
     const { width } = this.state;
+    const { name } = this.state;
     const isMobile = width <= 767;
 
     return (
@@ -44,7 +47,9 @@ class UserBar extends Component {
           />
           {!isMobile && (
             // <div className="user-dropdown" onClick={this.renderDropdown}>
-            <div className="username small-text">Harry Potter</div>
+            <div className="username small-text">
+              {name}
+            </div>
             //   <FontAwesomeIcon id="next" icon="angle-down" />
             // </div>
           )}
@@ -54,4 +59,8 @@ class UserBar extends Component {
   }
 }
 
-export default UserBar;
+const mapStateToProps = state => ({
+  name: state.account_info.name,
+});
+
+export default connect(mapStateToProps)(UserBar);
