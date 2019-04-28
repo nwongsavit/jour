@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { store } from '../../store/configureStore';
 import NavItem from './NavItem/NavItem';
 import './NavBar.css';
 
 class NavBar extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.handleLogInClick = this.handleLogInClick.bind(this);
+    this.handleNavItemClick = this.handleNavItemClick.bind(this);
     this.state = {
       width: window.innerWidth,
-      isLoggedIn: store.getState().isLoggedIn
+      isLoggedIn: this.props.isLoggedIn,
     };
   }
 
@@ -25,6 +25,26 @@ class NavBar extends Component {
 
   handleWindowSizeChange = () => {
     this.setState({ width: window.innerWidth });
+  }
+
+  handleNavItemClick = (e, to) => {
+    e.preventDefault();
+    this.setState(
+      {
+        isLoggedIn: this.props.isLoggedIn,
+      },
+      () => {
+        const { isLoggedIn } = this.state;
+        console.log('to :', to);
+        console.log('isLoggedIn :', isLoggedIn);
+        if (isLoggedIn) {
+          this.props.history.push(to);
+        }
+        else {
+          this.props.history.push('/login');
+        }
+      },
+    );
   }
 
   handleLogInClick(e) {
@@ -53,10 +73,10 @@ class NavBar extends Component {
           <div className="navbar-collapse">
             <ul className="flex-md-column navbar-nav w-100 navFlex">
               {/* {!isMobile && <NavBrand name="Jour" icon={bg} to="/home" />} */}
-              <NavItem name="Home" icon="home" to="/home" />
-              <NavItem name="Calendar" icon="calendar" to="/calendar" />
-              <NavItem name="Statistics" icon="chart-bar" to="/statistics" />
-              <NavItem name="Settings" icon="cog" to="/settings" />
+              <NavItem name="Home" icon="home" to="/home" onClick={(e => this.handleNavItemClick(e, '/home'))} />
+              <NavItem name="Calendar" icon="calendar" to="/calendar" onClick={(e => this.handleNavItemClick(e, '/calendar'))} />
+              <NavItem name="Statistics" icon="chart-bar" to="/statistics" onClick={(e => this.handleNavItemClick(e, '/statistics'))} />
+              <NavItem name="Settings" icon="cog" to="/settings" onClick={(e => this.handleNavItemClick(e, '/settings'))} />
               <NavItem name="Log In" icon="sign-out-alt" to="/login" onClick={this.handleLogInClick} />
             </ul>
           </div>
