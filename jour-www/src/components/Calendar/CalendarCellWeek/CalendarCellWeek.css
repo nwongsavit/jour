@@ -18,12 +18,35 @@
 }
 
 .selected {
-  color: blue;
+  color: #4a8aa4;
 }
 
 .week-content {
-  padding: 15px;
-  border-left: 1px solid lightgrey;
+  padding: 10px 10px 0 10px;
   border-right: 1px solid lightgrey;
   border-bottom: 1px solid lightgrey;
+}
+
+.pill {
+  font-size: 0.7em;
+  margin-bottom: 10px;
+  border-radius: 20px;
+  padding: 5px 10px;
+  background-color: #f4f4f4;
+}
+
+.circle {
+  border-radius: 50%;
+  margin: 0 auto;
+  height: 5px;
+  width: 5px;
+  background-color: transparent;
+}
+
+.selected-circle {
+  background-color: #4a8aa4;
+}
+
+.mood-circles {
+  margin-bottom: 10px;
 }

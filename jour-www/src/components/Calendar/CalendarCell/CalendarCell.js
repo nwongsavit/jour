@@ -15,17 +15,14 @@ class CalendarCell extends Component {
 
   render() {
     const { date, selectedDate } = this.props;
-    console.log('Object.keys(date).length :', Object.keys(date).length);
 
     return (
       <div className="CalendarCell" onClick={this.setSelectedDate}>
-        <span
-          className="small-text date"
-          className={selectedDate.getDate() === date.getDate() ? 'selected' : ''}
-          className={new Date().getMonth() !== date.getMonth() ? 'overflow' : ''}
-        >
-          {date.getDate()}
-        </span>
+        {date !== 0 && (
+          <span className="small-text date" className={selectedDate === date ? 'selected' : ''}>
+            {date.getDate()}
+          </span>
+        )}
       </div>
     );
   }

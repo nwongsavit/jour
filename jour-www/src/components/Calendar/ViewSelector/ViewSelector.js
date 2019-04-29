@@ -4,27 +4,28 @@ import './ViewSelector.css';
 
 class ViewSelector extends Component {
   render() {
-    const { leftArrowHandler, rightArrowHandler, title } = this.props;
+    const {
+      setMonthView, setWeekView, leftArrowHandler, rightArrowHandler, title,
+    } = this.props;
     return (
       <div className="ViewSelector">
         <div className="navigation">
-          {' '}
           <FontAwesomeIcon className="icon" icon="angle-left" onClick={leftArrowHandler} />
+          {title}
           <FontAwesomeIcon className="icon" icon="angle-right" onClick={rightArrowHandler} />
         </div>
-        <div className="title">{title}</div>
         <div className="view">
           <FontAwesomeIcon
             id="weekViewIcon"
             className="icon"
             icon="th-large"
-            onClick={this.setWeekView}
+            onClick={setWeekView}
           />
           <FontAwesomeIcon
             id="monthViewIcon"
             className="icon"
             icon="calendar"
-            onClick={this.setMonthView}
+            onClick={setMonthView}
           />
         </div>
       </div>

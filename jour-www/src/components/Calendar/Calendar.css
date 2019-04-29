@@ -9,10 +9,6 @@
   padding: 0px !important;
 }
 
-.row:nth-last-child(1) {
-  border-bottom: lightgrey 1px solid;
-}
-
 .daysOfTheWeek {
   margin: 20px;
 }

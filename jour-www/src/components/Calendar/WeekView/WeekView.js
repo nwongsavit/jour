@@ -119,17 +119,19 @@ class WeekView extends Component {
   };
 
   render() {
-    const { selectedDate } = this.props;
+    const { selectedDate, setMonthView, setWeekView } = this.props;
     const { journalInfo } = this.state;
     return (
       <div className="WeekView">
         <ViewSelector
+          setMonthView={setMonthView}
+          setWeekView={setWeekView}
           leftArrowHandler={this.previousWeek}
           rightArrowHandler={this.nextWeek}
           title={this.getTitle()}
         />
         {this.renderWeekDays()}
-        <div className="agenda">
+        {/* <div className="agenda">
           <div className="small-text agendaDate">{format(selectedDate, 'MMMM DD, YYYY')}</div>
           <div className="mood">
             <Entries journalInfo={journalInfo} />
@@ -140,7 +142,7 @@ class WeekView extends Component {
             <Task title="Practice presentation" />
             <Task title="Talk to team about homework" />
           </div>
-        </div>
+        </div> */}
       </div>
     );
   }

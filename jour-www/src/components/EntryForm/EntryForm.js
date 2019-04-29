@@ -7,6 +7,11 @@ import Textarea from '../Textarea/Textarea';
 
 const apiKey = process.env.REACT_APP_API_KEY;
 
+const PARAMS = {
+  edit: 'editJournal',
+  add: 'addJournal',
+};
+
 class EntryForm extends Component {
   constructor(props) {
     super(props);
@@ -25,18 +30,35 @@ class EntryForm extends Component {
 
   handleSubmit(e) {
     const { journal, jid, mood } = this.state;
-    const { uid, authKey, closeModal } = this.props;
+    const {
+      uid, authKey, closeModal, type,
+    } = this.props;
+
+    let params;
+    if (type === 'edit') {
+      params = {
+        key: apiKey,
+        request: 'editJournal',
+        uid,
+        jid,
+        journal,
+        mood,
+        authKey,
+      };
+    } else if (type === 'add') {
+      params = {
+        key: apiKey,
+        request: 'addJournal',
+        uid,
+        journal,
+        mood,
+        authKey,
+      };
+    }
+
     axios
       .get('https://jour.life/api/api.php', {
-        params: {
-          key: apiKey,
-          request: 'editJournal',
-          uid,
-          jid,
-          journal,
-          mood,
-          authKey,
-        },
+        params,
       })
       .then(result => this.setState(
         {
@@ -64,8 +86,8 @@ class EntryForm extends Component {
 
     return (
       <div className="EntryForm">
-        <Form className="textboxForm" onSubmit={this.handleSubmit}>
-          <Textarea key={jid} content={journal} onChange={this.handleJournalChange} />
+        <Form onSubmit={this.handleSubmit}>
+          <Textarea key={jid} content={journal || ''} onChange={this.handleJournalChange} />
           <Button type="submit" block>
             Submit
           </Button>

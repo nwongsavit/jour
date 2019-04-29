@@ -21,7 +21,7 @@ class EditModal extends Component {
             <Modal.Title>Edit Modal</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <EntryForm journalInfo={journalInfo} closeModal={this.closeModal} />
+            <EntryForm journalInfo={journalInfo} closeModal={this.closeModal} type="edit" />
           </Modal.Body>
           <Modal.Footer />
         </Modal>

@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import Task from '../Task/Task';
 import Textarea from '../Textarea/Textarea';
+import EntryForm from '../EntryForm/EntryForm';
 
 const apiKey = process.env.REACT_APP_API_KEY;
 
@@ -95,6 +96,7 @@ class Textbox extends Component {
             Submit
           </Button>
         </Form>
+        {/* <EntryForm type="add" /> */}
       </div>
     );
   }

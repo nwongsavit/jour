@@ -32,11 +32,22 @@ class CalendarCellWeek extends Component {
             selectedDate.getDate() === date.getDate() ? 'week-header selected' : 'week-header'
           }
         >
+          <div
+            className={
+              selectedDate.getDate() === date.getDate() ? 'selected-circle circle' : 'circle'
+            }
+          />
           <div className="small-text week-day">{format(date, 'dddd')}</div>
           <div className="week-date">{format(date, 'MM/DD')}</div>
         </div>
 
-        <div className="week-content">{this.getJournalLength()}</div>
+        <div className="week-content">
+          <div className="mood-circles">
+            <div className="selected-circle circle" />
+          </div>
+          <div className="journals-count pill">0 Journals</div>
+          <div className="tasks-count pill">0 Tasks</div>
+        </div>
       </div>
     );
   }
