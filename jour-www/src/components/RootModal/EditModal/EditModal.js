@@ -18,12 +18,11 @@ class EditModal extends Component {
       <div className="EditModal">
         <Modal show onHide={this.closeModal}>
           <Modal.Header closeButton>
-            <Modal.Title>Edit Modal</Modal.Title>
+            <Modal.Title>Edit Entry</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <EntryForm journalInfo={journalInfo} closeModal={this.closeModal} type="edit" />
           </Modal.Body>
-          <Modal.Footer />
         </Modal>
       </div>
     );

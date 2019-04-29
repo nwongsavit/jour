@@ -78,7 +78,7 @@ class Calendar extends Component {
             <Entries journalInfo={journalInfo} />
           </div>
           <div className="tasks">
-            <h3>I need to...</h3>
+            <h3>Tasks</h3>
             <Task title="Finish presentation script" />
             <Task title="Practice presentation" />
             <Task title="Talk to team about homework" />

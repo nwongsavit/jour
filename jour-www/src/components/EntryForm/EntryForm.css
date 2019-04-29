@@ -1,6 +1,23 @@
-.textboxForm {
+.EntryForm {
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+
+.textbox-form {
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding: 20px;
+  width: 100%;
+}
+
+.textbox-form > * {
+  margin-bottom: 20px;
+}
+
+.characters-remaining {
+  text-align: right;
 }

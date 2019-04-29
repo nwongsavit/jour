@@ -67,7 +67,7 @@ class Textbox extends Component {
   render() {
     return (
       <div className="Textbox">
-        <Form className="textboxForm" onSubmit={this.handleSubmit}>
+        {/* <Form className="textboxForm" onSubmit={this.handleSubmit}>
           <h3>Add Entry</h3>
           <Textarea
             rows={3}
@@ -95,8 +95,8 @@ class Textbox extends Component {
           <Button type="submit" block>
             Submit
           </Button>
-        </Form>
-        {/* <EntryForm type="add" /> */}
+        </Form> */}
+        <EntryForm type="add" />
       </div>
     );
   }

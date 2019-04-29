@@ -14,7 +14,7 @@ class ViewSelector extends Component {
           {title}
           <FontAwesomeIcon className="icon" icon="angle-right" onClick={rightArrowHandler} />
         </div>
-        <div className="view">
+        {/* <div className="view">
           <FontAwesomeIcon
             id="weekViewIcon"
             className="icon"
@@ -27,7 +27,7 @@ class ViewSelector extends Component {
             icon="calendar"
             onClick={setMonthView}
           />
-        </div>
+        </div> */}
       </div>
     );
   }

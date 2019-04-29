@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './CalendarCell.css';
 import { connect } from 'react-redux';
-
 import PropTypes from 'prop-types';
 
 class CalendarCell extends Component {

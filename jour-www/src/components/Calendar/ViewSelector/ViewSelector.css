@@ -16,7 +16,7 @@
 }
 
 .navigation > * {
-  margin: 0 20px !important;
+  flex: 1 0 0;
 }
 
 .icon {
