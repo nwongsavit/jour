@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Form, Button } from 'react-bootstrap';
 import './Textbox.css';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import Task from '../Task/Task';
-import Textarea from '../Textarea/Textarea';
 import EntryForm from '../EntryForm/EntryForm';
 
 const apiKey = process.env.REACT_APP_API_KEY;
@@ -45,7 +42,6 @@ class Textbox extends Component {
           message: result.data.message,
         },
         () => {
-          console.log('this.state.results :', this.state.results);
           this.props.history.push('/calendar');
         },
       ))
@@ -67,36 +63,7 @@ class Textbox extends Component {
   render() {
     return (
       <div className="Textbox">
-        <Form className="textboxForm" onSubmit={this.handleSubmit}>
-          <h3>Add Entry</h3>
-          <Textarea
-            rows={3}
-            placeholder="How are you feeling today?"
-            onChange={this.handleJournalChange}
-          />
-          <Form.Control as="select" onChange={this.handleMoodChange} defaultValue={this.state.mood}>
-            <option value="happy">Happy</option>
-            <option value="sad">Sad</option>
-            <option value="angry">Angry</option>
-            <option value="anxious">Anxious</option>
-            <option value="confident">Confident</option>
-            <option value="nostalgic">Nostalgic</option>
-          </Form.Control>
-          <div className="tasks">
-            <h3>Tasks</h3>
-            <Task title="Finish presentation script" />
-            <Task title="Practice presentation" />
-            <Task title="Talk to team about homework" />
-            <div className="addTask small-text">
-              <div className="plus">+</div>
-              <div className="addText">Add task</div>
-            </div>
-          </div>
-          <Button type="submit" block>
-            Submit
-          </Button>
-        </Form>
-        {/* <EntryForm type="add" /> */}
+        <EntryForm type="add" />
       </div>
     );
   }

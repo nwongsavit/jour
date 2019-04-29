@@ -1,7 +1,14 @@
 .Task {
+  display: flex;
   flex: 0 0 40px;
 }
 
 .checkbox {
-  margin-right: 20px;
+  margin-left: 20px;
+  margin-top: 25px;
+  flex: 0 0 30px;
+}
+
+.Textarea {
+  flex: 1 0 0;
 }

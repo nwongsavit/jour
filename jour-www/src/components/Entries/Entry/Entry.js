@@ -32,7 +32,7 @@ class Entry extends Component {
     return (
       <div className="Entry" onClick={this.open}>
         <div className="content">{journalInfo.journal}</div>
-        <div className="date small-text">{journalInfo.postDate}</div>
+        <div className="small-text">{journalInfo.postDate}</div>
       </div>
     );
   }

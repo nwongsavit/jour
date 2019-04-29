@@ -74,9 +74,7 @@ class Login extends Component {
         <div className="User">
           <Form className="form" onSubmit={this.handleSubmit}>
             <h3>Welcome back!</h3>
-            <span id="errors" style={{ float: 'left', fontSize: 'x-small', color: 'red' }}>
-              {message}
-            </span>
+            <span className="small-text error">{message}</span>
             <Form.Control
               id="email"
               type="email"

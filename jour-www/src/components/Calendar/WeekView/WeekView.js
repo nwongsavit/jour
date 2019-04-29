@@ -6,9 +6,8 @@ import {
   format, addDays, startOfWeek, endOfWeek,
 } from 'date-fns';
 import CalendarCellWeek from '../CalendarCellWeek/CalendarCellWeek';
-import Task from '../../Task/Task';
-import Entries from '../../Entries/Entries';
 import ViewSelector from '../ViewSelector/ViewSelector';
+import './WeekView.css';
 
 const apiKey = process.env.REACT_APP_API_KEY;
 class WeekView extends Component {
@@ -119,30 +118,15 @@ class WeekView extends Component {
   };
 
   render() {
-    const { selectedDate, setMonthView, setWeekView } = this.props;
-    const { journalInfo } = this.state;
     return (
       <div className="WeekView">
         <ViewSelector
-          setMonthView={setMonthView}
-          setWeekView={setWeekView}
           leftArrowHandler={this.previousWeek}
           rightArrowHandler={this.nextWeek}
           title={this.getTitle()}
+          picker
         />
         {this.renderWeekDays()}
-        {/* <div className="agenda">
-          <div className="small-text agendaDate">{format(selectedDate, 'MMMM DD, YYYY')}</div>
-          <div className="mood">
-            <Entries journalInfo={journalInfo} />
-          </div>
-          <div className="tasks">
-            <h3>I need to...</h3>
-            <Task title="Finish presentation script" />
-            <Task title="Practice presentation" />
-            <Task title="Talk to team about homework" />
-          </div>
-        </div> */}
       </div>
     );
   }

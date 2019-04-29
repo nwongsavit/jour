@@ -23,8 +23,8 @@ import Register from '../User/Register';
 import Confirm from '../User/Confirm';
 import ForgotPassword from '../User/ForgotPassword';
 import UserBar from '../UserBar/UserBar';
-import './App.css';
 import RootModal from '../RootModal/RootModal';
+import './App.css';
 
 library.add(
   faPencilAlt,
