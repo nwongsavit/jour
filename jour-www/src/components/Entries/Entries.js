@@ -22,6 +22,7 @@ class Entries extends Component {
     const { journalInfo } = this.props;
     return (
       <div className="Entries">
+        <h3>Entries</h3>
         {journalInfo && journalInfo.length && this.renderJournalEntries()}
       </div>
     );

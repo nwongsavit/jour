@@ -21,6 +21,10 @@
   color: #4a8aa4;
 }
 
+.first {
+  border-left: 1px solid lightgrey;
+}
+
 .week-content {
   padding: 10px 10px 0 10px;
   border-right: 1px solid lightgrey;

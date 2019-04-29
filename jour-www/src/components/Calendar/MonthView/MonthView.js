@@ -69,7 +69,6 @@ class MonthView extends Component {
   };
 
   render() {
-    const { currentMonth } = this.state;
     const { setMonthView, setWeekView } = this.props;
     return (
       <div className="MonthView">

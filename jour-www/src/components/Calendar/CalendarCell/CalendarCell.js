@@ -20,13 +20,14 @@ class CalendarCell extends Component {
       return '';
     }
     let classes = 'CalendarCell';
-    classes += selectedDate.setHours(0, 0, 0, 0) === date.setHours(0, 0, 0, 0) ? ' selected' : '';
+    classes
+      += selectedDate.setHours(0, 0, 0, 0) === date.setHours(0, 0, 0, 0) ? ' selected-picker' : '';
     classes += new Date().setHours(0, 0, 0, 0) === date.setHours(0, 0, 0, 0) ? ' today' : '';
     return classes;
   };
 
   render() {
-    const { date, selectedDate } = this.props;
+    const { date } = this.props;
     return (
       <div className={this.setCellClasses()} onClick={this.setSelectedDate}>
         {date !== 0 && <span className="small-text date">{date.getDate()}</span>}

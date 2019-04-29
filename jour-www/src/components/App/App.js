@@ -24,7 +24,6 @@ import Confirm from '../User/Confirm';
 import ForgotPassword from '../User/ForgotPassword';
 import UserBar from '../UserBar/UserBar';
 import RootModal from '../RootModal/RootModal';
-import MonthView from '../Calendar/MonthView/MonthView'; // remove latr
 import './App.css';
 
 library.add(
@@ -57,7 +56,6 @@ class App extends Component {
               <Route path="/register" component={Register} />
               <Route path="/confirm" component={Confirm} />
               <Route path="/forgot-password" component={ForgotPassword} />
-              <Route path="/demo" component={MonthView} />
               <Redirect path="/" exact to="/home" />
             </Switch>
           </div>

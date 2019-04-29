@@ -10,11 +10,6 @@ import Task from '../Task/Task';
 
 const apiKey = process.env.REACT_APP_API_KEY;
 
-const PARAMS = {
-  edit: 'editJournal',
-  add: 'addJournal',
-};
-
 class EntryForm extends Component {
   constructor(props) {
     super(props);

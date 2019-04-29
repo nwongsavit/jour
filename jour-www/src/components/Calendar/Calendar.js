@@ -14,11 +14,22 @@ class Calendar extends Component {
   constructor() {
     super();
     this.state = {
-      monthView: false,
-      weekView: true,
       journalInfo: {},
+      isMobile: window.innerWidth <= 767,
     };
   }
+
+  componentWillMount() {
+    window.addEventListener('resize', this.handleWindowSizeChange);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleWindowSizeChange);
+  }
+
+  handleWindowSizeChange = () => {
+    this.setState({ isMobile: window.innerWidth <= 767 });
+  };
 
   componentDidUpdate(prevProps) {
     if (
@@ -50,27 +61,16 @@ class Calendar extends Component {
       }));
   }
 
-  setWeekView = () => {
-    this.setState({
-      monthView: false,
-      weekView: true,
-    });
-  };
-
-  setMonthView = () => {
-    this.setState({
-      monthView: true,
-      weekView: false,
-    });
-  };
-
   render() {
-    const { monthView, weekView, journalInfo } = this.state;
+    const { journalInfo, isMobile } = this.state;
     const { selectedDate } = this.props;
     return (
       <div className="Calendar">
-        {monthView && <MonthView setWeekView={this.setWeekView} setMonthView={this.setMonthView} />}
-        {weekView && <WeekView setWeekView={this.setWeekView} setMonthView={this.setMonthView} />}
+        {isMobile ? (
+          <MonthView />
+        ) : (
+          <WeekView setWeekView={this.setWeekView} setMonthView={this.setMonthView} />
+        )}
 
         <div className="agenda">
           <div className="small-text agendaDate">{format(selectedDate, 'MMMM DD, YYYY')}</div>

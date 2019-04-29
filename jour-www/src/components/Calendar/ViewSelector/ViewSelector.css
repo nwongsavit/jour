@@ -20,6 +20,18 @@
 }
 
 .icon {
-  margin: 20px;
+  margin: 20px 0;
   cursor: pointer;
+}
+
+.datePicker {
+  margin: 10px auto 0 auto;
+  position: absolute;
+  z-index: 1;
+  background-color: white;
+  padding: 10px 30px;
+  border: 1px lightgrey solid;
+  width: 400px;
+  left: 60px;
+  right: 0;
 }

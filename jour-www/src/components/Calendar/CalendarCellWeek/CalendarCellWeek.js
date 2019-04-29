@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './CalendarCellWeek.css';
 import { connect } from 'react-redux';
-import { format } from 'date-fns';
+import { format, startOfWeek } from 'date-fns';
 import PropTypes from 'prop-types';
 
 class CalendarCellWeek extends Component {
@@ -23,7 +23,7 @@ class CalendarCellWeek extends Component {
   };
 
   render() {
-    const { date, selectedDate, journalInfo } = this.props;
+    const { date, selectedDate } = this.props;
 
     return (
       <div className="CalendarCellWeek" onClick={this.setSelectedDate}>
@@ -41,7 +41,11 @@ class CalendarCellWeek extends Component {
           <div className="week-date">{format(date, 'MM/DD')}</div>
         </div>
 
-        <div className="week-content">
+        <div
+          className={
+            date.getDate() === startOfWeek(date).getDate() ? 'week-content first' : 'week-content'
+          }
+        >
           <div className="mood-circles">
             <div className="selected-circle circle" />
           </div>
