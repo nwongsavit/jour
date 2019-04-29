@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import './Entry.css';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import EditModal from '../../EditModal/EditModal';
-import Textarea from '../../Textarea/Textarea';
 
 class Entry extends Component {
   constructor() {
@@ -13,21 +11,28 @@ class Entry extends Component {
     };
   }
 
-  toggleShow = () => {
+  open = () => {
+    this.props.dispatch({
+      type: 'OPEN_MODAL',
+      modalType: 'EDIT_ENTRY',
+      modalProps: {
+        journalInfo: this.props.journalInfo,
+      },
+    });
+  };
+
+  close = () => {
     this.setState({
-      show: !this.state.show,
+      show: false,
     });
   };
 
   render() {
     const { journalInfo } = this.props;
-    const { show } = this.state;
     return (
-      <div className="Entry" onClick={this.toggleShow}>
+      <div className="Entry" onClick={this.open}>
         <div className="content">{journalInfo.journal}</div>
         <div className="date small-text">{journalInfo.postDate}</div>
-
-        <EditModal show={show} onHide={this.toggleShow} journalInfo={journalInfo} />
       </div>
     );
   }
@@ -38,11 +43,11 @@ const mapStateToProps = state => ({
 });
 
 Entry.propTypes = {
-  journal: PropTypes.array,
+  journalInfo: PropTypes.array,
 };
 
 Entry.defaultProps = {
-  journal: [],
+  journalInfo: [],
 };
 
 export default connect(mapStateToProps)(Entry);

@@ -1,0 +1,25 @@
+.ViewSelector {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navigation {
+  display: flex;
+  flex: 1 0 0;
+  align-items: center;
+  text-align: center;
+}
+
+.view {
+  align-items: flex-end;
+}
+
+.navigation > * {
+  margin: 0 20px !important;
+}
+
+.icon {
+  margin: 20px 0 20px 20px;
+  cursor: pointer;
+}

@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import './MonthView.css';
 import { Col, Row } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   startOfMonth, endOfMonth, addMonths, format, addDays,
 } from 'date-fns';
 import CalendarCell from '../CalendarCell/CalendarCell';
+import ViewSelector from '../ViewSelector/ViewSelector';
 
 class MonthView extends Component {
   constructor() {
@@ -25,18 +26,17 @@ class MonthView extends Component {
     let day = monthStart;
 
     while (day <= monthEnd) {
-      // const cloneDay = day;
       for (let i = 0; i < 7; i += 1) {
-        if (day.getDay() !== i || day.getMonth() !== monthStart.getMonth()) {
+        if (day.getDay() !== i || day.getMonth() !== currentMonth.getMonth()) {
           days.push(
             <Col className="dateCol">
-              <CalendarCell />
+              <CalendarCell date={0} />
             </Col>,
-          ); // push an empty calendar cell
+          );
         } else {
           days.push(
-            <Col className="dateCol" key={day.getDate()}>
-              <CalendarCell date={day.getDate()} />
+            <Col className="dateCol">
+              <CalendarCell date={day} />
             </Col>,
           );
           day = addDays(day, 1);
@@ -49,35 +49,40 @@ class MonthView extends Component {
     return rows;
   }
 
-  next = () => {
+  nextMonth = () => {
     const { currentMonth } = this.state;
     this.setState({
       currentMonth: addMonths(currentMonth, 1),
     });
   };
 
-  previous = () => {
+  previousMonth = () => {
     const { currentMonth } = this.state;
     this.setState({
       currentMonth: addMonths(currentMonth, -1),
     });
   };
 
+  getTitle = () => {
+    const { currentMonth } = this.state;
+    return format(currentMonth, 'MMMM YYYY');
+  };
+
   render() {
     const { currentMonth } = this.state;
+    const { setMonthView, setWeekView } = this.props;
     return (
       <div className="MonthView">
-        <div id="calendarHeader">
-          <FontAwesomeIcon id="prev" icon="angle-left" onClick={this.previous} />
-          <div id="monthText">
-            {' '}
-            {format(currentMonth, 'MMMM YYYY')}
-            {' '}
-          </div>
-          <FontAwesomeIcon id="next" icon="angle-right" onClick={this.next} />
-        </div>
+        <ViewSelector
+          setMonthView={setMonthView}
+          setWeekView={setWeekView}
+          leftArrowHandler={this.previousMonth}
+          rightArrowHandler={this.nextMonth}
+          title={this.getTitle()}
+          onClick={setMonthView}
+        />
 
-        <Row className="daysOfTheWeek small-text">
+        <Row className="week-header week-day small-text">
           <Col>Sunday</Col>
           <Col>Monday</Col>
           <Col>Tuesday</Col>
@@ -93,4 +98,11 @@ class MonthView extends Component {
   }
 }
 
-export default MonthView;
+const mapStateToProps = state => ({
+  uid: state.account_info.id,
+  authKey: state.account_info.authKey,
+  selectedDate: state.selectedDate,
+  modalType: state.modalType,
+});
+
+export default connect(mapStateToProps)(MonthView);

@@ -5,22 +5,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 class CalendarCell extends Component {
-  constructor() {
-    super();
-    this.state = {
-      selected: false,
-    };
-  }
-
-  componentDidMount() {
-    const { date, selectedDate } = this.props;
-    if (date === selectedDate) {
-      this.setState({
-        selected: true,
-      });
-    }
-  }
-
   setSelectedDate = () => {
     const { date } = this.props;
     this.props.dispatch({
@@ -30,25 +14,26 @@ class CalendarCell extends Component {
   };
 
   render() {
-    const { date } = this.props;
-    const { selected } = this.state;
+    const { date, selectedDate } = this.props;
 
     return (
       <div className="CalendarCell" onClick={this.setSelectedDate}>
-        <span className="small-text date" className={selected ? 'selected' : ''}>
-          {date}
-        </span>
+        {date !== 0 && (
+          <span className="small-text date" className={selectedDate === date ? 'selected' : ''}>
+            {date.getDate()}
+          </span>
+        )}
       </div>
     );
   }
 }
 
 CalendarCell.propTypes = {
-  date: PropTypes.number,
+  date: PropTypes.object,
 };
 
 CalendarCell.defaultProps = {
-  date: 0,
+  date: {},
 };
 
 const mapStateToProps = state => ({
