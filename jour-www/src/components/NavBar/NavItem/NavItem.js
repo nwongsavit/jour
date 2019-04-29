@@ -12,7 +12,7 @@ class NavItem extends Component {
       <NavLink className="NavItem nav-link" activeClassName="active" to={to}>
         <FontAwesomeIcon className="navIcon" icon={icon} />
         {/* <span className="d-none d-md-inline">{name}</span> */}
-        <span className="d-none">{name}</span>
+        <span className="d-none name">{name}</span>
       </NavLink>
     );
   }

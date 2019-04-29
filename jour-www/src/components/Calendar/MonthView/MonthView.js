@@ -29,13 +29,13 @@ class MonthView extends Component {
       for (let i = 0; i < 7; i += 1) {
         if (day.getDay() !== i || day.getMonth() !== currentMonth.getMonth()) {
           days.push(
-            <Col className="dateCol">
+            <Col>
               <CalendarCell date={0} />
             </Col>,
           );
         } else {
           days.push(
-            <Col className="dateCol">
+            <Col>
               <CalendarCell date={day} />
             </Col>,
           );
@@ -83,13 +83,13 @@ class MonthView extends Component {
         />
 
         <Row className="week-header week-day small-text">
-          <Col>Sunday</Col>
-          <Col>Monday</Col>
-          <Col>Tuesday</Col>
-          <Col>Wednesday</Col>
-          <Col>Thursday</Col>
-          <Col>Friday</Col>
-          <Col>Saturday</Col>
+          <Col>S</Col>
+          <Col>M</Col>
+          <Col>T</Col>
+          <Col>W</Col>
+          <Col>T</Col>
+          <Col>F</Col>
+          <Col>S</Col>
         </Row>
 
         {this.renderMonthDays()}
