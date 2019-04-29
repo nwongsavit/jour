@@ -1,7 +1,6 @@
 const initialState = {
   account_info: {},
   isLoggedIn: false,
-  selectedDate: new Date().getDate(),
   selectedDate: new Date(),
   modalType: null,
   modalProps: {},
