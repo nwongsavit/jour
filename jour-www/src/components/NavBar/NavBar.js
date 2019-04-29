@@ -73,7 +73,7 @@ class NavBar extends Component {
           <div className="navbar-collapse">
             <ul className="flex-md-column navbar-nav w-100 navFlex">
               {/* {!isMobile && <NavBrand name="Jour" icon={bg} to="/home" />} */}
-              <NavItem name="Home" icon="home" to="/home" onClick={(e => this.handleNavItemClick(e, '/home'))} />
+              <NavItem name="Add" icon="plus" to="/add" onClick={(e => this.handleNavItemClick(e, '/add'))} />
               <NavItem name="Calendar" icon="calendar" to="/calendar" onClick={(e => this.handleNavItemClick(e, '/calendar'))} />
               <NavItem name="Statistics" icon="chart-bar" to="/statistics" onClick={(e => this.handleNavItemClick(e, '/statistics'))} />
               <NavItem name="Settings" icon="cog" to="/settings" onClick={(e => this.handleNavItemClick(e, '/settings'))} />

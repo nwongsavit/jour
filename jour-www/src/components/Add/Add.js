@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
-import './Home.css';
+import './Add.css';
 import Textbox from '../Textbox/Textbox';
 
-class Home extends Component {
+class Add extends Component {
   render() {
     return (
-      <div className="Home">
+      <div className="Add">
         <Textbox />
       </div>
     );
   }
 }
 
-export default Home;
+export default Add;

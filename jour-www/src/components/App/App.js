@@ -3,7 +3,7 @@ import { Route, Redirect, Switch } from 'react-router-dom';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
   faPencilAlt,
-  faHome,
+  faPlus,
   faCalendar,
   faChartBar,
   faCog,
@@ -14,7 +14,7 @@ import {
   faThLarge,
 } from '@fortawesome/free-solid-svg-icons';
 import NavBar from '../NavBar/NavBar';
-import Home from '../Home/Home';
+import Add from '../Add/Add';
 import Calendar from '../Calendar/Calendar';
 import Statistics from '../Statistics/Statistics';
 import Settings from '../Settings/Settings';
@@ -28,7 +28,7 @@ import RootModal from '../RootModal/RootModal';
 
 library.add(
   faPencilAlt,
-  faHome,
+  faPlus,
   faCalendar,
   faChartBar,
   faCog,
@@ -48,7 +48,7 @@ class App extends Component {
           <UserBar />
           <div className="container">
             <Switch>
-              <Route path="/home" component={Home} />
+              <Route path="/add" component={Add} />
               <Route path="/calendar" component={Calendar} />
               <Route path="/statistics" component={Statistics} />
               <Route path="/settings" component={Settings} />
@@ -56,7 +56,7 @@ class App extends Component {
               <Route path="/register" component={Register} />
               <Route path="/confirm" component={Confirm} />
               <Route path="/forgot-password" component={ForgotPassword} />
-              <Redirect path="/" exact to="/home" />
+              <Redirect path="/" exact to="/landing" />
             </Switch>
           </div>
         </div>
