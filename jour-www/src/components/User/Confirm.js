@@ -3,7 +3,7 @@ import './User.css';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 import { Form, Button } from 'react-bootstrap';
-import Home from '../Home/Home';
+import Add from '../Add/Add';
 
 
 //  api key from .env file.
@@ -77,7 +77,7 @@ class Confirm extends Component {
     return (
       <div>
         Email Confirmed. Redirecting now.
-        <Redirect to="/home" component={Home} />
+        <Redirect to="/home" component={Add} />
       </div>
 
     );

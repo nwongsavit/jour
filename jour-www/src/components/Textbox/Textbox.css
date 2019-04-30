@@ -1,5 +1,5 @@
 .Textbox {
-  margin: 0 auto;
+  margin: 15px auto 0 auto;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -9,15 +9,8 @@
 .textboxForm {
   display: flex;
   flex-direction: column;
-  width: 100%;
   height: 100%;
-  padding: 20px;
-}
-
-@media (min-width: 768px) {
-  .textboxForm {
-    padding: 50px;
-  }
+  width: 100%;
 }
 
 .textboxForm > * {

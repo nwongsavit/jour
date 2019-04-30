@@ -4,13 +4,17 @@ import './Task.css';
 import Textarea from '../Textarea/Textarea';
 
 class Task extends Component {
+  onCheck = () => {
+    // after every check, send api call
+    console.log('check');
+  };
+
   render() {
     const { title } = this.props;
     return (
       <div className="Task">
-        <Textarea rows={1} content={title} />
-        {/* <input className="checkbox" type="checkbox" />
-        {title} */}
+        <input className="checkbox" type="checkbox" />
+        <Textarea rows={1} content={title} onCheck={this.onCheck} />
       </div>
     );
   }

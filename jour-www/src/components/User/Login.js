@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './User.css';
 import axios from 'axios';
 import { Form, Button } from 'react-bootstrap';
-
 import { connect } from 'react-redux';
 
 //  api key from .env file.
@@ -55,7 +54,6 @@ class Login extends Component {
             type: 'LOGIN',
             account_info: this.state.account_info,
           });
-          console.log('this.state.account_ifno :', this.state.account_info);
         },
       ));
   }
@@ -76,9 +74,7 @@ class Login extends Component {
         <div className="User">
           <Form className="form" onSubmit={this.handleSubmit}>
             <h3>Welcome back!</h3>
-            <span id="errors" style={{ float: 'left', fontSize: 'x-small', color: 'red' }}>
-              {message}
-            </span>
+            <span className="small-text error">{message}</span>
             <Form.Control
               id="email"
               type="email"
@@ -96,12 +92,12 @@ class Login extends Component {
             <Button type="submit" block>
               Submit
             </Button>
-            <div id="register" className="smallText">
+            <div id="register" className="small-text">
               Not registered?
               {' '}
               <a href="/register">Create an account</a>
             </div>
-            <div id="forgot-password" className="smallText">
+            <div id="forgot-password" className="small-text">
               Forgot password?
               {' '}
               <a href="/forgot-password">Click here</a>

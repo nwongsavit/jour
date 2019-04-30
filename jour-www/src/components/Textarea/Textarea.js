@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './Textarea.css';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 class Textarea extends Component {
   render() {
@@ -32,4 +33,8 @@ Textarea.defaultProps = {
   content: '',
 };
 
-export default Textarea;
+const mapStateToProps = state => ({
+  selectedDate: state.selectedDate,
+});
+
+export default connect(mapStateToProps)(Textarea);

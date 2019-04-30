@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import { Route, Redirect, Switch } from "react-router-dom";
-import { library } from "@fortawesome/fontawesome-svg-core";
+import React, { Component } from 'react';
+import { Route, Redirect, Switch } from 'react-router-dom';
+import { library } from '@fortawesome/fontawesome-svg-core';
 import {
   faPencilAlt,
-  faHome,
+  faPlus,
   faCalendar,
   faChartBar,
   faCog,
@@ -11,23 +11,24 @@ import {
   faAngleLeft,
   faAngleRight,
   faAngleDown,
-  faThLarge
-} from "@fortawesome/free-solid-svg-icons";
-import NavBar from "../NavBar/NavBar";
-import Home from "../Home/Home";
-import Calendar from "../Calendar/Calendar";
-import Statistics from "../Statistics/Statistics";
-import Settings from "../Settings/Settings";
-import Login from "../User/Login";
-import Register from "../User/Register";
-import Confirm from "../User/Confirm";
-import ForgotPassword from "../User/ForgotPassword";
-import UserBar from "../UserBar/UserBar";
-import "./App.css";
+  faThLarge,
+} from '@fortawesome/free-solid-svg-icons';
+import NavBar from '../NavBar/NavBar';
+import Add from '../Add/Add';
+import Calendar from '../Calendar/Calendar';
+import Statistics from '../Statistics/Statistics';
+import Settings from '../Settings/Settings';
+import Login from '../User/Login';
+import Register from '../User/Register';
+import Confirm from '../User/Confirm';
+import ForgotPassword from '../User/ForgotPassword';
+import UserBar from '../UserBar/UserBar';
+import RootModal from '../RootModal/RootModal';
+import './App.css';
 
 library.add(
   faPencilAlt,
-  faHome,
+  faPlus,
   faCalendar,
   faChartBar,
   faCog,
@@ -35,7 +36,7 @@ library.add(
   faAngleLeft,
   faAngleRight,
   faThLarge,
-  faAngleDown
+  faAngleDown,
 );
 
 class App extends Component {
@@ -47,7 +48,7 @@ class App extends Component {
           <UserBar />
           <div className="container">
             <Switch>
-              <Route path="/home" component={Home} />
+              <Route path="/add" component={Add} />
               <Route path="/calendar" component={Calendar} />
               <Route path="/statistics" component={Statistics} />
               <Route path="/settings" component={Settings} />
@@ -55,10 +56,11 @@ class App extends Component {
               <Route path="/register" component={Register} />
               <Route path="/confirm" component={Confirm} />
               <Route path="/forgot-password" component={ForgotPassword} />
-              <Redirect path="/" exact to="/home" />
+              <Redirect path="/" exact to="/landing" />
             </Switch>
           </div>
         </div>
+        <RootModal />
       </div>
     );
   }
