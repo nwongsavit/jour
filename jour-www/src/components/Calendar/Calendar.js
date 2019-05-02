@@ -28,7 +28,9 @@ class Calendar extends Component {
       // selectedDate: new Date(),
     };
   }
-
+  componentDidLoad() {
+    document.title = "Jour - Calendar";
+  }
   // setDayView = () => {
   //   const { monthView, weekView, dayView } = this.state;
   //   this.setState({

@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import './Settings.css';
 
 class Settings extends Component {
+  componentDidLoad() {
+    document.title = "Jour - Settings";
+  }
   render() {
     return (
       <div className='Settings'>
