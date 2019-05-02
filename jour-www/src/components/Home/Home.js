@@ -5,10 +5,10 @@ import Textbox from '../Textbox/Textbox';
 
 
 class Home extends Component {
+  componentDidMount() {
+    document.title = "Jour - Home";
+  }
   render() {
-    componentDidMount: function() {
-      document.title = "Jour - Home";
-    };
     return (
       <div className="Home">
         <Textbox />
