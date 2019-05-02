@@ -33,7 +33,7 @@ class UserBar extends Component {
 
   render() {
     const { width } = this.state;
-    const { name } = this.state;
+    const { name } = this.props;
     const isMobile = width <= 767;
 
     return (
