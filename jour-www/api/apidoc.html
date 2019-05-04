@@ -514,5 +514,77 @@
         </b>
     </p>
 </div>
+<hr>
+<div style="background-color:lightgrey">
+    <h4>Request: getJournalsByYearWeek</h4>
+    <p>required parameters:</p>
+    <ul>
+        <li>uid</li>
+        <li>authKey</li>
+        <li>date - required format: yyyy-mm-dd (anydate from the desired week will work</li>
+    </ul>
+    <p>Sample call:
+        <b>https://www.jour.life/api/api.php?key=apikey&request=getJournalsByYearWeek&uid=2&date=2019-03-27&authKey=blah</b><br>
+        Sample response:
+        <b>
+        <pre>
+            {
+                "result": "false",
+                "message": "Error: Missing required data. Please provide an email address and password",
+                "needed": [
+                     "uid",
+                     "date",
+                     "authKey"
+                ]
+            }
+        </pre>
+        </b>
+        Sample response:
+        <b>
+        <pre>
+            {
+                "result": "false",
+                "message": "User Authentication failed,"
+            }
+        </pre>
+        </b>
+        Sample response:
+        <b>
+        <pre>
+            {
+                "result": "false",
+                "message": "No journals for this user on this week."
+            }
+        </pre>
+        </b>
+        Sample response:
+        <b>
+        <pre>
+            {
+                "result": true,
+                "message": "Success.",
+                "journals": [
+                    {
+                        "id": 1,
+                        "uid": 1,
+                        "mood": "fsf",
+                        "journal": "fsrf",
+                        "postDate": "2019-03-27 22:49:59",
+                        "editDate": "2019-04-03 19:00:46"
+                    },
+                    {
+                        "id": 4,
+                        "uid": 1,
+                        "mood": "blah",
+                        "journal": "qewfadsf",
+                        "postDate": "2019-03-27 00:00:00",
+                         "editDate": null
+                     }
+                ]
+            }
+        </pre>
+        </b>
+    </p>
+</div>
 </body>
 </html>

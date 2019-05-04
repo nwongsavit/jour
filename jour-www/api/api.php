@@ -497,4 +497,51 @@ if ($_GET['request'] == "getJournalsByDate") {
 
 }
 
+if ($_GET['request'] == "getJournalsByYearWeek") {
+    //make sure api call requirements are met.
+    if (!isset($_GET['uid']) || !isset($_GET['date']) || !isset($_GET['authKey'])) {
+        if (!isset($_GET['uid'])) {
+            $neededParams[] = "uid";
+        }
+        if (!isset($_GET['authKey'])) {
+            $neededParams[] = "authKey";
+        }
+        if (!isset($_GET['date'])) {
+            $neededParams[] = "date";
+        }
+        $error = array('result' => false, 'message' => "Error: Missing required data. Please provide user id, date, and authKey.", 'needed' => $neededParams);
+        echo json_encode($error);
+        return;
+    }
+    //all required params have been provided.
+    //auth the user...
+    //check the auth key
+    $user = new users();
+    if(!$user->confirmAuthKey($_GET['uid'],$_GET['authKey'])) {
+
+        $error = array('result' => false, 'message' => "Unable to authenticate user.");
+        echo json_encode($error);
+        return;
+
+    }
+
+    $journal = new journal();
+
+    //every thing checks out, add the journal.
+    if (!$result = $journal->getJournalsByYearWeek($_GET['uid'], $_GET['date'])) {
+
+        $error = array('result' => false, 'message' => "No journals for this user on this week.");
+        echo json_encode($error);
+        return;
+
+    }
+    else {
+
+        $result = array('result' => true, 'message' => "Success.", 'journals' => $result);
+        echo json_encode($result);
+        return;
+
+    }
+
+}
 ?>
