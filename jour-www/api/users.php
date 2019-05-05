@@ -400,6 +400,48 @@ class users
         return $result;
     }
 
+    function deleteUser($uid, $authKey)
+    {
+
+        //get the database link
+        $link = $this->getLink();
+
+        //make sure that the user has authority to do this
+        if (!$this->confirmAuthKey($uid, $authKey)) {
+
+            $result = false;
+            return $result;
+
+        }
+
+        //they do, so delete the user from the users table and their journals from the journal table. add delete tasks and settings once those are complete??
+        if (!$stmt = $link->prepare("DELETE jour_users.*, jour_journals.* from jour_users left join jour_journals on jour_journals.uid = jour_users.id  WHERE jour_users.id = ?")) {
+
+            echo("ERROR DELETING USER DATA:" . $link->error);
+            die();
+
+        }
+
+        $stmt->bind_param('i', $uid);
+        if (!$stmt->execute()) {
+
+            $result = false;
+
+        }
+        else {
+
+            $result = true;
+
+        }
+
+        //close the stmt and the link and return the result
+        $stmt->close();
+        $link->close();
+        return $result;
+
+    }
+
+
 
     function resetPassword($email, $auth_hash)
     {

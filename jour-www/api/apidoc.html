@@ -636,5 +636,36 @@
         </b>
     </p>
 </div>
+<hr>
+<div style="background-color:lightgray">
+    <h4>Request: deleteUser</h4>
+    <p>required parameters:</p>
+    <ul>
+        <li>uid</li>
+        <li>authKey</li>
+    </ul>
+    <p>Sample call:
+        <b>https://www.jour.life/api/api.php?key=apikey&request=deleteUser&uid=1&authKey=1</b><br>
+        Sample response:
+        <b>
+        <pre>
+            {
+                "result": false,
+                "message": "Error deleting user with id 4."
+            }
+        </pre>
+        </b>
+        Sample response:
+        <b>
+        <pre>
+           {
+                "result": true,
+                "message": "Success. Account with user id 1 deleted."
+           }
+        </pre>
+        </b>
+    </p>
+</div>
+
 </body>
 </html>

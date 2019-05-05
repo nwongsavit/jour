@@ -367,7 +367,56 @@ if (isset($_GET['request']) && $_GET['request'] == "editUser") {
     }
 }
 
+if (isset($_GET['request']) && $_GET['request'] == "deleteUser") {
+    //make sure api call requirements are met.
+    if (!isset($_GET['uid']) || !isset($_GET['authKey'])) {
+        if (!isset($_GET['uid'])) {
+            $neededParams[] = "uid";
+        }
+        if (!isset($_GET['authKey'])) {
+            $neededParams[] = "authKey";
+        }
+        $error = array('result' => false, 'message' => "Error: Missing required data.", 'needed' => $neededParams);
+        echo json_encode($error);
+        return;
+    }
 
+
+    $user = new users();
+
+    //make sure the user exists.
+    if (!$user->getUser($_GET['uid'])) {
+
+        $error = array('result' => false, 'message' => "Error: User does not exist.");
+        echo json_encode($error);
+        return;
+
+    }
+
+    //auth the user...
+    //check the auth key
+    if (!$user->confirmAuthKey($_GET['uid'], $_GET['authKey'])) {
+
+        $error = array('result' => false, 'message' => "Unable to authenticate user.");
+        echo json_encode($error);
+        return;
+
+    }
+
+    if (!$user->deleteUser($_GET['uid'], $_GET['authKey'])) {
+
+        $error = array('result' => false, 'message' => "Error deleting user with id " . $_GET['uid'] . ".");
+        echo json_encode($error);
+        return;
+
+    } else {
+
+        $result = array('result' => true, 'message' => "Success. Account with user id " . $_GET['uid'] . " deleted.");
+        echo json_encode($result);
+        return;
+
+    }
+}
 //**********************************************END USER RELATED API CALLS*************************************************************
 
 
