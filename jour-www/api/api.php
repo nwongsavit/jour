@@ -42,7 +42,6 @@ if (!isset($_GET['request'])) {
 //**********************************************USER RELATED API CALLS*************************************************************
 
 
-
 //check to see if the email address is already in the users database.
 if (isset($_GET['request']) && $_GET['request'] == "isUser") {
     //make sure api call requirements are met.
@@ -57,9 +56,8 @@ if (isset($_GET['request']) && $_GET['request'] == "isUser") {
         $result = array('result' => false, 'message' => "No associated user.");
         echo json_encode($result);
         return;
-    }
-    else {
-        $result = array('result' => true, 'message' => "An account with email address: ". $_GET['email'] . " already exists.");
+    } else {
+        $result = array('result' => true, 'message' => "An account with email address: " . $_GET['email'] . " already exists.");
         echo json_encode($result);
         return;
     }
@@ -78,9 +76,8 @@ if (isset($_GET['request']) && $_GET['request'] == "isWaitingConf") {
         $result = array('result' => false, 'message' => "No associated email is waiting confirmation.");
         echo json_encode($result);
         return;
-    }
-    else {
-        $result = array('result' => true, 'message' => "An account with email address: ". $_GET['email'] . " is waiting for confirmation.");
+    } else {
+        $result = array('result' => true, 'message' => "An account with email address: " . $_GET['email'] . " is waiting for confirmation.");
         echo json_encode($result);
         return;
     }
@@ -111,7 +108,7 @@ if (isset($_GET['request']) && $_GET['request'] == "registerUser") {
     }
 
     $password = $_GET['password'];
-    if(!preg_match('/^(?=.*\d)(?=.*[@#\-_$%^&+=§!\?])(?=.*[a-z])(?=.*[A-Z])[0-9A-Za-z@#\-_%^&+\=\*$! \?]{8,80}$/',$password)) {
+    if (!preg_match('/^(?=.*\d)(?=.*[@#\-_$%^&+=§!\?])(?=.*[a-z])(?=.*[A-Z])[0-9A-Za-z@#\-_%^&+\=\*$! \?]{8,80}$/', $password)) {
         //password does not meet requirements
         /*requirements
             Characters: 8-80
@@ -132,7 +129,7 @@ if (isset($_GET['request']) && $_GET['request'] == "registerUser") {
         return;
     }
     //check to make sure the user isn't already in the queue for confirmation
-    if($user->isWaitingConf($_GET['email'])){
+    if ($user->isWaitingConf($_GET['email'])) {
         $error = array('result' => false, 'message' => "This email is already awaiting confirmation.");
         echo json_encode($error);
         return;
@@ -141,8 +138,7 @@ if (isset($_GET['request']) && $_GET['request'] == "registerUser") {
         $error = array('result' => false, 'message' => "The account was not created.");
         echo json_encode($error);
         return;
-    }
-    else {
+    } else {
         $result = array('result' => true, 'message' => "Account creation for " . $_GET['email'] . " is pending confirmation.");
         echo json_encode($result);
         return;
@@ -166,7 +162,7 @@ if (isset($_GET['request']) && $_GET['request'] == "confirmEmail") {
     //we have what we need to confirm the email address
     $user = new users();
     //first lets make sure that there is a need to confirm
-    if(!$user->isWaitingConf($_GET['email'])){
+    if (!$user->isWaitingConf($_GET['email'])) {
         $error = array('result' => false, 'message' => "This email is not in the confirmation queue.");
         echo json_encode($error);
         return;
@@ -176,9 +172,8 @@ if (isset($_GET['request']) && $_GET['request'] == "confirmEmail") {
         $result = array('result' => false, 'message' => "Unable to confirm the email address.");
         echo json_encode($result);
         return;
-    }
-    else {
-        $result = array('result' => true, 'message' => "The account with email address: ". $_GET['email'] . " has been confirmed.");
+    } else {
+        $result = array('result' => true, 'message' => "The account with email address: " . $_GET['email'] . " has been confirmed.");
         echo json_encode($result);
         return;
     }
@@ -202,13 +197,13 @@ if (isset($_GET['request']) && $_GET['request'] == "authUser") {
     $user = new users();
     //first lets make sure that there is a need to authorize
     //check to see if the email has been confirmed
-    if($user->isWaitingConf($_GET['email'])){
+    if ($user->isWaitingConf($_GET['email'])) {
         $error = array('result' => false, 'message' => "This email address still needs to be confirmed.");
         echo json_encode($error);
         return;
     }
     //check to see if the user is in the database
-    if(!$user->isUser($_GET['email'])){
+    if (!$user->isUser($_GET['email'])) {
         $error = array('result' => false, 'message' => "This email is not associated with a valid account.");
         echo json_encode($error);
         return;
@@ -218,8 +213,7 @@ if (isset($_GET['request']) && $_GET['request'] == "authUser") {
         $result = array('result' => false, 'message' => "Login failed: Email/Password mismatch.");
         echo json_encode($result);
         return;
-    }
-    else {
+    } else {
         $account['id'] = $user->getId();
         $account['name'] = $user->getName();
         $account['joinDate'] = $user->getJoinDate();
@@ -245,12 +239,11 @@ if (isset($_GET['request']) && $_GET['request'] == "getUser") {
 
     $user = new users();
 
-    if(!$user->getUser($_GET['uid'])){
+    if (!$user->getUser($_GET['uid'])) {
         $error = array('result' => false, 'message' => "Error getting data for user id " . $_GET['uid'] . ".");
         echo json_encode($error);
         return;
-    }
-    else {
+    } else {
         $account['id'] = $user->getId();
         $account['name'] = $user->getName();
         $account['joinDate'] = $user->getJoinDate();
@@ -261,6 +254,119 @@ if (isset($_GET['request']) && $_GET['request'] == "getUser") {
         return;
     }
 }
+
+//api call for editing users email, name, and password. (Password is optional
+if (isset($_GET['request']) && $_GET['request'] == "editUser") {
+
+    //make sure api call requirements are met.
+    if (!isset($_GET['email']) || !isset($_GET['name']) || !isset($_GET['uid']) || !isset($_GET['authKey'])) {
+        if (!isset($_GET['email'])) {
+            $neededParams[] = "Email Address";
+        }
+        if (!isset($_GET['name'])) {
+            $neededParams[] = "First Name";
+        }
+        if (!isset($_GET['uid'])) {
+            $neededParams[] = "User Id";
+        }
+        if (!isset($_GET['authKey'])) {
+            $neededParams[] = "authKey";
+        }
+        $error = array('result' => false, 'message' => "Error: Missing required data. Please provide an email address, name, authKey, and user id.", 'needed' => $neededParams);
+        echo json_encode($error);
+        return;
+    }
+
+    //check to make sure the data is valid.
+    if (!filter_var($_GET['email'], FILTER_VALIDATE_EMAIL)) {
+
+        $error = array('result' => false, 'message' => "Error: The email address provided is not valid.");
+        echo json_encode($error);
+        return;
+
+    }
+
+    if (isset($_GET['password'])) {
+
+        $password = $_GET['password'];
+        if (!preg_match('/^(?=.*\d)(?=.*[@#\-_$%^&+=§!\?])(?=.*[a-z])(?=.*[A-Z])[0-9A-Za-z@#\-_%^&+\=\*$! \?]{8,80}$/', $password)) {
+            //password does not meet requirements
+            /*requirements
+                Characters: 8-80
+                1 capital letter
+                1 number
+                1 symbol (@#-_$%^&+=!?* space)
+            */
+            $error = array('result' => false, 'message' => "Error: The password provided doesn't meet requirements.");
+            echo json_encode($error);
+            return;
+
+        }
+    }
+
+    //we have what we need to see if the user already exists, make the check.
+    $user = new users();
+
+    //make sure the user exists.
+    if (!$user->getUser($_GET['uid'])) {
+
+        $error = array('result' => false, 'message' => "Error: User does not exist.");
+        echo json_encode($error);
+        return;
+
+    }
+
+    //auth the user...
+    //check the auth key
+    if (!$user->confirmAuthKey($_GET['uid'], $_GET['authKey'])) {
+
+        $error = array('result' => false, 'message' => "Unable to authenticate user.");
+        echo json_encode($error);
+        return;
+
+    }
+
+    //they are auth'd
+    //get this users data
+    $user->getUser($_GET['uid']);
+
+    //check to make sure that the new email address is not in use by someone else.
+    if ($user->getEmail() != $_GET['email']) {
+
+        if ($user->isUser($_GET['email'])) {
+
+            $error = array('result' => false, 'message' => "Error: The email address is already in use.");
+            echo json_encode($error);
+            return;
+
+        }
+
+        //check to make sure the user isn't already in the queue for confirmation
+        if ($user->isWaitingConf($_GET['email'])) {
+
+            $error = array('result' => false, 'message' => "This email is already awaiting confirmation for another user.");
+            echo json_encode($error);
+            return;
+
+        }
+
+    }
+
+    if (!$user->editUser($_GET['uid'], $_GET['email'], $_GET['name'], $_GET['password'])) {
+
+        $error = array('result' => false, 'message' => "The account edit could not be completed.");
+        echo json_encode($error);
+        return;
+
+    } else {
+
+        $result = array('result' => true, 'message' => "Account edit for " . $_GET['email'] . " was successful.");
+        echo json_encode($result);
+        return;
+
+    }
+}
+
 
 //**********************************************END USER RELATED API CALLS*************************************************************
 
@@ -290,7 +396,7 @@ if ($_GET['request'] == "addJournal") {
     //auth the user...
     //check the auth key
     $user = new users();
-    if(!$user->confirmAuthKey($_GET['uid'],$_GET['authKey'])) {
+    if (!$user->confirmAuthKey($_GET['uid'], $_GET['authKey'])) {
 
         $error = array('result' => false, 'message' => "Unable to authenticate user.");
         echo json_encode($error);
@@ -317,14 +423,13 @@ if ($_GET['request'] == "addJournal") {
 
     }
     //every thing checks out, add the journal.
-    if (!$journal->addJournal($_GET['uid'], $_GET['journal'],$_GET['mood'])) {
+    if (!$journal->addJournal($_GET['uid'], $_GET['journal'], $_GET['mood'])) {
 
         $error = array('result' => false, 'message' => "Unable to add journal entry.");
         echo json_encode($error);
         return;
 
-    }
-    else {
+    } else {
 
         $result = array('result' => true, 'message' => "Success. Journal Added.");
         echo json_encode($result);
@@ -359,7 +464,7 @@ if ($_GET['request'] == "editJournal") {
     //auth the user...
     //check the auth key
     $user = new users();
-    if(!$user->confirmAuthKey($_GET['uid'],$_GET['authKey'])) {
+    if (!$user->confirmAuthKey($_GET['uid'], $_GET['authKey'])) {
 
         $error = array('result' => false, 'message' => "Unable to authenticate user.");
         echo json_encode($error);
@@ -386,14 +491,13 @@ if ($_GET['request'] == "editJournal") {
 
     }
     //every thing checks out, add the journal.
-    if (!$journal->editJournal($_GET['uid'], $_GET['jid'] ,$_GET['journal'],$_GET['mood'])) {
+    if (!$journal->editJournal($_GET['uid'], $_GET['jid'], $_GET['journal'], $_GET['mood'])) {
 
         $error = array('result' => false, 'message' => "Unable to edit journal entry.");
         echo json_encode($error);
         return;
 
-    }
-    else {
+    } else {
 
         $result = array('result' => true, 'message' => "Success. Journal Edited.");
         echo json_encode($result);
@@ -422,7 +526,7 @@ if ($_GET['request'] == "deleteJournal") {
     //auth the user...
     //check the auth key
     $user = new users();
-    if(!$user->confirmAuthKey($_GET['uid'],$_GET['authKey'])) {
+    if (!$user->confirmAuthKey($_GET['uid'], $_GET['authKey'])) {
 
         $error = array('result' => false, 'message' => "Unable to authenticate user.");
         echo json_encode($error);
@@ -439,8 +543,7 @@ if ($_GET['request'] == "deleteJournal") {
         echo json_encode($error);
         return;
 
-    }
-    else {
+    } else {
 
         $result = array('result' => true, 'message' => "Success. Journal deleted.");
         echo json_encode($result);
@@ -469,7 +572,7 @@ if ($_GET['request'] == "getJournalsByDate") {
     //auth the user...
     //check the auth key
     $user = new users();
-    if(!$user->confirmAuthKey($_GET['uid'],$_GET['authKey'])) {
+    if (!$user->confirmAuthKey($_GET['uid'], $_GET['authKey'])) {
 
         $error = array('result' => false, 'message' => "Unable to authenticate user.");
         echo json_encode($error);
@@ -486,8 +589,7 @@ if ($_GET['request'] == "getJournalsByDate") {
         echo json_encode($error);
         return;
 
-    }
-    else {
+    } else {
 
         $result = array('result' => true, 'message' => "Success.", 'journals' => $result);
         echo json_encode($result);
@@ -517,7 +619,7 @@ if ($_GET['request'] == "getJournalsByYearWeek") {
     //auth the user...
     //check the auth key
     $user = new users();
-    if(!$user->confirmAuthKey($_GET['uid'],$_GET['authKey'])) {
+    if (!$user->confirmAuthKey($_GET['uid'], $_GET['authKey'])) {
 
         $error = array('result' => false, 'message' => "Unable to authenticate user.");
         echo json_encode($error);
@@ -534,8 +636,7 @@ if ($_GET['request'] == "getJournalsByYearWeek") {
         echo json_encode($error);
         return;
 
-    }
-    else {
+    } else {
 
         $result = array('result' => true, 'message' => "Success.", 'journals' => $result);
         echo json_encode($result);
