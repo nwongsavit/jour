@@ -12,6 +12,7 @@ header('Content-Type: application/json');
 include('db.php');
 include('users.php');
 include('journal.php');
+include ('tasks.php');
 
 //jour API
 
@@ -417,6 +418,7 @@ if (isset($_GET['request']) && $_GET['request'] == "deleteUser") {
 
     }
 }
+
 //**********************************************END USER RELATED API CALLS*************************************************************
 
 
@@ -694,4 +696,153 @@ if ($_GET['request'] == "getJournalsByYearWeek") {
     }
 
 }
+
+//**********************************************END JOURNAL RELATED API CALLS********************************************************
+
+
+//**********************************************TASKS RELATED API CALLS**************************************************************
+
+if ($_GET['request'] == "addTasks") {
+    //make sure api call requirements are met.
+    if (!isset($_GET['uid']) || !isset($_GET['authKey']) || !isset($_GET['tasks'])) {
+        if (!isset($_GET['uid'])) {
+            $neededParams[] = "uid";
+        }
+        if (!isset($_GET['authKey'])) {
+            $neededParams[] = "authKey";
+        }
+        if (!isset($_GET['tasks'])) {
+            $neededParams[] = "tasks";
+        }
+        $error = array('result' => false, 'message' => "Error: Missing required data. Please provide user id, tasks, and authKey.", 'needed' => $neededParams);
+        echo json_encode($error);
+        return;
+    }
+
+    //all required params have been provided.
+    //auth the user...
+    //check the auth key
+    $user = new users();
+    if (!$user->confirmAuthKey($_GET['uid'], $_GET['authKey'])) {
+
+        $error = array('result' => false, 'message' => "Unable to authenticate user.");
+        echo json_encode($error);
+        return;
+
+    }
+
+    $tasks = new tasks();
+
+    //every thing checks out, add the journal.
+    if (!$result = $tasks->addTasks($_GET['uid'], $_GET['tasks'])) {
+
+        $error = array('result' => false, 'message' => "Error. Could not add tasks.");
+        echo json_encode($error);
+        return;
+
+    } else {
+
+        $result = array('result' => true, 'message' => "Success. Tasks added.");
+        echo json_encode($result);
+        return;
+
+    }
+
+}
+
+if ($_GET['request'] == "toggleTasksCompleted") {
+    //make sure api call requirements are met.
+    if (!isset($_GET['uid']) || !isset($_GET['tid']) || !isset($_GET['authKey'])) {
+        if (!isset($_GET['uid'])) {
+            $neededParams[] = "uid";
+        }
+        if (!isset($_GET['authKey'])) {
+            $neededParams[] = "authKey";
+        }
+        if (!isset($_GET['tid'])) {
+            $neededParams[] = "task id";
+        }
+        $error = array('result' => false, 'message' => "Error: Missing required data. Please provide user id, task id, and authKey.", 'needed' => $neededParams);
+        echo json_encode($error);
+        return;
+    }
+
+    //all required params have been provided.
+    //auth the user...
+    //check the auth key
+    $user = new users();
+    if (!$user->confirmAuthKey($_GET['uid'], $_GET['authKey'])) {
+
+        $error = array('result' => false, 'message' => "Unable to authenticate user.");
+        echo json_encode($error);
+        return;
+
+    }
+
+    $tasks = new tasks();
+
+    //every thing checks out, add the journal.
+    if (!$result = $tasks->toggleTaskCompleted($_GET['uid'], $_GET['tid'])) {
+
+        $error = array('result' => false, 'message' => "Error. Could not toggle the task completed value.");
+        echo json_encode($error);
+        return;
+
+    } else {
+
+        $result = array('result' => true, 'message' => "Success. Task completed value was changed.");
+        echo json_encode($result);
+        return;
+
+    }
+
+}
+
+if ($_GET['request'] == "getTasksByYearWeek") {
+    //make sure api call requirements are met.
+    if (!isset($_GET['uid']) || !isset($_GET['date']) || !isset($_GET['authKey'])) {
+        if (!isset($_GET['uid'])) {
+            $neededParams[] = "uid";
+        }
+        if (!isset($_GET['authKey'])) {
+            $neededParams[] = "authKey";
+        }
+        if (!isset($_GET['date'])) {
+            $neededParams[] = "date";
+        }
+        $error = array('result' => false, 'message' => "Error: Missing required data. Please provide user id, date, and authKey.", 'needed' => $neededParams);
+        echo json_encode($error);
+        return;
+    }
+    //all required params have been provided.
+    //auth the user...
+    //check the auth key
+    $user = new users();
+    if (!$user->confirmAuthKey($_GET['uid'], $_GET['authKey'])) {
+
+        $error = array('result' => false, 'message' => "Unable to authenticate user.");
+        echo json_encode($error);
+        return;
+
+    }
+
+    $tasks = new tasks();
+
+    //every thing checks out, add the journal.
+    if (!$result = $tasks->getTasksByYearWeek($_GET['uid'], $_GET['date'])) {
+
+        $error = array('result' => false, 'message' => "No tasks for this user on this week.");
+        echo json_encode($error);
+        return;
+
+    } else {
+
+        $result = array('result' => true, 'message' => "Success.", 'tasks' => $result);
+        echo json_encode($result);
+        return;
+
+    }
+
+}
+
 ?>

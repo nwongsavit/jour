@@ -666,6 +666,165 @@
         </b>
     </p>
 </div>
-
+<hr>
+<div style="background-color:whitesmoke">
+    <h4>Request: getTasksByYearWeek</h4>
+    <p>required parameters:</p>
+    <ul>
+        <li>uid</li>
+        <li>authKey</li>
+        <li>date - required format: yyyy-mm-dd (anydate from the desired week will work</li>
+    </ul>
+    <p>Sample call:
+        <b>https://www.jour.life/api/api.php?key=apikey&request=getTasksByYearWeek&uid=2&date=2019-05-05&authKey=blah</b><br>
+        Sample response:
+        <b>
+        <pre>
+            {
+                "result": false,
+                "message": "Error: Missing required data. user id, date, and users auth key.",
+                "needed": [
+                     "uid",
+                     "date",
+                     "authKey"
+                ]
+            }
+        </pre>
+        </b>
+        Sample response:
+        <b>
+        <pre>
+            {
+                "result": false,
+                "message": "User Authentication failed,"
+            }
+        </pre>
+        </b>
+        Sample response:
+        <b>
+        <pre>
+            {
+                "result": false,
+                "message": "No tasks for this user on this week."
+            }
+        </pre>
+        </b>
+        Sample response:
+        <b>
+        <pre>
+            {
+                "result": true,
+                "message": "Success.",
+                "tasks": [
+                    {
+                        "id": 1,
+                        "uid": 11,
+                        "task_date": "2019-05-05 01:29:53",
+                        "task": "blah",
+                        "completed": 0
+                    },
+                    {
+                        "id": 2,
+                        "uid": 11,
+                        "task_date": "2019-05-05 01:29:53",
+                        "task": "bleh",
+                        "completed": 0
+                    },
+                    {
+                        "id": 3,
+                        "uid": 11,
+                        "task_date": "2019-05-05 01:33:40",
+                        "task": "blah",
+                        "completed": 1
+                    },
+                    {
+                        "id": 4,
+                        "uid": 11,
+                        "task_date": "2019-05-05 01:33:40",
+                        "task": "bleh",
+                        "completed": 0
+                    },
+                    {
+                        "id": 5,
+                        "uid": 11,
+                        "task_date": "2019-05-05 01:33:40",
+                        "task": "fu",
+                        "completed": 1
+                    },
+                    {
+                        "id": 6,
+                        "uid": 11,
+                        "task_date": "2019-05-05 01:33:40",
+                        "task": "bar",
+                        "completed": 1
+                    }
+                ]
+            }
+        </pre>
+        </b>
+    </p>
+</div>
+<hr>
+<div style="background-color:lightgray">
+    <h4>Request: addTasks</h4>
+    <p>required parameters:</p>
+    <ul>
+        <li>uid</li>
+        <li>authKey</li>
+        <li>tasks[]</li>
+    </ul>
+    <p>Sample call:
+        <b>https://www.jour.life/api/api.php?key=apikey&request=addTasks&uid=1&authKey=1&tasks[]=sometask&tasks[]=anothertask&tasks[]=yetanothertask</b><br>
+        Sample response:
+        <b>
+        <pre>
+            {
+                "result": false,
+                "message": "Error. Could not add tasks."
+            }
+        </pre>
+        </b>
+        Sample response:
+        <b>
+        <pre>
+           {
+                "result": true,
+                "message": "Success. Tasks added."
+           }
+        </pre>
+        </b>
+    </p>
+</div>
+<hr>
+<div style="background-color:whitesmoke">
+    <h4>Request: addTasks</h4>
+    <p>required parameters:</p>
+    <ul>
+        <li>uid</li>
+        <li>authKey</li>
+        <li>tid</li>
+    </ul>
+    <p>Sample call:
+        <b>https://www.jour.life/api/api.php?key=apikey&request=toggleTasksCompleted&uid=1&authKey=1&tid=3</b><br>
+        Sample response:
+        <b>
+        <pre>
+            {
+                "result": false,
+                "message": "Error. Could not toggle the task completed value."
+            }
+        </pre>
+        </b>
+        Sample response:
+        <b>
+        <pre>
+           {
+                "result": true,
+                "message": "Success. Task completed value was changed.""
+           }
+        </pre>
+        </b>
+    </p>
+</div>
 </body>
 </html>
