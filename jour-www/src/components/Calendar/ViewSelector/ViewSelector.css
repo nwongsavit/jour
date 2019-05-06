@@ -24,6 +24,10 @@
   cursor: pointer;
 }
 
+.title {
+  cursor: pointer;
+}
+
 .datePicker {
   margin: 10px auto 0 auto;
   position: absolute;
