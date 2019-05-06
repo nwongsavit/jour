@@ -11,7 +11,6 @@ const apiKey = process.env.REACT_APP_API_KEY;
 class Tasks extends Component {
   renderTasks() {
     const { tasks } = this.props;
-    console.log('tasks :', tasks);
     if (tasks[0].id) {
       return tasks.map(task => <Task title={task.task} key={task.id} />);
     }

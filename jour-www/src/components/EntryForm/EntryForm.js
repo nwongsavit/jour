@@ -153,15 +153,10 @@ class EntryForm extends Component {
           tasks: tasksArr,
         },
       })
-      .then(result => this.setState(
-        {
-          results: result.data.result,
-          message: result.data.message,
-        },
-        () => {
-          console.log('this.state.message :', this.state.message);
-        },
-      ));
+      .then(result => this.setState({
+        results: result.data.result,
+        message: result.data.message,
+      }));
   }
 
   renderTasks() {

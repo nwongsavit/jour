@@ -60,16 +60,11 @@ class Calendar extends Component {
           date: format(new Date(selectedDate), 'YYYY-MM-DD'),
         },
       })
-      .then(result => this.setState(
-        {
-          results: result.data.result,
-          message: result.data.message,
-          tasks: result.data.tasks,
-        },
-        () => {
-          console.log('this.state.tasks :', this.state.tasks);
-        },
-      ));
+      .then(result => this.setState({
+        results: result.data.result,
+        message: result.data.message,
+        tasks: result.data.tasks,
+      }));
   }
 
   getJournalEntries() {

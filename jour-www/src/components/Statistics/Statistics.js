@@ -76,7 +76,6 @@ class Statistics extends Component {
           journalInfo: result.data.journals,
         },
         () => {
-          console.log('this.state.journalInfo :', this.state.journalInfo);
           this.sortByMood();
         },
       ));
@@ -88,7 +87,6 @@ class Statistics extends Component {
       return;
     }
 
-    console.log('journalInfo :', journalInfo);
     journalInfo.forEach((journal) => {
       moodCount[journal.mood] += 1;
     });
