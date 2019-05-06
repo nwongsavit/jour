@@ -23,7 +23,7 @@ class CalendarCellWeek extends Component {
   };
 
   render() {
-    const { date, selectedDate } = this.props;
+    const { date, selectedDate, journalCount } = this.props;
 
     return (
       <div className="CalendarCellWeek" onClick={this.setSelectedDate}>
@@ -46,10 +46,14 @@ class CalendarCellWeek extends Component {
             date.getDate() === startOfWeek(date).getDate() ? 'week-content first' : 'week-content'
           }
         >
-          <div className="mood-circles">
+          {/* <div className="mood-circles">
             <div className="selected-circle circle" />
+          </div> */}
+          <div className="journals-count pill">
+            {journalCount}
+            {' '}
+Journals
           </div>
-          <div className="journals-count pill">0 Journals</div>
           <div className="tasks-count pill">0 Tasks</div>
         </div>
       </div>
@@ -59,10 +63,12 @@ class CalendarCellWeek extends Component {
 
 CalendarCellWeek.propTypes = {
   date: PropTypes.object,
+  journalCount: PropTypes.number,
 };
 
 CalendarCellWeek.defaultProps = {
   date: {},
+  journalCount: 0,
 };
 
 const mapStateToProps = state => ({
