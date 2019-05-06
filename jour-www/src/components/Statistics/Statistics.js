@@ -9,7 +9,11 @@ import {
   YAxis,
   VerticalBarSeries,
   RadialChart,
+  Hint,
 } from 'react-vis';
+import {
+  PieChart, Pie, Legend, Tooltip,
+} from 'recharts';
 import {
   format, addDays, startOfWeek, endOfWeek,
 } from 'date-fns';
@@ -92,13 +96,14 @@ class Statistics extends Component {
     });
 
     let data = Object.assign(
-      Object.entries(moodCount).map(([key, value]) => ({ subLabel: key, angle: value })),
+      Object.entries(moodCount).map(([key, value]) => ({ name: key, value })),
     );
 
-    data = data.filter(d => d.angle !== 0);
+    data = data.filter(d => d.value !== 0);
     this.setState({
       moodData: data,
     });
+    console.log('data :', data);
   };
 
   previousWeek = () => {
@@ -130,9 +135,17 @@ class Statistics extends Component {
   render() {
     const barSeriesStyle = { fill: 'inherit', stroke: 'inherit' };
 
-    const { moodData, moodCount } = this.state;
+    const { moodData, moodCount, value } = this.state;
 
     const myData = [{ angle: 1 }, { angle: 5 }, { angle: 2 }];
+
+    const tipStyle = {
+      display: 'flex',
+      color: '#fff',
+      background: '#000',
+      alignItems: 'center',
+      padding: '5px',
+    };
 
     return (
       <div className="Statistics">
@@ -149,7 +162,7 @@ class Statistics extends Component {
           <VerticalBarSeries className="paidPageVisitors" style={barSeriesStyle} data={moodData} />
         </FlexibleWidthXYPlot> */}
         <h3>Mood</h3>
-        <RadialChart
+        {/* <RadialChart
           data={moodData}
           radius={140}
           padAngle={0.04}
@@ -159,7 +172,29 @@ class Statistics extends Component {
           showLabels
           onValueMouseOver={v => this.setState({ value: v })}
           onSeriesMouseOut={v => this.setState({ value: false })}
-        />
+        >
+          {value !== false && (
+            <Hint value={value}>
+              <div style={{ background: 'black', position: 'absolute' }}>
+                <h3>Value of hint</h3>
+                <p>{value.sublabel}</p>
+              </div>
+            </Hint>
+          )}
+        </RadialChart> */}
+        <PieChart width={400} height={400}>
+          <Pie
+            dataKey="value"
+            isAnimationActive={false}
+            data={moodData}
+            cx={200}
+            cy={200}
+            outerRadius={80}
+            fill="#8884d8"
+            label
+          />
+          <Tooltip />
+        </PieChart>
       </div>
     );
   }

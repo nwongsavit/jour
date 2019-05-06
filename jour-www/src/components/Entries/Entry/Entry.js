@@ -12,6 +12,7 @@ class Entry extends Component {
   }
 
   open = () => {
+    const { journalInfo } = this.props;
     this.props.dispatch({
       type: 'OPEN_MODAL',
       modalType: 'EDIT_ENTRY',
