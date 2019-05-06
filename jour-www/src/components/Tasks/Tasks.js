@@ -4,84 +4,32 @@ import './Tasks.css';
 import { format } from 'date-fns';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import Task from './Task/Task';
+import Task from '../Task/Task';
 
 const apiKey = process.env.REACT_APP_API_KEY;
 
 class Tasks extends Component {
-  constructor() {
-    super();
-    this.state = {
-      tasks: [],
-    };
-  }
-
-  componentDidMount() {
-    this.getTasks();
-  }
-
-  getTasks() {
-    const { uid, authKey } = this.props;
-    axios
-      .get('https://jour.life/api/api.php', {
-        params: {
-          key: apiKey,
-          request: 'getTasksByYearWeek',
-          uid,
-          authKey,
-          date: format(new Date(), 'YYYY-MM-DD'),
-        },
-      })
-      .then(result => this.setState(
-        {
-          results: result.data.result,
-          message: result.data.message,
-          tasks: result.data.journals,
-        },
-        () => {
-          console.log('this.state.tasks :', this.state.tasks);
-        },
-      ));
-  }
-
   renderTasks() {
-    const { tasks } = this.state;
-
+    const { tasks } = this.props;
+    console.log('tasks :', tasks);
     if (tasks[0].id) {
-      return tasks.map(journal => <Task content="hello" />);
+      return tasks.map(task => <Task title={task.task} key={task.id} />);
     }
   }
 
-  onCheck = () => {
-    console.log('check');
-  };
-
-  addPlaceholderTask = () => {
-    console.log('check');
-  };
-
   render() {
-    const { title } = this.props;
+    const { tasks } = this.props;
     return (
       <div className="Tasks">
         <h3>Tasks</h3>
-        {/* <Task title="Finish presentation script" />
-        <Task title="Practice presentation" />
-        <Task title="Talk to team about homework" /> */}
-        {this.renderTasks}
-        <Task placeholder="Add a task" />
-        <div className="addTask small-text" onClick={this.addPlaceholderTask}>
-          <div className="plus">+</div>
-          <div className="addText">Add task</div>
-        </div>
+        {tasks && tasks.length && this.renderTasks()}
       </div>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  uid: state.account_info.id,
-  authKey: state.account_info.authKey,
+  selectedDate: state.selectedDate,
 });
 
 export default connect(mapStateToProps)(Tasks);

@@ -8,6 +8,7 @@ import MonthView from './MonthView/MonthView';
 import WeekView from './WeekView/WeekView';
 import Task from '../Task/Task';
 import Entries from '../Entries/Entries';
+import Tasks from '../Tasks/Tasks';
 
 const apiKey = process.env.REACT_APP_API_KEY;
 class Calendar extends Component {
@@ -15,6 +16,7 @@ class Calendar extends Component {
     super();
     this.state = {
       journalInfo: {},
+      tasks: {},
       isMobile: window.innerWidth <= 767,
     };
   }
@@ -35,11 +37,39 @@ class Calendar extends Component {
     if (
       prevProps.selectedDate !== this.props.selectedDate
       || prevProps.modalType !== this.props.modalType
-    ) this.getJournalEntries();
+    ) {
+      this.getJournalEntries();
+      this.getTasks();
+    }
   }
 
   componentDidMount() {
     this.getJournalEntries();
+    this.getTasks();
+  }
+
+  getTasks() {
+    const { uid, authKey, selectedDate } = this.props;
+    axios
+      .get('https://jour.life/api/api.php', {
+        params: {
+          key: apiKey,
+          request: 'getTasksByYearWeek',
+          uid,
+          authKey,
+          date: format(new Date(selectedDate), 'YYYY-MM-DD'),
+        },
+      })
+      .then(result => this.setState(
+        {
+          results: result.data.result,
+          message: result.data.message,
+          tasks: result.data.tasks,
+        },
+        () => {
+          console.log('this.state.tasks :', this.state.tasks);
+        },
+      ));
   }
 
   getJournalEntries() {
@@ -62,7 +92,7 @@ class Calendar extends Component {
   }
 
   render() {
-    const { journalInfo, isMobile } = this.state;
+    const { journalInfo, isMobile, tasks } = this.state;
     const { selectedDate } = this.props;
     return (
       <div className="Calendar">
@@ -74,15 +104,14 @@ class Calendar extends Component {
 
         <div className="agenda">
           <div className="small-text agendaDate">{format(selectedDate, 'MMMM DD, YYYY')}</div>
-          <div className="mood">
-            <Entries journalInfo={journalInfo} />
-          </div>
-          <div className="tasks">
+          <Entries journalInfo={journalInfo} />
+          <Tasks tasks={tasks} />
+          {/* <div className="tasks">
             <h3>Tasks</h3>
             <Task title="Finish presentation script" />
             <Task title="Practice presentation" />
             <Task title="Talk to team about homework" />
-          </div>
+          </div> */}
         </div>
       </div>
     );
