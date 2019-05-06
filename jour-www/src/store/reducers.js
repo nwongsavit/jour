@@ -32,6 +32,10 @@ const reducer = (state = initialState, action) => {
         modalType: initialState.modalType,
         modalProps: initialState.modalProps,
       });
+    case 'UPDATE_USER':
+      return Object.assign({}, state, {
+        account_info: action.account_info,
+      });
     default:
       return state;
   }
