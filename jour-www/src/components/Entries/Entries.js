@@ -4,13 +4,6 @@ import { connect } from 'react-redux';
 import Entry from './Entry/Entry';
 
 class Entries extends Component {
-  constructor() {
-    super();
-    this.state = {
-      currentMonth: new Date(),
-    };
-  }
-
   renderJournalEntries() {
     const { journalInfo } = this.props;
     if (journalInfo[0].id) {

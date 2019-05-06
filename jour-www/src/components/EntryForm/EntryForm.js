@@ -18,10 +18,12 @@ class EntryForm extends Component {
     this.handleDelete = this.handleDelete.bind(this);
     this.handleJournalChange = this.handleJournalChange.bind(this);
     this.handleMoodChange = this.handleMoodChange.bind(this);
+    this.handleTaskChange = this.handleTaskChange.bind(this);
     this.toggleDeleteModal = this.toggleDeleteModal.bind(this);
     this.state = {
       journal: props.journalInfo.journal || '',
-      tasks: [],
+      tasks: {},
+      taskLayout: [],
       jid: props.journalInfo.id || '',
       mood: props.journalInfo.mood || 'happy',
       postDate: props.journalInfo.postDate || '',
@@ -34,6 +36,7 @@ class EntryForm extends Component {
   }
 
   handleSubmit(e) {
+    e.preventDefault();
     const { journal, jid, mood } = this.state;
     const {
       uid, authKey, closeModal, type,
@@ -61,7 +64,7 @@ class EntryForm extends Component {
       };
     }
 
-    // this.addTasks();
+    this.addTasks();
 
     axios
       .get('https://jour.life/api/api.php', {
@@ -85,8 +88,6 @@ class EntryForm extends Component {
       .catch((error) => {
         console.log('error :', error);
       });
-
-    e.preventDefault();
   }
 
   handleDelete() {
@@ -128,64 +129,60 @@ class EntryForm extends Component {
     this.setState({ deleteModal: !this.state.deleteModal });
   }
 
-  getTasks() {
-    const { uid, authKey } = this.props;
-    axios
-      .get('https://jour.life/api/api.php', {
-        params: {
-          key: apiKey,
-          request: 'getTasksByYearWeek',
-          uid,
-          authKey,
-          date: format(new Date(), 'YYYY-MM-DD'),
-        },
-      })
-      .then(result => this.setState(
-        {
-          results: result.data.result,
-          message: result.data.message,
-          tasks: result.data.journals,
-        },
-        () => {
-          console.log('this.state.tasks :', this.state.tasks);
-        },
-      ));
-  }
+  handleTaskChange = (i, e) => {
+    const { tasks } = this.state;
+    this.setState({
+      tasks: { ...tasks, [i]: e.target.value },
+    });
+  };
 
   addTasks() {
+    const { tasks } = this.state;
+    if (!tasks) {
+      return;
+    }
+    const tasksArr = Object.keys(tasks).map(t => tasks[t]);
     const { uid, authKey } = this.props;
     axios
       .get('https://jour.life/api/api.php', {
         params: {
           key: apiKey,
-          request: 'getTasksByYearWeek',
+          request: 'addTasks',
           uid,
           authKey,
-          'tasks[]': ['task1'],
+          tasks: tasksArr,
         },
       })
-      .then(result => this.setState(
-        {
-          results: result.data.result,
-          message: result.data.message,
-        },
-        () => {
-          console.log('this.state.message :', this.state.message);
-        },
-      ));
+      .then(result => this.setState({
+        results: result.data.result,
+        message: result.data.message,
+      }));
   }
 
   renderTasks() {
     const { tasks } = this.state;
 
     if (tasks[0].id) {
-      return tasks.map(journal => <Task content="hello" />);
+      return tasks.map(journal => <Task content="hello" checkbox={false} />);
     }
   }
 
+  addPlaceholderTask = () => {
+    this.setState(prev => ({
+      taskLayout: [...prev.taskLayout, 'Add a task'],
+    }));
+  };
+
   render() {
     const {
-      journal, mood, jid, results, message, charactersRemaining, deleteModal,
+      journal,
+      mood,
+      jid,
+      results,
+      message,
+      charactersRemaining,
+      deleteModal,
+      taskLayout,
     } = this.state;
     const { type } = this.props;
 
@@ -226,11 +223,20 @@ characters remaining
             {type === 'add' && (
               <div className="tasks">
                 <h3>Tasks</h3>
-                {this.renderTasks}
-                <Task placeholder="Add a task" />
-                <div className="addTask small-text" onClick={this.addPlaceholderTask}>
+                {taskLayout.map((task, i) => (
+                  <div id={`task-${i}`}>
+                    <Task
+                      placeholder={task}
+                      id={i}
+                      key={i}
+                      onChange={this.handleTaskChange.bind(this, i)}
+                      checkbox={false}
+                    />
+                  </div>
+                ))}
+                <div className="add-task small-text" onClick={this.addPlaceholderTask}>
                   <div className="plus">+</div>
-                  <div className="addText">Add task</div>
+                  <div className="add-text">Add a task</div>
                 </div>
               </div>
             )}

@@ -46,6 +46,17 @@ class Statistics extends Component {
   }
 
   getJournalEntriesByWeek() {
+    this.setState({
+      moodCount: {
+        angry: 0,
+        anxious: 0,
+        confident: 0,
+        happy: 0,
+        nostalgic: 0,
+        sad: 0,
+      },
+      moodData: [],
+    });
     const { selectedWeek } = this.state;
     const { uid, authKey } = this.props;
     axios
@@ -66,8 +77,6 @@ class Statistics extends Component {
         },
         () => {
           this.sortByMood();
-          // console.log('format(new Date(selecte :', format(new Date(selectedWeek), 'YYYY-MM-DD'));
-          // console.log('this.state.journalInfo :', this.state.journalInfo);
         },
       ));
   }
@@ -77,6 +86,7 @@ class Statistics extends Component {
     if (!journalInfo) {
       return;
     }
+
     journalInfo.forEach((journal) => {
       moodCount[journal.mood] += 1;
     });
@@ -85,9 +95,7 @@ class Statistics extends Component {
       Object.entries(moodCount).map(([key, value]) => ({ subLabel: key, angle: value })),
     );
 
-    console.log('pre data :', data);
     data = data.filter(d => d.angle !== 0);
-    console.log('data :', data);
     this.setState({
       moodData: data,
     });
@@ -125,8 +133,6 @@ class Statistics extends Component {
     const { moodData, moodCount } = this.state;
 
     const myData = [{ angle: 1 }, { angle: 5 }, { angle: 2 }];
-    console.log('myData :', myData);
-    console.log('moodData :', moodData);
 
     return (
       <div className="Statistics">
@@ -142,6 +148,7 @@ class Statistics extends Component {
           <YAxis />
           <VerticalBarSeries className="paidPageVisitors" style={barSeriesStyle} data={moodData} />
         </FlexibleWidthXYPlot> */}
+        <h3>Mood</h3>
         <RadialChart
           data={moodData}
           radius={140}

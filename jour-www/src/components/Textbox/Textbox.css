@@ -17,12 +17,13 @@
   margin-bottom: 20px;
 }
 
-.addTask {
+.add-task {
+  cursor: pointer;
   display: flex;
   padding: 20px 20px 0 20px;
 }
 
-.addText {
+.add-text {
   margin-left: 24px;
 }
 
