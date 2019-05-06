@@ -18,6 +18,7 @@ class Login extends Component {
       results: false,
       message: '',
       account_info: {},
+      isLoggedIn: false,
       email: '',
       password: '',
     };
@@ -46,16 +47,23 @@ class Login extends Component {
           results: result.data.result,
           message: result.data.message,
           account_info: result.data.account_info,
+          isLoggedIn: true,
           //  this is an array of missing params, not needed here because the form has required set.
           //  needed: result.data.needed,
         },
         () => {
-          this.props.dispatch({
-            type: 'LOGIN',
-            account_info: this.state.account_info,
-          });
+          if (result.data.result) {
+            this.props.dispatch({
+              type: 'LOGIN',
+              account_info: this.state.account_info,
+              isLoggedIn: this.state.isLoggedIn,
+            });
+          }
         },
-      ));
+      ))
+      .catch((error) => {
+        console.log('error :', error);
+      });
   }
 
   handleEmailChange(e) {
@@ -67,48 +75,41 @@ class Login extends Component {
   }
 
   render() {
-    const { results } = this.state;
-    const { message } = this.state;
-    if (!results) {
-      return (
-        <div className="User">
-          <Form className="form" onSubmit={this.handleSubmit}>
-            <h3>Welcome back!</h3>
-            <span className="small-text error">{message}</span>
-            <Form.Control
-              id="email"
-              type="email"
-              placeholder="Username"
-              onChange={this.handleEmailChange}
-              required
-            />
-            <Form.Control
-              id="password"
-              type="password"
-              placeholder="Password"
-              onChange={this.handlePasswordChange}
-              required
-            />
-            <Button type="submit" block>
-              Submit
-            </Button>
-            <div id="register" className="small-text">
-              Not registered?
-              {' '}
-              <a href="/register">Create an account</a>
-            </div>
-            <div id="forgot-password" className="small-text">
-              Forgot password?
-              {' '}
-              <a href="/forgot-password">Click here</a>
-            </div>
-          </Form>
-        </div>
-      );
-    }
+    const { message, results } = this.state;
+
     return (
-      <div className="login-success">
-        <span>You are now logged in!</span>
+      <div className="User">
+        <Form className="form" onSubmit={this.handleSubmit}>
+          <h3>Welcome back!</h3>
+          {!results ? <div className="small-text error">{message}</div> : ''}
+          <Form.Control
+            id="email"
+            type="email"
+            placeholder="Email address"
+            onChange={this.handleEmailChange}
+            required
+          />
+          <Form.Control
+            id="password"
+            type="password"
+            placeholder="Password"
+            onChange={this.handlePasswordChange}
+            required
+          />
+          <Button type="submit" block>
+              Sign in
+          </Button>
+          <div id="register" className="small-text">
+              Not registered?
+            {' '}
+            <a href="/register">Create a new account</a>
+          </div>
+          <div id="forgot-password" className="small-text">
+              Forgot password?
+            {' '}
+            <a href="/forgot-password">Click here</a>
+          </div>
+        </Form>
       </div>
     );
   }
@@ -116,6 +117,7 @@ class Login extends Component {
 
 const mapStateToProps = state => ({
   account_info: state.account_info,
+  isLoggedIn: state.isLoggedIn,
 });
 
 export default connect(mapStateToProps)(Login);

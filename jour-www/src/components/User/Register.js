@@ -78,7 +78,7 @@ class Register extends Component {
       return (
         <div className="User">
           <Form className="form" onSubmit={this.handleSubmit}>
-            <h3>Sign Up</h3>
+            <h3>Welcome!</h3>
             <span
               id="errors"
               style={{ float: 'left', fontSize: 'x-small', color: 'red' }}
@@ -88,14 +88,14 @@ class Register extends Component {
             <Form.Control
               type="firstName"
               id="first"
-              placeholder="First Name"
+              placeholder="First name"
               onChange={this.handleFirstChange}
               required
             />
             <Form.Control
               type="email"
               id="emailAddress"
-              placeholder="Email"
+              placeholder="Email address"
               onChange={this.handleEmailChange}
               required
             />
@@ -110,8 +110,18 @@ class Register extends Component {
               type="submit"
               block
             >
-              Submit
+              Create new account
             </Button>
+            <div id="login" className="small-text">
+              Already have an account?
+              {' '}
+              <a href="/login">Sign in</a>
+            </div>
+            <div id="forgot-password" className="small-text">
+              Forgot password?
+              {' '}
+              <a href="/forgot-password">Click here</a>
+            </div>
           </Form>
         </div>
       );
