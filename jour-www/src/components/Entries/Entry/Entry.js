@@ -43,7 +43,7 @@ const mapStateToProps = state => ({
 });
 
 Entry.propTypes = {
-  journalInfo: PropTypes.array,
+  journalInfo: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
 };
 
 Entry.defaultProps = {

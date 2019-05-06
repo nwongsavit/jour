@@ -21,3 +21,17 @@
 .characters-remaining {
   text-align: right;
 }
+
+.delete-modal {
+  width: 100%;
+}
+
+.confirmation-buttons {
+  padding: 0 20px;
+  display: flex;
+}
+.confirmation-buttons > * {
+  margin: 15px;
+  flex: 1 0 0;
+  justify-content: space-between;
+}

@@ -14,7 +14,7 @@ class WeekView extends Component {
   constructor() {
     super();
     this.state = {
-      journalInfo: {},
+      journalInfoWeek: [],
     };
   }
 
@@ -22,20 +22,22 @@ class WeekView extends Component {
     if (
       prevProps.selectedDate !== this.props.selectedDate
       || prevProps.modalType !== this.props.modalType
-    ) this.getJournalEntries();
+    ) {
+      this.getJournalEntriesByWeek(this.props.selectedDate);
+    }
   }
 
   componentDidMount() {
-    this.getJournalEntries();
+    this.getJournalEntriesByWeek(this.props.selectedDate);
   }
 
-  getJournalEntries() {
+  getJournalEntriesByWeek() {
     const { uid, authKey, selectedDate } = this.props;
     axios
       .get('https://jour.life/api/api.php', {
         params: {
           key: apiKey,
-          request: 'getJournalsByDate',
+          request: 'getJournalsByYearWeek',
           uid,
           authKey,
           date: format(new Date(selectedDate), 'YYYY-MM-DD'),
@@ -44,26 +46,30 @@ class WeekView extends Component {
       .then(result => this.setState({
         results: result.data.result,
         message: result.data.message,
-        journalInfo: result.data.journals,
+        journalInfoWeek: result.data.journals,
       }));
   }
 
   renderWeekDays() {
-    const { journalInfo } = this.state;
+    const { journalInfoWeek } = this.state;
     const { selectedDate } = this.props;
     const weekStart = startOfWeek(selectedDate);
     const weekEnd = endOfWeek(weekStart);
-
     const rows = [];
     const days = [];
     let day = weekStart;
 
     let i = 0;
+    let journalCount = 0;
 
     while (day <= weekEnd) {
+      if (journalInfoWeek) {
+        journalCount = journalInfoWeek.filter(journal => journal.postDate.includes(format(day, 'YYYY-MM-DD')));
+        journalCount = journalCount.length;
+      }
       days.push(
         <Col className="dateCol" key={i}>
-          <CalendarCellWeek date={day} key={i} journalInfo={journalInfo} />
+          <CalendarCellWeek date={day} key={i} journalCount={journalCount} />
         </Col>,
       );
       day = addDays(day, 1);
@@ -75,7 +81,6 @@ class WeekView extends Component {
   }
 
   previousWeek = () => {
-    console.log('previousWeek :');
     const { selectedDate } = this.props;
     let newDate = addDays(selectedDate, -7);
     newDate = startOfWeek(newDate);

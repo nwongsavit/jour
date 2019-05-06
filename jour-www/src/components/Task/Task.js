@@ -10,11 +10,11 @@ class Task extends Component {
   };
 
   render() {
-    const { title } = this.props;
+    const { title, placeholder } = this.props;
     return (
       <div className="Task">
         <input className="checkbox" type="checkbox" />
-        <Textarea rows={1} content={title} onCheck={this.onCheck} />
+        <Textarea rows={1} content={title} onCheck={this.onCheck} placeholder={placeholder} />
       </div>
     );
   }
@@ -22,10 +22,12 @@ class Task extends Component {
 
 Task.propTypes = {
   title: PropTypes.string,
+  placeholder: PropTypes.string,
 };
 
 Task.defaultProps = {
   title: '',
+  placeholder: '',
 };
 
 export default Task;
