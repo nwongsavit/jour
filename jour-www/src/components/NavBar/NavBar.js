@@ -25,7 +25,7 @@ class NavBar extends Component {
 
   handleWindowSizeChange = () => {
     this.setState({ width: window.innerWidth });
-  }
+  };
 
   handleNavItemClick = (e, to) => {
     e.preventDefault();
@@ -35,17 +35,14 @@ class NavBar extends Component {
       },
       () => {
         const { isLoggedIn } = this.state;
-        console.log('to :', to);
-        console.log('isLoggedIn :', isLoggedIn);
         if (isLoggedIn) {
           this.props.history.push(to);
-        }
-        else {
+        } else {
           this.props.history.push('/login');
         }
       },
     );
-  }
+  };
 
   handleLogInClick(e) {
     e.preventDefault();
@@ -73,11 +70,36 @@ class NavBar extends Component {
           <div className="navbar-collapse">
             <ul className="flex-md-column navbar-nav w-100 navFlex">
               {/* {!isMobile && <NavBrand name="Jour" icon={bg} to="/home" />} */}
-              <NavItem name="Add" icon="plus" to="/add" onClick={(e => this.handleNavItemClick(e, '/add'))} />
-              <NavItem name="Calendar" icon="calendar" to="/calendar" onClick={(e => this.handleNavItemClick(e, '/calendar'))} />
-              <NavItem name="Statistics" icon="chart-bar" to="/statistics" onClick={(e => this.handleNavItemClick(e, '/statistics'))} />
-              <NavItem name="Settings" icon="cog" to="/settings" onClick={(e => this.handleNavItemClick(e, '/settings'))} />
-              <NavItem name="Log In" icon="sign-out-alt" to="/login" onClick={this.handleLogInClick} />
+              <NavItem
+                name="Add"
+                icon="plus"
+                to="/add"
+                onClick={e => this.handleNavItemClick(e, '/add')}
+              />
+              <NavItem
+                name="Calendar"
+                icon="calendar"
+                to="/calendar"
+                onClick={e => this.handleNavItemClick(e, '/calendar')}
+              />
+              <NavItem
+                name="Statistics"
+                icon="chart-bar"
+                to="/statistics"
+                onClick={e => this.handleNavItemClick(e, '/statistics')}
+              />
+              <NavItem
+                name="Settings"
+                icon="cog"
+                to="/settings"
+                onClick={e => this.handleNavItemClick(e, '/settings')}
+              />
+              <NavItem
+                name="Log In"
+                icon="sign-out-alt"
+                to="/login"
+                onClick={this.handleLogInClick}
+              />
             </ul>
           </div>
         </nav>

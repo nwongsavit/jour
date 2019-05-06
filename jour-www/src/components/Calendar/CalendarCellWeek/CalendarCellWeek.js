@@ -13,15 +13,6 @@ class CalendarCellWeek extends Component {
     });
   };
 
-  getJournalLength = () => {
-    // const { date, journalInfo } = this.props;
-    // console.log('journalInfo :', date.getDate(), journalInfo);
-    // if (journalInfo[0] === 0) {
-    //   return 'inside';
-    // }
-    // return 'empty';
-  };
-
   render() {
     const { date, selectedDate, journalCount } = this.props;
 
