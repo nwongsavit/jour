@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Route, Redirect, Switch } from 'react-router-dom';
+import {
+  Route, Redirect, Switch, withRouter,
+} from 'react-router-dom';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 import {
   faPencilAlt,
   faPlus,
@@ -47,7 +48,7 @@ class App extends Component {
 
     return (
       <div className="App">
-        { isLoggedIn ? <NavBar /> : '' }
+        {isLoggedIn ? <NavBar /> : ''}
         <div className="content">
           <UserBar />
           <div className="container">
@@ -63,6 +64,7 @@ class App extends Component {
               <Redirect path="/" exact to="/landing" />
             </Switch>
           </div>
+          <div className="filler" />
         </div>
         <RootModal />
       </div>

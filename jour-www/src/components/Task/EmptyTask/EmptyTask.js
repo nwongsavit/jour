@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import './Task.css';
-import Input from '../Input/Input';
+import './EmptyTask.css';
+import Input from '../../Input/Input';
 
-class Task extends Component {
+class EmptyTask extends Component {
   constructor(props) {
     super(props);
     this.handleInputChange = this.handleInputChange.bind(this);
-    this.state = {
-      content: this.props.taskInfo.task || '',
-    };
+    this.state = {};
   }
 
   // onChange = (e) => {
@@ -25,35 +23,28 @@ class Task extends Component {
   render() {
     const { content } = this.state;
     const {
-      placeholder, onChange, checkbox, taskInfo,
+      placeholder, onChange, checkbox, EmptyTaskInfo,
     } = this.props;
     return (
-      <div className="Task" id={`task-${taskInfo.id}`}>
-        <Input
-          content={content}
-          placeholder={placeholder}
-          onChange={this.handleInputChange}
-          onBlur={this.onCheck}
-          checkbox={checkbox}
-          completed={taskInfo.completed}
-        />
+      <div className="EmptyTask" id={`task-${EmptyTaskInfo.id}`}>
+        <Input placeholder="Add a task" onChange={onChange} />
       </div>
     );
   }
 }
 
-Task.propTypes = {
+EmptyTask.propTypes = {
   placeholder: PropTypes.string,
   checkbox: PropTypes.bool,
-  taskInfo: PropTypes.object,
+  EmptyTaskInfo: PropTypes.object,
 };
 
-Task.defaultProps = {
+EmptyTask.defaultProps = {
   placeholder: '',
   checkbox: true,
-  taskInfo: {
-    task: '',
+  EmptyTaskInfo: {
+    EmptyTask: '',
   },
 };
 
-export default Task;
+export default EmptyTask;

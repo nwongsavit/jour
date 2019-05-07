@@ -26,9 +26,15 @@ class Login extends Component {
   }
 
   componentWillMount() {
-    document.title = "Jour - Login";
+    document.title = 'Jour - Login';
     const { isLoggedIn } = this.props;
     if (isLoggedIn) {
+      this.props.history.push('/calendar');
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.isLoggedIn !== this.props.isLoggedIn) {
       this.props.history.push('/calendar');
     }
   }
@@ -106,15 +112,15 @@ class Login extends Component {
             required
           />
           <Button type="submit" block>
-              Sign in
+            Sign in
           </Button>
           <div id="register" className="small-text">
-              Not registered?
+            Not registered?
             {' '}
             <a href="/register">Create a new account</a>
           </div>
           <div id="forgot-password" className="small-text">
-              Forgot password?
+            Forgot password?
             {' '}
             <a href="/forgot-password">Click here</a>
           </div>
@@ -130,4 +136,3 @@ const mapStateToProps = state => ({
 });
 
 export default withRouter(connect(mapStateToProps)(Login));
-

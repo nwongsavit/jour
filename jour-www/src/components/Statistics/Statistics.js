@@ -44,7 +44,7 @@ class Statistics extends Component {
   }
 
   componentWillMount() {
-    document.title = "Jour - Statistics";
+    document.title = 'Jour - Statistics';
     const { isLoggedIn } = this.props;
     if (!isLoggedIn) {
       this.props.history.push('/login');
@@ -200,15 +200,10 @@ class Statistics extends Component {
           title={this.getTitle()}
           picker={false}
         />
-        {/* <FlexibleWidthXYPlot className="pageVisitorsChart" xType="ordinal" height={300} stackBy="y">
-          <HorizontalGridLines />
-          <XAxis />
-          <YAxis />
-          <VerticalBarSeries className="paidPageVisitors" style={barSeriesStyle} data={moodData} />
-        </FlexibleWidthXYPlot> */}
-        <h3>Mood</h3>
+        <h3>Statistics</h3>
         <div className="charts">
           <div className="chart1">
+            <h3>Moods by Charts</h3>
             <ResponsiveContainer height={400} width="100%">
               <PieChart>
                 <Pie
@@ -249,7 +244,7 @@ class Statistics extends Component {
             </ResponsiveContainer>
           </div>
           <div className="chart3">
-            <ResponsiveContainer height={400} width="100%">
+            <ResponsiveContainer height={300} width="100%">
               <LineChart data={data}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="name" />

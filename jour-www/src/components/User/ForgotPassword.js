@@ -32,7 +32,7 @@ class ForgotPassword extends Component {
 
   handleCancelClick = () => {
     this.props.history.push('/login');
-  }
+  };
 
   render() {
     return (
@@ -51,10 +51,10 @@ class ForgotPassword extends Component {
           />
           <div className="confirmation-buttons">
             <Button type="submit" onClick={this.handleSaveClick}>
-            Save Changes
+              Save
             </Button>
             <Button variant="light" onClick={this.handleCancelClick}>
-            Cancel
+              Cancel
             </Button>
           </div>
         </Form>
