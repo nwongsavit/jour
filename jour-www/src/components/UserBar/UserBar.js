@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { connect } from 'react-redux';
 import './UserBar.css';
 import NavBrand from '../NavBar/NavBrand/NavBrand';
@@ -45,11 +45,12 @@ class UserBar extends Component {
         <div className="user-container">
           {isLoggedIn ? (
             <div className="user-info" onClick={this.toggleDropdown}>
-              <img
+              <FontAwesomeIcon className="profile-picture" icon="user" />
+              {/* <img
                 src="https://www.dhresource.com/0x0s/f2-albu-g1-M01-BA-11-rBVaGFZPxxaAFYa-AAHcP0vLhWQ251.jpg/movie-jewelry-harry-potter-deathly-hallows.jpg"
                 className="profile-picture"
                 alt="profile"
-              />
+              /> */}
               {!isMobile && (
                 <div className="username small-text">{name}</div>
                 //   <FontAwesomeIcon id="next" icon="angle-down" />

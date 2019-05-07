@@ -15,6 +15,7 @@ import {
   faAngleRight,
   faAngleDown,
   faThLarge,
+  faUser,
 } from '@fortawesome/free-solid-svg-icons';
 import NavBar from '../NavBar/NavBar';
 import Add from '../Add/Add';
@@ -27,6 +28,7 @@ import Confirm from '../User/Confirm';
 import ForgotPassword from '../User/ForgotPassword';
 import UserBar from '../UserBar/UserBar';
 import RootModal from '../RootModal/RootModal';
+import Landing from '../Landing/Landing';
 import './App.css';
 
 library.add(
@@ -40,6 +42,7 @@ library.add(
   faAngleRight,
   faThLarge,
   faAngleDown,
+  faUser,
 );
 
 class App extends Component {
@@ -61,7 +64,7 @@ class App extends Component {
               <Route path="/register" component={Register} />
               <Route path="/confirm" component={Confirm} />
               <Route path="/forgot-password" component={ForgotPassword} />
-              <Redirect path="/" exact to="/landing" />
+              <Redirect path="/" to="/login" component={Login} />
             </Switch>
           </div>
           <div className="filler" />
