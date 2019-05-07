@@ -6,6 +6,7 @@ import { withRouter } from 'react-router-dom';
 
 class Add extends Component {
   componentWillMount() {
+    document.title = "Jour - Add";
     const { isLoggedIn } = this.props;
     if (!isLoggedIn) {
       this.props.history.push('/login');

@@ -39,6 +39,7 @@ class Statistics extends Component {
   }
 
   componentWillMount() {
+    document.title = "Jour - Statistics";
     const { isLoggedIn } = this.props;
     if (!isLoggedIn) {
       this.props.history.push('/login');

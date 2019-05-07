@@ -31,6 +31,7 @@ class Settings extends Component {
   }
 
   componentWillMount() {
+    document.title = "Jour - Settings";
     const { isLoggedIn } = this.props;
     if (!isLoggedIn) {
       this.props.history.push('/login');

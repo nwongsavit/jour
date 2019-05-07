@@ -23,6 +23,7 @@ class Calendar extends Component {
   }
 
   componentWillMount() {
+    document.title = "Jour - Calendar";
     window.addEventListener('resize', this.handleWindowSizeChange);
     const { isLoggedIn } = this.props;
     if (!isLoggedIn) {

@@ -5,7 +5,7 @@ import './UserBar.css';
 import NavBrand from '../NavBar/NavBrand/NavBrand';
 import UserDropdown from './UserDropdown/UserDropdown';
 
-const bg = require('../../assets/jourlogo200w.png');
+const bg = require('../../assets/jourlogo.svg');
 
 class UserBar extends Component {
   constructor(props) {
