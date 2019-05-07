@@ -1,0 +1,44 @@
+.chart {
+  border: 1px lightgrey solid;
+  border-radius: 10px;
+  width: 50%;
+  height: 100%;
+}
+
+.Statistics {
+  /* display: flex; */
+  /* flex-direction: column;
+  align-items: center; */
+}
+
+.charts {
+  justify-content: center;
+  display: grid;
+  /* grid-template-columns: repeat(auto-fill, minmax(250px, 50%)); */
+  grid-template-rows: auto;
+  /* grid-template-areas: "chart1 chart2"
+  "chart3 chart3"; */
+}
+
+.charts > * {
+
+  padding: 10px;
+}
+
+@media (min-width: 768px) {
+  .charts {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 50%));
+  }
+}
+/* 
+.chart1 {
+  grid-area: chart1;
+}
+
+.chart2 {
+  grid-area: chart2;
+} */
+
+.chart3 {
+  grid-column: 1 / -1;
+}

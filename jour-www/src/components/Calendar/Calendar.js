@@ -25,13 +25,10 @@ class Calendar extends Component {
     window.addEventListener('resize', this.handleWindowSizeChange);
   }
 
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.handleWindowSizeChange);
+  componentDidMount() {
+    this.getJournalEntries();
+    this.getTasks();
   }
-
-  handleWindowSizeChange = () => {
-    this.setState({ isMobile: window.innerWidth <= 767 });
-  };
 
   componentDidUpdate(prevProps) {
     if (
@@ -43,9 +40,8 @@ class Calendar extends Component {
     }
   }
 
-  componentDidMount() {
-    this.getJournalEntries();
-    this.getTasks();
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleWindowSizeChange);
   }
 
   getTasks() {
@@ -54,7 +50,7 @@ class Calendar extends Component {
       .get('https://jour.life/api/api.php', {
         params: {
           key: apiKey,
-          request: 'getTasksByYearWeek',
+          request: 'getTasksByDate',
           uid,
           authKey,
           date: format(new Date(selectedDate), 'YYYY-MM-DD'),
@@ -85,6 +81,10 @@ class Calendar extends Component {
         journalInfo: result.data.journals,
       }));
   }
+
+  handleWindowSizeChange = () => {
+    this.setState({ isMobile: window.innerWidth <= 767 });
+  };
 
   render() {
     const { journalInfo, isMobile, tasks } = this.state;

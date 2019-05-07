@@ -6,9 +6,10 @@ import Entry from './Entry/Entry';
 class Entries extends Component {
   renderJournalEntries() {
     const { journalInfo } = this.props;
-    if (journalInfo[0].id) {
+    if (journalInfo && journalInfo.length && journalInfo[0].id) {
       return journalInfo.map(journal => <Entry journalInfo={journal} key={journal.id} />);
     }
+    return <div>No entries</div>;
   }
 
   render() {
@@ -16,7 +17,7 @@ class Entries extends Component {
     return (
       <div className="Entries">
         <h3>Entries</h3>
-        {journalInfo && journalInfo.length && this.renderJournalEntries()}
+        {this.renderJournalEntries()}
       </div>
     );
   }

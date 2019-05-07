@@ -14,7 +14,9 @@ class CalendarCellWeek extends Component {
   };
 
   render() {
-    const { date, selectedDate, journalCount } = this.props;
+    const {
+      date, selectedDate, journalCount, taskCount,
+    } = this.props;
 
     return (
       <div className="CalendarCellWeek" onClick={this.setSelectedDate}>
@@ -45,7 +47,11 @@ class CalendarCellWeek extends Component {
             {' '}
 Journals
           </div>
-          <div className="tasks-count pill">0 Tasks</div>
+          <div className="tasks-count pill">
+            {taskCount}
+            {' '}
+Tasks
+          </div>
         </div>
       </div>
     );

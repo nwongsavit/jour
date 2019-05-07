@@ -3,16 +3,17 @@ import './Statistics.css';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import {
-  HorizontalGridLines,
-  FlexibleWidthXYPlot,
+  PieChart,
+  Pie,
+  Legend,
+  Tooltip,
+  Cell,
+  LineChart,
+  Line,
   XAxis,
   YAxis,
-  VerticalBarSeries,
-  RadialChart,
-  Hint,
-} from 'react-vis';
-import {
-  PieChart, Pie, Legend, Tooltip,
+  CartesianGrid,
+  ResponsiveContainer,
 } from 'recharts';
 import {
   format, addDays, startOfWeek, endOfWeek,
@@ -103,7 +104,6 @@ class Statistics extends Component {
     this.setState({
       moodData: data,
     });
-    console.log('data :', data);
   };
 
   previousWeek = () => {
@@ -137,8 +137,43 @@ class Statistics extends Component {
 
     const { moodData, moodCount, value } = this.state;
 
-    const myData = [{ angle: 1 }, { angle: 5 }, { angle: 2 }];
-
+    const data = [
+      {
+        name: 'Page A',
+        uv: 4000,
+        amt: 2400,
+      },
+      {
+        name: 'Page B',
+        uv: 3000,
+        amt: 2210,
+      },
+      {
+        name: 'Page C',
+        uv: 2000,
+        amt: 2290,
+      },
+      {
+        name: 'Page D',
+        uv: 2780,
+        amt: 2000,
+      },
+      {
+        name: 'Page E',
+        uv: 1890,
+        amt: 2181,
+      },
+      {
+        name: 'Page F',
+        uv: 2390,
+        amt: 2500,
+      },
+      {
+        name: 'Page G',
+        uv: 3490,
+        amt: 2100,
+      },
+    ];
     const tipStyle = {
       display: 'flex',
       color: '#fff',
@@ -146,6 +181,7 @@ class Statistics extends Component {
       alignItems: 'center',
       padding: '5px',
     };
+    const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
     return (
       <div className="Statistics">
@@ -162,39 +198,97 @@ class Statistics extends Component {
           <VerticalBarSeries className="paidPageVisitors" style={barSeriesStyle} data={moodData} />
         </FlexibleWidthXYPlot> */}
         <h3>Mood</h3>
-        {/* <RadialChart
-          data={moodData}
-          radius={140}
-          padAngle={0.04}
-          width={300}
-          height={300}
-          innerRadius={100}
-          showLabels
-          onValueMouseOver={v => this.setState({ value: v })}
-          onSeriesMouseOut={v => this.setState({ value: false })}
-        >
-          {value !== false && (
-            <Hint value={value}>
-              <div style={{ background: 'black', position: 'absolute' }}>
-                <h3>Value of hint</h3>
-                <p>{value.sublabel}</p>
-              </div>
-            </Hint>
-          )}
-        </RadialChart> */}
-        <PieChart width={400} height={400}>
-          <Pie
-            dataKey="value"
-            isAnimationActive={false}
-            data={moodData}
-            cx={200}
-            cy={200}
-            outerRadius={80}
-            fill="#8884d8"
-            label
-          />
-          <Tooltip />
-        </PieChart>
+        <div className="charts">
+          <div className="chart1">
+            <ResponsiveContainer height={400} width="100%">
+              <PieChart>
+                <Pie
+                  dataKey="value"
+                  isAnimationActive={false}
+                  data={moodData}
+                  cx="50%"
+                  cy="50%"
+                  fill="#8884d8"
+                  label
+                >
+                  {moodData.map((entry, index) => (
+                    <Cell fill={COLORS[index % COLORS.length]} />
+                  ))}
+                </Pie>
+                <Tooltip />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
+          <div className="chart2">
+            <ResponsiveContainer height={400} width="100%">
+              <PieChart>
+                <Pie
+                  dataKey="value"
+                  isAnimationActive={false}
+                  data={moodData}
+                  cx="50%"
+                  cy="50%"
+                  fill="#8884d8"
+                  label
+                >
+                  {moodData.map((entry, index) => (
+                    <Cell fill={COLORS[index % COLORS.length]} />
+                  ))}
+                </Pie>
+                <Tooltip />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
+          <div className="chart3">
+            <ResponsiveContainer height={400} width="100%">
+              <LineChart data={data}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Line type="monotone" dataKey="uv" stroke="#82ca9d" activeDot={{ r: 8 }} />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+          {/* <ResponsiveContainer height={150} width="100%">
+            <PieChart>
+              <Pie
+                dataKey="value"
+                isAnimationActive={false}
+                data={moodData}
+                cx="50%"
+                cy="50%"
+                fill="#8884d8"
+                label
+              >
+                {moodData.map((entry, index) => (
+                  <Cell fill={COLORS[index % COLORS.length]} />
+                ))}
+              </Pie>
+              <Tooltip />
+            </PieChart>
+          </ResponsiveContainer>
+
+          <LineChart
+            width={500}
+            height={300}
+            data={data}
+            margin={{
+              top: 5,
+              right: 30,
+              left: 20,
+              bottom: 5,
+            }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="name" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Line type="monotone" dataKey="uv" stroke="#82ca9d" activeDot={{ r: 8 }} />
+          </LineChart> */}
+        </div>
       </div>
     );
   }

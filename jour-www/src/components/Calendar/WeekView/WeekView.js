@@ -15,7 +15,13 @@ class WeekView extends Component {
     super();
     this.state = {
       journalInfoWeek: [],
+      taskInfoWeek: [],
     };
+  }
+
+  componentDidMount() {
+    this.getJournalEntriesByWeek(this.props.selectedDate);
+    this.getTasksByWeek();
   }
 
   componentDidUpdate(prevProps) {
@@ -24,11 +30,8 @@ class WeekView extends Component {
       || prevProps.modalType !== this.props.modalType
     ) {
       this.getJournalEntriesByWeek(this.props.selectedDate);
+      this.getTasksByWeek();
     }
-  }
-
-  componentDidMount() {
-    this.getJournalEntriesByWeek(this.props.selectedDate);
   }
 
   getJournalEntriesByWeek() {
@@ -50,35 +53,35 @@ class WeekView extends Component {
       }));
   }
 
-  renderWeekDays() {
-    const { journalInfoWeek } = this.state;
-    const { selectedDate } = this.props;
-    const weekStart = startOfWeek(selectedDate);
-    const weekEnd = endOfWeek(weekStart);
-    const rows = [];
-    const days = [];
-    let day = weekStart;
-
-    let i = 0;
-    let journalCount = 0;
-
-    while (day <= weekEnd) {
-      if (journalInfoWeek) {
-        journalCount = journalInfoWeek.filter(journal => journal.postDate.includes(format(day, 'YYYY-MM-DD')));
-        journalCount = journalCount.length;
-      }
-      days.push(
-        <Col className="dateCol" key={i}>
-          <CalendarCellWeek date={day} key={i} journalCount={journalCount} />
-        </Col>,
-      );
-      day = addDays(day, 1);
-      i += 1;
-    }
-    rows.push(<Row key={i}>{days}</Row>);
-
-    return rows;
+  getTasksByWeek() {
+    const { uid, authKey, selectedDate } = this.props;
+    axios
+      .get('https://jour.life/api/api.php', {
+        params: {
+          key: apiKey,
+          request: 'getTasksByYearWeek',
+          uid,
+          authKey,
+          date: format(new Date(selectedDate), 'YYYY-MM-DD'),
+        },
+      })
+      .then(result => this.setState(
+        {
+          results: result.data.result,
+          message: result.data.message,
+          taskInfoWeek: result.data.tasks,
+        },
+        () => console.log('this.state.taskInfoWeek :', this.state.taskInfoWeek),
+      ));
   }
+
+  getTitle = () => {
+    const { selectedDate } = this.props;
+    const start = format(startOfWeek(selectedDate), 'MMMM DD, YYYY');
+    const end = format(endOfWeek(selectedDate), 'MMMM DD, YYYY');
+
+    return `${start} - ${end}`;
+  };
 
   previousWeek = () => {
     const { selectedDate } = this.props;
@@ -114,13 +117,40 @@ class WeekView extends Component {
     }
   };
 
-  getTitle = () => {
+  renderWeekDays() {
+    const { journalInfoWeek, taskInfoWeek } = this.state;
     const { selectedDate } = this.props;
-    const start = format(startOfWeek(selectedDate), 'MMMM DD, YYYY');
-    const end = format(endOfWeek(selectedDate), 'MMMM DD, YYYY');
+    const weekStart = startOfWeek(selectedDate);
+    const weekEnd = endOfWeek(weekStart);
+    const rows = [];
+    const days = [];
+    let day = weekStart;
 
-    return `${start} - ${end}`;
-  };
+    let i = 0;
+    let journalCount = 0;
+    let taskCount = 0;
+
+    while (day <= weekEnd) {
+      if (journalInfoWeek) {
+        journalCount = journalInfoWeek.filter(journal => journal.postDate.includes(format(day, 'YYYY-MM-DD')));
+        journalCount = journalCount.length;
+      }
+      if (taskInfoWeek) {
+        taskCount = taskInfoWeek.filter(task => task.task_date.includes(format(day, 'YYYY-MM-DD')));
+        taskCount = taskCount.length;
+      }
+      days.push(
+        <Col className="dateCol" key={i}>
+          <CalendarCellWeek date={day} key={i} journalCount={journalCount} taskCount={taskCount} />
+        </Col>,
+      );
+      day = addDays(day, 1);
+      i += 1;
+    }
+    rows.push(<Row key={i}>{days}</Row>);
+
+    return rows;
+  }
 
   render() {
     return (
