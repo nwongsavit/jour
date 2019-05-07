@@ -1,0 +1,26 @@
+.Input {
+  padding: 20px;
+  border-bottom: 1px solid lightgrey;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.Input:focus-within {
+  border-bottom: 1px solid #6fb6d3;
+}
+
+input {
+  border: none;
+  width: 100%;
+}
+
+input:focus {
+  outline: none;
+}
+
+.checkbox {
+  margin: 0;
+  margin-right: 20px;
+}

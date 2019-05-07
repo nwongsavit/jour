@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 class Textarea extends Component {
   render() {
     const {
-      rows, placeholder, content, onChange,
+      rows, placeholder, content, onChange, onBlur,
     } = this.props;
     return (
       <div className="Textarea">
@@ -15,6 +15,7 @@ class Textarea extends Component {
           placeholder={placeholder}
           defaultValue={content}
           onChange={onChange}
+          onBlur={onBlur}
         />
       </div>
     );

@@ -1,27 +1,41 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import './Task.css';
-import Textarea from '../Textarea/Textarea';
+import Input from '../Input/Input';
 
 class Task extends Component {
-  onCheck = () => {
+  constructor(props) {
+    super(props);
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.state = {
+      content: this.props.taskInfo.task,
+    };
+  }
+
+  onChange = (e) => {
     // after every check, send api call
+    console.log('e.target.value :', e.target.value);
     console.log('check');
   };
 
+  handleInputChange(e) {
+    this.setState({ content: e.target.value });
+  }
+
   render() {
+    const { content } = this.state;
     const {
-      title, placeholder, onChange, checkbox,
+      placeholder, onChange, checkbox, taskInfo,
     } = this.props;
     return (
-      <div className="Task">
-        {checkbox ? <input className="checkbox" type="checkbox" /> : ''}
-        <Textarea
-          rows={1}
-          content={title}
-          onCheck={this.onCheck}
+      <div className="Task" id={`task-${taskInfo.id}`}>
+        <Input
+          content={content}
           placeholder={placeholder}
-          onChange={onChange}
+          onChange={this.handleInputChange}
+          onBlur={this.onCheck}
+          checkbox={checkbox}
+          completed={taskInfo.completed}
         />
       </div>
     );
@@ -29,13 +43,11 @@ class Task extends Component {
 }
 
 Task.propTypes = {
-  title: PropTypes.string,
   placeholder: PropTypes.string,
   checkbox: PropTypes.bool,
 };
 
 Task.defaultProps = {
-  title: '',
   placeholder: '',
   checkbox: true,
 };
