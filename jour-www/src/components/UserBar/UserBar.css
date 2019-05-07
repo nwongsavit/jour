@@ -30,8 +30,8 @@
 }
 
 .profile-picture {
-  border: 1px solid #ededed;
-  border-radius: 50%;
+  /* border: 1px solid #ededed; */
+  /* border-radius: 50%; */
   height: 35px;
   width: 35px;
 }
