@@ -4,6 +4,7 @@ import './Calendar.css';
 
 import { format } from 'date-fns';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import MonthView from './MonthView/MonthView';
 import WeekView from './WeekView/WeekView';
 import Task from '../Task/Task';
@@ -22,7 +23,12 @@ class Calendar extends Component {
   }
 
   componentWillMount() {
+    document.title = "Jour - Calendar";
     window.addEventListener('resize', this.handleWindowSizeChange);
+    const { isLoggedIn } = this.props;
+    if (!isLoggedIn) {
+      this.props.history.push('/login');
+    }
   }
 
   componentWillUnmount() {
@@ -118,6 +124,7 @@ const mapStateToProps = state => ({
   authKey: state.account_info.authKey,
   selectedDate: state.selectedDate,
   modalType: state.modalType,
+  isLoggedIn: state.isLoggedIn,
 });
 
-export default connect(mapStateToProps)(Calendar);
+export default withRouter(connect(mapStateToProps)(Calendar));

@@ -7,11 +7,8 @@ import './NavBar.css';
 class NavBar extends Component {
   constructor(props) {
     super(props);
-    this.handleLogInClick = this.handleLogInClick.bind(this);
-    this.handleNavItemClick = this.handleNavItemClick.bind(this);
     this.state = {
       width: window.innerWidth,
-      isLoggedIn: this.props.isLoggedIn,
     };
   }
 
@@ -26,34 +23,6 @@ class NavBar extends Component {
   handleWindowSizeChange = () => {
     this.setState({ width: window.innerWidth });
   };
-
-  handleNavItemClick = (e, to) => {
-    e.preventDefault();
-    this.setState(
-      {
-        isLoggedIn: this.props.isLoggedIn,
-      },
-      () => {
-        const { isLoggedIn } = this.state;
-        if (isLoggedIn) {
-          this.props.history.push(to);
-        } else {
-          this.props.history.push('/login');
-        }
-      },
-    );
-  };
-
-  handleLogInClick(e) {
-    e.preventDefault();
-    this.props.history.push('/login');
-    const { isLoggedIn } = this.state;
-    if (isLoggedIn) {
-      this.props.dispatch({
-        type: 'LOGOUT',
-      });
-    }
-  }
 
   render() {
     const { width } = this.state;
@@ -74,31 +43,21 @@ class NavBar extends Component {
                 name="Add"
                 icon="plus"
                 to="/add"
-                onClick={e => this.handleNavItemClick(e, '/add')}
               />
               <NavItem
                 name="Calendar"
                 icon="calendar"
                 to="/calendar"
-                onClick={e => this.handleNavItemClick(e, '/calendar')}
               />
               <NavItem
                 name="Statistics"
                 icon="chart-bar"
                 to="/statistics"
-                onClick={e => this.handleNavItemClick(e, '/statistics')}
               />
               <NavItem
                 name="Settings"
                 icon="cog"
                 to="/settings"
-                onClick={e => this.handleNavItemClick(e, '/settings')}
-              />
-              <NavItem
-                name="Log In"
-                icon="sign-out-alt"
-                to="/login"
-                onClick={this.handleLogInClick}
               />
             </ul>
           </div>

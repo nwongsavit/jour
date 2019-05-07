@@ -5,7 +5,7 @@ import './UserBar.css';
 import NavBrand from '../NavBar/NavBrand/NavBrand';
 import UserDropdown from './UserDropdown/UserDropdown';
 
-const bg = require('../../assets/jourlogo200w.png');
+const bg = require('../../assets/jourlogo.svg');
 
 class UserBar extends Component {
   constructor(props) {
@@ -13,7 +13,6 @@ class UserBar extends Component {
     this.toggleDropdown = this.toggleDropdown.bind(this);
     this.state = {
       width: window.innerWidth,
-      name: this.props.name,
       dropdown: false,
     };
   }
@@ -41,7 +40,7 @@ class UserBar extends Component {
 
     return (
       <div className="UserBar">
-        <NavBrand name="Jour" icon={bg} to="/home" />
+        <NavBrand name="Jour" icon={bg} to="/calendar" />
 
         <div className="user-container">
           {isLoggedIn ? (

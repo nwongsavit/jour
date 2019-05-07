@@ -5,6 +5,10 @@
   justify-content: space-between;
 }
 
+.UserBar > NavBrand {
+  color: #4a8aa4;
+}
+
 .user-container {
   margin-right: 30px;
 }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './Statistics.css';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 import {
   HorizontalGridLines,
@@ -35,6 +36,14 @@ class Statistics extends Component {
       message: '',
       value: false,
     };
+  }
+
+  componentWillMount() {
+    document.title = "Jour - Statistics";
+    const { isLoggedIn } = this.props;
+    if (!isLoggedIn) {
+      this.props.history.push('/login');
+    }
   }
 
   componentDidMount() {
@@ -169,6 +178,7 @@ const mapStateToProps = state => ({
   selectedDate: state.selectedDate,
   uid: state.account_info.id,
   authKey: state.account_info.authKey,
+  isLoggedIn: state.isLoggedIn,
 });
 
-export default connect(mapStateToProps)(Statistics);
+export default withRouter(connect(mapStateToProps)(Statistics));
