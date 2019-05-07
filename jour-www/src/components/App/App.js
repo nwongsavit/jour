@@ -63,7 +63,7 @@ class App extends Component {
               <Route path="/register" component={Register} />
               <Route path="/confirm" component={Confirm} />
               <Route path="/forgot-password" component={ForgotPassword} />
-              <Redirect path="/" exact to="/landing" component={Landing} />
+              <Redirect path="/" to="/login" component={Login} />
             </Switch>
           </div>
         </div>
