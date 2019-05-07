@@ -30,6 +30,13 @@ class Settings extends Component {
     };
   }
 
+  componentWillMount() {
+    const { isLoggedIn } = this.props;
+    if (!isLoggedIn) {
+      this.props.history.push('/login');
+    }
+  }
+
   handleCancelClick = () => {
     this.props.history.push('/calendar');
   }
@@ -88,9 +95,6 @@ class Settings extends Component {
             });
           }
         },
-        () => {
-          console.log('account_info :', this.state.account_info);
-        }
       ))
       .catch((error) => {
         console.log('error :', error);
@@ -172,6 +176,7 @@ const mapStateToProps = state => ({
   account_info: state.account_info,
   uid: state.account_info.id,
   authKey: state.account_info.authKey,
+  isLoggedIn: state.isLoggedIn,
 });
 
 export default withRouter(connect(mapStateToProps)(Settings));

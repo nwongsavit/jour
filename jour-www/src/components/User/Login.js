@@ -3,6 +3,7 @@ import './User.css';
 import axios from 'axios';
 import { Form, Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 //  api key from .env file.
 const apiKey = process.env.REACT_APP_API_KEY;
@@ -22,6 +23,13 @@ class Login extends Component {
       email: '',
       password: '',
     };
+  }
+
+  componentWillMount() {
+    const { isLoggedIn } = this.props;
+    if (isLoggedIn) {
+      this.props.history.push('/calendar');
+    }
   }
 
   handleSubmit(e) {
@@ -120,4 +128,5 @@ const mapStateToProps = state => ({
   isLoggedIn: state.isLoggedIn,
 });
 
-export default connect(mapStateToProps)(Login);
+export default withRouter(connect(mapStateToProps)(Login));
+

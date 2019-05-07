@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
 import { library } from '@fortawesome/fontawesome-svg-core';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import {
   faPencilAlt,
   faPlus,
@@ -41,9 +43,11 @@ library.add(
 
 class App extends Component {
   render() {
+    const { isLoggedIn } = this.props;
+
     return (
       <div className="App">
-        <NavBar />
+        { isLoggedIn ? <NavBar /> : '' }
         <div className="content">
           <UserBar />
           <div className="container">
@@ -66,4 +70,8 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = state => ({
+  isLoggedIn: state.isLoggedIn,
+});
+
+export default withRouter(connect(mapStateToProps)(App));

@@ -40,7 +40,7 @@ class UserBar extends Component {
 
     return (
       <div className="UserBar">
-        <NavBrand name="Jour" icon={bg} to="/home" />
+        <NavBrand name="Jour" icon={bg} to="/calendar" />
 
         <div className="user-container">
           {isLoggedIn ? (

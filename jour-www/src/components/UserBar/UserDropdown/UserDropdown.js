@@ -29,10 +29,6 @@ class UserDropdown extends Component {
         <div className="logout-button" onClick={this.handleLogInClick}>
           Logout
         </div>
-        {' '}
-        <div className="test-button" onClick={this.handleLogInClick}>
-          Test
-        </div>
       </div>
     );
   }
