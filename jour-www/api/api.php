@@ -574,7 +574,7 @@ if ($_GET['request'] == "deleteJournal") {
         if (!isset($_GET['jid'])) {
             $neededParams[] = "jid";
         }
-        $error = array('result' => false, 'message' => "Error: Missing required data. Please provide user id, edited journal, mood, authKey, and journal id", 'needed' => $neededParams);
+        $error = array('result' => false, 'message' => "Error: Missing required data. Please provide user id, journal id, and authKey", 'needed' => $neededParams);
         echo json_encode($error);
         return;
     }
@@ -608,6 +608,7 @@ if ($_GET['request'] == "deleteJournal") {
     }
 
 }
+
 if ($_GET['request'] == "getJournalsByDate") {
     //make sure api call requirements are met.
     if (!isset($_GET['uid']) || !isset($_GET['date']) || !isset($_GET['authKey'])) {
@@ -973,4 +974,52 @@ if ($_GET['request'] == "editTask") {
     }
 
 }
+
+if ($_GET['request'] == "deleteTask") {
+    //make sure api call requirements are met.
+    if (!isset($_GET['uid']) || !isset($_GET['tid']) || !isset($_GET['authKey'])) {
+        if (!isset($_GET['uid'])) {
+            $neededParams[] = "uid";
+        }
+        if (!isset($_GET['authKey'])) {
+            $neededParams[] = "authKey";
+        }
+        if (!isset($_GET['tid'])) {
+            $neededParams[] = "tid";
+        }
+        $error = array('result' => false, 'message' => "Error: Missing required data. Please provide user id, task id, and authKey.", 'needed' => $neededParams);
+        echo json_encode($error);
+        return;
+    }
+    //all required params have been provided.
+    //auth the user...
+    //check the auth key
+    $user = new users();
+    if (!$user->confirmAuthKey($_GET['uid'], $_GET['authKey'])) {
+
+        $error = array('result' => false, 'message' => "Unable to authenticate user.");
+        echo json_encode($error);
+        return;
+
+    }
+
+    $task = new tasks();
+
+    //every thing checks out, add the journal.
+    if (!$task->deleteTask($_GET['uid'], $_GET['tid'])) {
+
+        $error = array('result' => false, 'message' => "Unable to delete task.");
+        echo json_encode($error);
+        return;
+
+    } else {
+
+        $result = array('result' => true, 'message' => "Success. Task deleted.");
+        echo json_encode($result);
+        return;
+
+    }
+
+}
+
 ?>

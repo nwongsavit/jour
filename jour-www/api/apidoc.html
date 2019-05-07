@@ -981,5 +981,50 @@
         </b>
     </p>
 </div>
+<hr>
+<div style="background-color:lightgray">
+    <h4>Request: deleteTask</h4>
+    <p>required parameters:</p>
+    <ul>
+        <li>uid</li>
+        <li>tid</li>
+        <li>authKey</li>
+    </ul>
+    <p>Sample call:
+        <b>https://www.jour.life/api/api.php?key=apikey&request=deleteTask&uid=2&tid=2&&authKey=blah</b><br>
+        Sample response:
+        <b>
+        <pre>
+            {
+                "result": false,
+                "message": "Error: Missing required data. Please provide an email address and password",
+                "needed": [
+                     "uid",
+                     "tid",
+                     "authKey"
+                ]
+            }
+        </pre>
+        </b>
+        Sample response:
+        <b>
+        <pre>
+            {
+                "result": false,
+                "message": "User Authentication failed,"
+            }
+        </pre>
+        </b>
+        Sample response:
+        <b>
+        <pre>
+            {
+                "result": true,
+                "message": "Success. Task deleted."
+            }
+        </pre>
+        </b>
+    </p>
+</div>
 </body>
 </html>

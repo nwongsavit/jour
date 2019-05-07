@@ -265,6 +265,64 @@ class tasks
 
     }
 
+    function deleteTask($uid, $tid)
+    {
+
+        //delete a task entry by its id
+
+        //get database link
+        $link = $this->getLink();
+
+        //make sure that this user owns this task
+        if (!$stmt = $link->prepare("SELECT * FROM jour_tasks WHERE id = ? and uid = ?")) {
+
+            return false;
+
+        }
+
+        $stmt->bind_param('ii', $tid, $uid);
+        if (!$stmt->execute()) {
+
+            //there was an error updating the task
+            return false;
+
+        }
+
+        $stmt = $stmt->get_result();
+        if (!$stmt->num_rows) {
+
+            //there was an error getting the task
+            return false;
+        }
+
+        //everything is good, delete the task
+        if (!$stmt = $link->prepare("DELETE from jour_tasks where id = ? AND uid = ?")) {
+
+            echo("ERROR:" . $link->error);
+            die();
+
+        }
+        $stmt->bind_param('ii', $tid, $uid);
+        if (!$stmt->execute()) {
+
+            //there was an error updating the task
+            echo("ERROR:" . $link->error);
+            $result = false;
+
+        } else {
+
+            //the task was deleted
+            $result = true;
+
+        }
+
+        //close the stmt and the link and return the result
+        $stmt->close();
+        $link->close();
+        return $result;
+    }
+
+
 }
 
 ?>
