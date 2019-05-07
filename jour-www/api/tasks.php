@@ -138,6 +138,59 @@ class tasks
 
     }
 
+    function getTasksByDate($uid, $date)
+    {
+
+        //get database link
+        $link = $this->getLink();
+
+        //date must be in yyyy-mm-dd format. for example march 27th, 2019 = 2019-03-27
+
+        //grab all the journals by date
+        if (!$stmt = $link->prepare("SELECT * FROM jour_tasks WHERE uid = ? and DATE(task_date) = ?")) {
+
+            echo("ERROR:" . $link->error);
+            die();
+
+        }
+        $stmt->bind_param('is', $uid, $date);
+        if (!$stmt->execute()) {
+
+            //there was an error grabbing the journals
+            echo("ERROR:" . $link->error);
+            $result = false;
+
+        } else {
+
+            $result = $stmt->get_result();
+
+            if ($result->num_rows) {
+
+                $tasks[] = array();
+                $i = 0;
+                while ($row = $result->fetch_assoc()) {
+
+                    $tasks[$i] = $row;
+                    $i++;
+
+                }
+                $result = $tasks;
+
+            }
+            else {
+
+                $result = false;
+
+            }
+
+        }
+
+        //close the stmt and the link and return the result
+        $stmt->close();
+        $link->close();
+        return $result;
+
+    }
 
 }
 
