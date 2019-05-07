@@ -924,5 +924,61 @@
         </b>
     </p>
 </div>
+<hr>
+<div style="background-color:whitesmoke">
+    <h4>Request: editTask</h4>
+    <p>required parameters:</p>
+    <ul>
+        <li>uid</li>
+        <li>authKey</li>
+        <li>tid</li>
+        <li>task</li>
+    </ul>
+    <p>Sample call:
+        <b>https://www.jour.life/api/api.php?key=apikey&request=editTask&uid=2&tid=11&authKey=blah&task=edit here</b><br>
+        Sample response:
+        <b>
+        <pre>
+            {
+                "result": false,
+                "message": "Error: Missing required data. user id, date, and users auth key.",
+                "needed": [
+                     "uid",
+                     "tid",
+                     "authKey"
+                     "task"
+                ]
+            }
+        </pre>
+        </b>
+        Sample response:
+        <b>
+        <pre>
+            {
+                "result": false,
+                "message": "User Authentication failed,"
+            }
+        </pre>
+        </b>
+        Sample response:
+        <b>
+        <pre>
+            {
+                "result": false,
+                "message": "Error editing the task."
+            }
+        </pre>
+        </b>
+        Sample response:
+        <b>
+        <pre>
+            {
+                "result": true,
+                "message": "Success, the task was edited.",
+            }
+        </pre>
+        </b>
+    </p>
+</div>
 </body>
 </html>

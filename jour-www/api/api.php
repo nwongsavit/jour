@@ -719,6 +719,7 @@ if ($_GET['request'] == "addTasks") {
         return;
     }
 
+
     //all required params have been provided.
     //auth the user...
     //check the auth key
@@ -732,6 +733,23 @@ if ($_GET['request'] == "addTasks") {
     }
 
     $tasks = new tasks();
+
+
+    //make sure that the tasks are not too long.
+    foreach ($_GET['tasks'] as $t) {
+
+        //check the tasks length
+        if (!$tasks->checkTaskLength($t)) {
+
+            $error = array('result' => false, 'message' => "Error. At least one of the tasks failed the length requirements test.");
+            echo json_encode($error);
+            return;
+
+        }
+
+
+    }
+
 
     //every thing checks out, add the journal.
     if (!$result = $tasks->addTasks($_GET['uid'], $_GET['tasks'])) {
@@ -885,6 +903,65 @@ if ($_GET['request'] == "getTasksByDate") {
     } else {
 
         $result = array('result' => true, 'message' => "Success.", 'tasks' => $result);
+        echo json_encode($result);
+        return;
+
+    }
+
+}
+
+if ($_GET['request'] == "editTask") {
+    //make sure api call requirements are met.
+    if (!isset($_GET['uid']) || !isset($_GET['tid']) || !isset($_GET['authKey']) || !isset($_GET['task'])) {
+        if (!isset($_GET['uid'])) {
+            $neededParams[] = "uid";
+        }
+        if (!isset($_GET['authKey'])) {
+            $neededParams[] = "authKey";
+        }
+        if (!isset($_GET['tid'])) {
+            $neededParams[] = "task id";
+        }
+        if (!isset($_GET['task'])) {
+            $neededParams[] = "edited task";
+        }
+        $error = array('result' => false, 'message' => "Error: Missing required data. Please provide user id, task id, edited task, and authKey.", 'needed' => $neededParams);
+        echo json_encode($error);
+        return;
+    }
+    //all required params have been provided.
+    //auth the user...
+    //check the auth key
+    $user = new users();
+    if (!$user->confirmAuthKey($_GET['uid'], $_GET['authKey'])) {
+
+        $error = array('result' => false, 'message' => "Unable to authenticate user.");
+        echo json_encode($error);
+        return;
+
+    }
+
+    $tasks = new tasks();
+
+    //check the length of the task
+    if (!$tasks->checkTaskLength($_GET['task'])) {
+
+        $error = array('result' => false, 'message' => "The task does not meet length requirements.");
+        echo json_encode($error);
+        return;
+
+    }
+
+    //every thing checks out, grab the tasks.
+    if (!$result = $tasks->editTask($_GET['uid'], $_GET['tid'], $_GET['task'])) {
+
+        $error = array('result' => false, 'message' => "Could not edit the task.");
+        echo json_encode($error);
+        return;
+
+    } else {
+
+        $result = array('result' => true, 'message' => "Success, the task was edited.");
         echo json_encode($result);
         return;
 
