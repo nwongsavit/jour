@@ -228,9 +228,12 @@ if (isset($_GET['request']) && $_GET['request'] == "authUser") {
 
 if (isset($_GET['request']) && $_GET['request'] == "getUser") {
     //make sure api call requirements are met.
-    if (!isset($_GET['uid'])) {
+    if (!isset($_GET['uid']) || !isset($_GET['authKey'])) {
         if (!isset($_GET['uid'])) {
             $neededParams[] = "uid";
+        }
+        if (!isset($_GET['authKey'])) {
+            $neededParams[] = "authKey";
         }
         $error = array('result' => false, 'message' => "Error: Missing required data.", 'needed' => $neededParams);
         echo json_encode($error);
@@ -240,7 +243,9 @@ if (isset($_GET['request']) && $_GET['request'] == "getUser") {
 
     $user = new users();
 
-    if (!$user->getUser($_GET['uid'])) {
+
+
+    if (!$user->getUser($_GET['uid'], $_GET['authKey'])) {
         $error = array('result' => false, 'message' => "Error getting data for user id " . $_GET['uid'] . ".");
         echo json_encode($error);
         return;
@@ -309,7 +314,7 @@ if (isset($_GET['request']) && $_GET['request'] == "editUser") {
     $user = new users();
 
     //make sure the user exists.
-    if (!$user->getUser($_GET['uid'])) {
+    if (!$user->getUser($_GET['uid'], $_GET['authKey'])) {
 
         $error = array('result' => false, 'message' => "Error: User does not exist.");
         echo json_encode($error);
@@ -329,7 +334,7 @@ if (isset($_GET['request']) && $_GET['request'] == "editUser") {
 
     //they are auth'd
     //get this users data
-    $user->getUser($_GET['uid']);
+    $user->getUser($_GET['uid'], $_GET['authKey']);
 
     //check to make sure that the new email address is not in use by someone else.
     if ($user->getEmail() != $_GET['email']) {
@@ -386,7 +391,7 @@ if (isset($_GET['request']) && $_GET['request'] == "deleteUser") {
     $user = new users();
 
     //make sure the user exists.
-    if (!$user->getUser($_GET['uid'])) {
+    if (!$user->getUser($_GET['uid'], $_GET['authKey'])) {
 
         $error = array('result' => false, 'message' => "Error: User does not exist.");
         echo json_encode($error);

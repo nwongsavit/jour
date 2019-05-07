@@ -304,12 +304,19 @@ class users
 
     }
 
-    function getUser($uid)
+    function getUser($uid, $auth)
     {
 
         //get the database link
         $link = $this->getLink();
 
+
+        //check user auth
+        if (!$this->confirmAuthKey($uid, $auth)) {
+
+            return false;
+
+        }
 
         //get the users data
         if (!$stmt = $link->prepare("SELECT * FROM jour_users WHERE id = ?")) {
@@ -329,7 +336,7 @@ class users
             $this->name = $row['first_name'];
             $this->email = $row['email'];
             $this->id = $row['id'];
-            $this->authKey = "Not Authorized";
+            $this->authKey = $row['authKey'];
             return true;
 
         } else {
