@@ -13,7 +13,6 @@ class UserBar extends Component {
     this.toggleDropdown = this.toggleDropdown.bind(this);
     this.state = {
       width: window.innerWidth,
-      name: this.props.name,
       dropdown: false,
     };
   }

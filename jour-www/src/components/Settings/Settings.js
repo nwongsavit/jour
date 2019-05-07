@@ -23,8 +23,7 @@ class Settings extends Component {
     this.state = {
       results: '',
       message: '',
-      account_info: this.props.account_info,
-      uid: this.props.account_info.uid,
+      account_info: {},
       name: '',
       password: '',
       email: '',
@@ -37,29 +36,31 @@ class Settings extends Component {
 
   handleSaveClick(e) {
     e.preventDefault();
-    const { name, password, email, account_info, uid } = this.state;
+
+    const { name, password, email } = this.state;
+    const { uid, authKey } = this.props;
+
+    let params = {
+      key: apiKey,
+      request: 'editUser',
+      uid,
+      authKey,
+      email,
+      name,
+    };
+
+    if (password !== '') {
+      params = { ...params, ...password };
+    }
 
     axios
       .get('https://jour.life/api/api.php', {
-        params: {
-          key: apiKey,
-          request: 'editUser',
-          email,
-          name,
-          password,
-        },
+        params,
       })
       .then(result => this.setState(
         {
           results: result.data.result,
           message: result.data.message,
-        },
-        () => {
-          if (result.data.result) {
-            this.props.dispatch({
-              type: 'EDIT_USER',
-            });
-          }
         },
       ))
       .catch((error) => {
@@ -69,7 +70,6 @@ class Settings extends Component {
     axios
       .get('https://jour.life/api/api.php', {
         params: {
-          key: apiKey,
           request: 'getUser',
           uid,
         },
@@ -84,9 +84,13 @@ class Settings extends Component {
           if (result.data.result) {
             this.props.dispatch({
               type: 'GET_USER',
+              account_info: this.state.account_info,
             });
           }
         },
+        () => {
+          console.log('account_info :', this.state.account_info);
+        }
       ))
       .catch((error) => {
         console.log('error :', error);
@@ -106,7 +110,6 @@ class Settings extends Component {
   }
 
   render() {
-    const { name, email } = this.props.account_info;
     const { message, results } = this.state;
 
     return (
@@ -156,15 +159,19 @@ class Settings extends Component {
 }
 
 Settings.propTypes = {
-  account_info: PropTypes.object,
+  uid: PropTypes.number,
+  authKey: PropTypes.string,
 };
 
 Settings.defaultProps = {
-  account_info: {},
+  uid: null,
+  authKey: '',
 };
 
 const mapStateToProps = state => ({
   account_info: state.account_info,
+  uid: state.account_info.id,
+  authKey: state.account_info.authKey,
 });
 
 export default withRouter(connect(mapStateToProps)(Settings));

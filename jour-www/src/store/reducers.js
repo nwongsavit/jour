@@ -36,10 +36,6 @@ const reducer = (state = initialState, action) => {
     return Object.assign({}, state, {
       account_info: action.account_info,
     });
-  case 'EDIT_USER':
-    return Object.assign({}, state, {
-      account_info: action.account_info,
-    });
   default:
     return state;
   }
