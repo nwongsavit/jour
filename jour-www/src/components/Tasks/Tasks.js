@@ -11,9 +11,10 @@ const apiKey = process.env.REACT_APP_API_KEY;
 class Tasks extends Component {
   renderTasks() {
     const { tasks } = this.props;
-    if (tasks[0].id) {
-      return tasks.map(task => <Task title={task.task} key={task.id} />);
+    if (tasks && tasks.length && tasks[0].id) {
+      return tasks.map(task => <Task title={task.task} key={task.id} taskInfo={task} />);
     }
+    return <div>No tasks</div>;
   }
 
   render() {
@@ -21,7 +22,7 @@ class Tasks extends Component {
     return (
       <div className="Tasks">
         <h3>Tasks</h3>
-        {tasks && tasks.length && this.renderTasks()}
+        {this.renderTasks()}
       </div>
     );
   }
