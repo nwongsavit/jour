@@ -8,7 +8,7 @@ class Task extends Component {
     super(props);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.state = {
-      content: this.props.taskInfo.task,
+      content: this.props.taskInfo.task || '',
     };
   }
 
@@ -45,11 +45,15 @@ class Task extends Component {
 Task.propTypes = {
   placeholder: PropTypes.string,
   checkbox: PropTypes.bool,
+  taskInfo: PropTypes.object,
 };
 
 Task.defaultProps = {
   placeholder: '',
   checkbox: true,
+  taskInfo: {
+    task: '',
+  },
 };
 
 export default Task;
