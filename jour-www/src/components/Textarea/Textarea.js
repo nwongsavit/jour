@@ -1,13 +1,21 @@
 import React, { Component } from 'react';
 import './Textarea.css';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 class Textarea extends Component {
   render() {
-    const { rows, placeholder, content } = this.props;
+    const {
+      rows, placeholder, content, onChange,
+    } = this.props;
     return (
       <div className="Textarea">
-        <textarea rows={rows} placeholder={placeholder} defaultValue={content} />
+        <textarea
+          rows={rows}
+          placeholder={placeholder}
+          defaultValue={content}
+          onChange={onChange}
+        />
       </div>
     );
   }
@@ -25,4 +33,8 @@ Textarea.defaultProps = {
   content: '',
 };
 
-export default Textarea;
+const mapStateToProps = state => ({
+  selectedDate: state.selectedDate,
+});
+
+export default connect(mapStateToProps)(Textarea);

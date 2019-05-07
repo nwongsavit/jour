@@ -232,26 +232,26 @@ class users
                 //no match return false
                 return false;
             } else {
-              //they have provided correct credentials, set private vars and return true
-              $this->joinDate = $row['join_date'];
-              $this->name = $row['first_name'];
-              $this->email = $row['email'];
-              $this->id = $row['id'];
-              $this->authKey = password_hash($this->getId() . $this->getName() . $this->getJoinDate() . $this->getEmail() . time(), PASSWORD_DEFAULT);
+                //they have provided correct credentials, set private vars and return true
+                $this->joinDate = $row['join_date'];
+                $this->name = $row['first_name'];
+                $this->email = $row['email'];
+                $this->id = $row['id'];
+                $this->authKey = password_hash($this->getId() . $this->getName() . $this->getJoinDate() . $this->getEmail() . time(), PASSWORD_DEFAULT);
 
-              //update the users table for this user with the auth key so they can use that to post to their account.
+                //update the users table for this user with the auth key so they can use that to post to their account.
                 if (!$stmt = $link->prepare("UPDATE jour_users set authKey = ? WHERE id = ?")) {
                     echo("ERROR UPDATING AUTHKEY:" . $link->error);
                     die();
                 }
                 $stmt->bind_param('si', $this->getAuthKey(), $this->getId());
 
-                if(!$stmt->execute()) {
+                if (!$stmt->execute()) {
                     echo("ERROR UPDATING AUTHKEY IN USERS DATABASE:" . $link->error);
                     die();
                 }
 
-              return true;
+                return true;
             }
         } else {
             $result = false;
@@ -290,12 +290,10 @@ class users
                 //no match return false
                 return false;
 
-            }
-            else {
+            } else {
                 return true;
             }
-        }
-        else {
+        } else {
             $result = false;
         }
         //close the stmt and the link and return the result
@@ -306,7 +304,8 @@ class users
 
     }
 
-    function getUser($uid) {
+    function getUser($uid)
+    {
 
         //get the database link
         $link = $this->getLink();
@@ -325,13 +324,13 @@ class users
             //set the row as associative array
             $row = $stmt->fetch_assoc();
 
-                //set private vars and return true
-                $this->joinDate = $row['join_date'];
-                $this->name = $row['first_name'];
-                $this->email = $row['email'];
-                $this->id = $row['id'];
-                $this->authKey = "Not Authorized";
-                return true;
+            //set private vars and return true
+            $this->joinDate = $row['join_date'];
+            $this->name = $row['first_name'];
+            $this->email = $row['email'];
+            $this->id = $row['id'];
+            $this->authKey = "Not Authorized";
+            return true;
 
         } else {
             $result = false;
@@ -342,6 +341,107 @@ class users
         return $result;
 
     }
+
+    function editUser($uid, $email, $name, $password)
+    {
+        $link = $this->getLink();
+        //check to see if the user is already registered,
+        //if the user is already waiting confirmation, do not readd, just give success and the email will be sent via api call.
+
+        if (isset($password)) {
+
+            if (!$stmt = $link->prepare("UPDATE jour_users SET password = ? WHERE id = ?")) {
+
+                echo("ERROR:" . $link->error);
+                die();
+
+            }
+
+            $stmt->bind_param('si', password_hash($password, PASSWORD_DEFAULT), $uid);
+
+            if (!$stmt->execute()) {
+
+                echo("ERROR:" . $link->error);
+                $result = false;
+
+            } else {
+
+                //the password has been updated.
+                $result = true;
+
+            }
+
+        }
+
+        if (!$stmt = $link->prepare("UPDATE jour_users SET email = ?, first_name = ? WHERE id = ?")) {
+
+            echo("ERROR:" . $link->error);
+            die();
+
+        }
+
+        $stmt->bind_param('ssi', $email, $name, $uid);
+
+        if (!$stmt->execute()) {
+
+            echo("ERROR:" . $link->error);
+            $result = false;
+
+        } else {
+
+            //the info has been updated
+            $result = true;
+
+        }
+
+        //close the stmt and the link and return the result
+        $stmt->close();
+        $link->close();
+        return $result;
+    }
+
+    function deleteUser($uid, $authKey)
+    {
+
+        //get the database link
+        $link = $this->getLink();
+
+        //make sure that the user has authority to do this
+        if (!$this->confirmAuthKey($uid, $authKey)) {
+
+            $result = false;
+            return $result;
+
+        }
+
+        //they do, so delete the user from the users table and their journals from the journal table. add delete tasks and settings once those are complete??
+        if (!$stmt = $link->prepare("DELETE jour_users.*, jour_journals.* from jour_users left join jour_journals on jour_journals.uid = jour_users.id  WHERE jour_users.id = ?")) {
+
+            echo("ERROR DELETING USER DATA:" . $link->error);
+            die();
+
+        }
+
+        $stmt->bind_param('i', $uid);
+        if (!$stmt->execute()) {
+
+            $result = false;
+
+        }
+        else {
+
+            $result = true;
+
+        }
+
+        //close the stmt and the link and return the result
+        $stmt->close();
+        $link->close();
+        return $result;
+
+    }
+
+
 
     function resetPassword($email, $auth_hash)
     {

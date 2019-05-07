@@ -4,13 +4,25 @@ import './Task.css';
 import Textarea from '../Textarea/Textarea';
 
 class Task extends Component {
+  onCheck = () => {
+    // after every check, send api call
+    console.log('check');
+  };
+
   render() {
-    const { title } = this.props;
+    const {
+      title, placeholder, onChange, checkbox,
+    } = this.props;
     return (
       <div className="Task">
-        <Textarea rows={1} content={title} />
-        {/* <input className="checkbox" type="checkbox" />
-        {title} */}
+        {checkbox ? <input className="checkbox" type="checkbox" /> : ''}
+        <Textarea
+          rows={1}
+          content={title}
+          onCheck={this.onCheck}
+          placeholder={placeholder}
+          onChange={onChange}
+        />
       </div>
     );
   }
@@ -18,10 +30,14 @@ class Task extends Component {
 
 Task.propTypes = {
   title: PropTypes.string,
+  placeholder: PropTypes.string,
+  checkbox: PropTypes.bool,
 };
 
 Task.defaultProps = {
   title: '',
+  placeholder: '',
+  checkbox: true,
 };
 
 export default Task;

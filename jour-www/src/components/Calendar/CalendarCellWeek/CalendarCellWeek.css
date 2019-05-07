@@ -1,0 +1,56 @@
+.CalendarCellWeek {
+  cursor: pointer;
+}
+
+.week-header {
+  text-align: center !important;
+  padding-bottom: 15px;
+  border-bottom: 1px solid lightgrey;
+}
+
+.week-day {
+  font-weight: bold;
+}
+
+.week-date {
+  color: grey;
+  font-size: 0.7em;
+}
+
+.selected {
+  color: #4a8aa4;
+}
+
+.first {
+  border-left: 1px solid lightgrey;
+}
+
+.week-content {
+  padding: 10px 10px 0 10px;
+  border-right: 1px solid lightgrey;
+  border-bottom: 1px solid lightgrey;
+}
+
+.pill {
+  font-size: 0.7em;
+  margin-bottom: 10px;
+  border-radius: 20px;
+  padding: 5px 10px;
+  background-color: #f4f4f4;
+}
+
+.circle {
+  border-radius: 50%;
+  margin: 0 auto;
+  height: 5px;
+  width: 5px;
+  background-color: transparent;
+}
+
+.selected-circle {
+  background-color: #4a8aa4;
+}
+
+.mood-circles {
+  margin-bottom: 10px;
+}

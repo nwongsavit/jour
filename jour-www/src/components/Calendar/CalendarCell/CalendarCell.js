@@ -1,45 +1,51 @@
 import React, { Component } from 'react';
 import './CalendarCell.css';
-
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 class CalendarCell extends Component {
-  constructor() {
-    super();
-    this.state = {
-      today: false,
-    };
-  }
-
-  componentDidMount() {
+  setSelectedDate = () => {
     const { date } = this.props;
-    if (date === new Date().getDate()) {
-      this.setState({
-        today: true,
+    if (date !== 0) {
+      this.props.dispatch({
+        type: 'SELECTED_STATE',
+        selectedDate: date,
       });
     }
-  }
+  };
+
+  setCellClasses = () => {
+    const { date, selectedDate } = this.props;
+    if (date === 0) {
+      return '';
+    }
+    let classes = 'CalendarCell';
+    classes
+      += selectedDate.setHours(0, 0, 0, 0) === date.setHours(0, 0, 0, 0) ? ' selected-picker' : '';
+    classes += new Date().setHours(0, 0, 0, 0) === date.setHours(0, 0, 0, 0) ? ' today' : '';
+    return classes;
+  };
 
   render() {
     const { date } = this.props;
-    const { today } = this.state;
-
     return (
-      <div className="CalendarCell">
-        <span className="smallText date" id={today ? 'today' : ''}>
-          {date}
-        </span>
+      <div className={this.setCellClasses()} onClick={this.setSelectedDate}>
+        {date !== 0 && <span className="small-text date">{date.getDate()}</span>}
       </div>
     );
   }
 }
 
 CalendarCell.propTypes = {
-  date: PropTypes.number,
+  date: PropTypes.object,
 };
 
 CalendarCell.defaultProps = {
-  date: 0,
+  date: {},
 };
 
-export default CalendarCell;
+const mapStateToProps = state => ({
+  selectedDate: state.selectedDate,
+});
+
+export default connect(mapStateToProps)(CalendarCell);

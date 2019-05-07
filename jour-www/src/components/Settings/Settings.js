@@ -1,68 +1,89 @@
 import React, { Component } from 'react';
+import { Form, Button } from 'react-bootstrap';
 import './Settings.css';
 
 class Settings extends Component {
-  componentDidLoad() {
-    document.title = "Jour - Settings";
+  constructor() {
+    super();
+    this.handleFirstChange = this.handleFirstChange.bind(this);
+    this.handleEmailChange = this.handleEmailChange.bind(this);
+    this.handlePasswordChange = this.handlePasswordChange.bind(this);
+
+    this.state = {
+      results: false,
+      //  message sent with the result. these can be changed in api.php.
+      message: '',
+      //  first name
+      first: '',
+      //  password
+      pass: '',
+      //  email
+      emailAddress: '',
+    };
   }
+
+  handleFirstChange(e) {
+    this.setState({ first: e.target.value });
+  }
+
+  handleEmailChange(e) {
+    this.setState({ emailAddress: e.target.value });
+  }
+
+  handlePasswordChange(e) {
+    this.setState({ pass: e.target.value });
+  }
+  
   render() {
     return (
-      <div className='Settings'>
-      <p>E-mail </p>
-      <textarea rows="1" cols="100">
-      </textarea>
-      <button type="button">Change E-mail</button>
-      <br></br>
+      <div className="Settings">
+      <Form className="form">
 
-      <br/>
+        <h3>Settings</h3>
 
-      <p>Password </p>
-      <textarea rows="1" cols="100">
-      </textarea>
-      <button type="button">Change Password</button>
-      <br></br>
-      <br/>
+        <Form.Control
+          type="email"
+          id="emailAddress"
+          placeholder="New Email"
+          onChange={this.handleEmailChange}
+          required
+        />
+        <Button
+          type="submit"
+          block
+        >
+          Change Email
+        </Button>
 
-      <p>Your Username </p>
-      <textarea rows="1" cols="100">
-      </textarea>
-      <button type="button">Change Username</button>
-      <br></br>
-      <br/>
+        <Form.Control
+          type="password"
+          id="pass"
+          placeholder="Password"
+          onChange={this.handlePasswordChange}
+          required
+        />
+        <Button
+          type="submit"
+          block
+        >
+          Change Password
+        </Button>
 
-      <p>Your First Name </p>
-      <textarea rows="1" cols="100">
-      </textarea>
-      <button type="button">Change First Name</button>
-      <br></br>
-      <br/>
-
-      <p>Your Last Name </p>
-      <textarea rows="1" cols="100">
-      </textarea>
-      <button type="button">Change Last Name</button>
-      <br></br>
-
-      <br/>
-
-      <label for="timenotify">Notify me at:</label>
-      <input type="time" id="timenotify" name="timenotify"
-             min="0:00" max="24:00" required>
-      </input>
-
-      <input type="Submit">
-      </input>
-
-      <br/>
-      <br></br>
-      <button type="button">Reset Your Account</button>
-
-
-
-
-      </div>
-
-
+        <Form.Control
+          type="firstName"
+          id="first"
+          placeholder="New First Name"
+          onChange={this.handleFirstChange}
+          required
+        />
+        <Button
+          type="submit"
+          block
+        >
+          Change First Name
+        </Button>
+      </Form>
+    </div>
     );
   }
 }

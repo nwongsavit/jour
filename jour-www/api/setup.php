@@ -26,6 +26,26 @@ if (!$users_table_state->num_rows) {
     echo("Create users table...success<br>");
 }
 
+//users table
+$tasks_table_state = $link->query("SELECT * FROM information_schema.tables WHERE table_schema = 'jour_jour' AND table_name= 'jour_tasks' LIMIT 1");
+if (!$tasks_table_state->num_rows) {
+    //the tasks table does not exist, create it....
+    $create_tasks_table = "CREATE TABLE `jour_jour`.`jour_tasks` ( 
+      `id` INT(11) NOT NULL AUTO_INCREMENT ,
+      `uid` INT(11) NOT NULL , 
+      `task_date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ,
+      `task` VARCHAR(255) NOT NULL ,
+      `completed` BOOLEAN NOT NULL DEFAULT 0,
+      PRIMARY KEY (`id`)
+      ) ENGINE = MyISAM;";
+
+    if (!$link->query($create_tasks_table)) {
+        die("Error creating tasks table: " . $link->error . " Fix this error and run setup.php again.");
+    }
+    echo("Create tasks table...success<br>");
+}
+
+
 //confirmation table
 $conf_table_state = $link->query("SELECT * FROM information_schema.tables WHERE table_schema = 'jour_jour' AND table_name= 'jour_confirm' LIMIT 1");
 if (!$conf_table_state->num_rows) {

@@ -1,0 +1,37 @@
+.EntryForm {
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+
+.textbox-form {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
+.textbox-form > * {
+  margin-bottom: 20px;
+}
+
+.characters-remaining {
+  text-align: right;
+}
+
+.delete-modal {
+  width: 100%;
+}
+
+.confirmation-buttons {
+  padding: 0 20px;
+  display: flex;
+}
+.confirmation-buttons > * {
+  margin: 15px;
+  flex: 1 0 0;
+  justify-content: space-between;
+}
