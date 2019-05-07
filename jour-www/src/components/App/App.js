@@ -26,6 +26,7 @@ import Confirm from '../User/Confirm';
 import ForgotPassword from '../User/ForgotPassword';
 import UserBar from '../UserBar/UserBar';
 import RootModal from '../RootModal/RootModal';
+import Landing from '../Landing/Landing';
 import './App.css';
 
 library.add(
@@ -60,7 +61,7 @@ class App extends Component {
               <Route path="/register" component={Register} />
               <Route path="/confirm" component={Confirm} />
               <Route path="/forgot-password" component={ForgotPassword} />
-              <Redirect path="/" exact to="/landing" />
+              <Redirect path="/" exact to="/landing" component={Landing} />
             </Switch>
           </div>
         </div>
