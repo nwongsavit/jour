@@ -26,6 +26,7 @@ class Login extends Component {
   }
 
   componentWillMount() {
+    document.title = "Jour - Login";
     const { isLoggedIn } = this.props;
     if (isLoggedIn) {
       this.props.history.push('/calendar');

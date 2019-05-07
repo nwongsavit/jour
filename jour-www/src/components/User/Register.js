@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import './User.css';
 import axios from 'axios';
 import { Form, Button } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 //  api key from .env file.
 const apiKey = process.env.REACT_APP_API_KEY;
@@ -26,6 +28,14 @@ class Register extends Component {
       //  email
       emailAddress: '',
     };
+  }
+
+  componentWillMount() {
+    document.title = "Jour - Register";
+    const { isLoggedIn } = this.props;
+    if (isLoggedIn) {
+      this.props.history.push('/calendar');
+    }
   }
 
   handleSubmit(e) {
@@ -134,4 +144,8 @@ class Register extends Component {
   }
 }
 
-export default Register;
+const mapStateToProps = state => ({
+  isLoggedIn: state.isLoggedIn,
+});
+
+export default withRouter(connect(mapStateToProps)(Register));
