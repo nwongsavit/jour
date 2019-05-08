@@ -1120,4 +1120,53 @@ if ($_GET['request'] == "getStatsByYearWeek") {
 
 }
 
+if ($_GET['request'] == "getStatsByDate") {
+    //make sure api call requirements are met.
+    if (!isset($_GET['uid']) || !isset($_GET['authKey']) || !isset($_GET['date'])) {
+        if (!isset($_GET['uid'])) {
+            $neededParams[] = "uid";
+        }
+        if (!isset($_GET['authKey'])) {
+            $neededParams[] = "authKey";
+        }
+        if (!isset($_GET['date'])) {
+            $neededParams[] = "date";
+        }
+        $error = array('result' => false, 'message' => "Error: Missing required data. Please provide user id, date, and authKey.", 'needed' => $neededParams);
+        echo json_encode($error);
+        return;
+    }
+
+    //all required params have been provided.
+    //auth the user...
+    //check the auth key
+    $user = new users();
+    if (!$user->confirmAuthKey($_GET['uid'], $_GET['authKey'])) {
+
+        $error = array('result' => false, 'message' => "Unable to authenticate user.");
+        echo json_encode($error);
+        return;
+
+    }
+
+    $stats = new stats();
+
+    //every thing checks out, get the stats.
+    if (!$result = $stats->getStatsByDate($_GET['uid'], $_GET['date'])) {
+
+        $error = array('result' => false, 'message' => "Unable to get stats");
+        echo json_encode($error);
+        return;
+
+    } else {
+
+        $result = array('result' => true, 'message' => "Success", 'stats' => $result);
+        echo json_encode($result);
+        return;
+
+    }
+
+}
+
+
 ?>
