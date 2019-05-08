@@ -84,7 +84,7 @@ class EntryForm extends Component {
 
   addTasks() {
     const { tasks } = this.state;
-    if (!tasks && tasks.length === 0) {
+    if (!Object.keys(tasks).length) {
       return;
     }
     const tasksArr = Object.keys(tasks).map(t => tasks[t]);
