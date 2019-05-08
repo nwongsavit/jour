@@ -8,6 +8,8 @@ import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import Textarea from '../Textarea/Textarea';
 import Task from '../Task/Task';
+import EmptyTask from '../Task/EmptyTask/EmptyTask';
+import Tasks from '../Tasks/Tasks';
 
 const apiKey = process.env.REACT_APP_API_KEY;
 
@@ -33,6 +35,101 @@ class EntryForm extends Component {
       charactersRemaining: 140,
       deleteModal: false,
     };
+  }
+
+  handleTaskChange = (i, e) => {
+    const { tasks } = this.state;
+    this.setState({
+      tasks: { ...tasks, [i]: e.target.value },
+    });
+    console.log('tasks :', tasks);
+  };
+
+  getTasks() {
+    const { uid, authKey } = this.props;
+    axios
+      .get('https://jour.life/api/api.php', {
+        params: {
+          key: apiKey,
+          request: 'getTasksByDate',
+          uid,
+          authKey,
+          date: format(new Date(), 'YYYY-MM-DD'),
+        },
+      })
+      .then(result => this.setState({
+        results: result.data.result,
+        message: result.data.message,
+        tasks: result.data.tasks,
+      }));
+  }
+
+  addPlaceholderTask = () => {
+    this.setState(prev => ({
+      taskLayout: [...prev.taskLayout, 'Add a task'],
+    }));
+  };
+
+  toggleDeleteModal() {
+    this.setState({ deleteModal: !this.state.deleteModal });
+  }
+
+  handleMoodChange(e) {
+    this.setState({ mood: e.target.value });
+  }
+
+  handleJournalChange(e) {
+    this.setState({ journal: e.target.value, charactersRemaining: 140 - e.target.value.length });
+  }
+
+  addTasks() {
+    const { tasks } = this.state;
+    if (!tasks && tasks.length === 0) {
+      return;
+    }
+    const tasksArr = Object.keys(tasks).map(t => tasks[t]);
+    const { uid, authKey } = this.props;
+    axios
+      .get('https://jour.life/api/api.php', {
+        params: {
+          key: apiKey,
+          request: 'addTasks',
+          uid,
+          authKey,
+          tasks: tasksArr,
+        },
+      })
+      .then(result => this.setState({
+        results: result.data.result,
+        message: result.data.message,
+      }));
+  }
+
+  handleDelete() {
+    const { jid } = this.state;
+    const { uid, authKey, closeModal } = this.props;
+
+    axios
+      .get('https://jour.life/api/api.php', {
+        params: {
+          key: apiKey,
+          request: 'deleteJournal',
+          uid,
+          authKey,
+          jid,
+        },
+      })
+      .then(result => this.setState(
+        {
+          results: result.data.result,
+          message: result.data.message,
+        },
+        () => {
+          if (result.data.result) {
+            closeModal();
+          }
+        },
+      ));
   }
 
   handleSubmit(e) {
@@ -90,89 +187,6 @@ class EntryForm extends Component {
       });
   }
 
-  handleDelete() {
-    const { jid } = this.state;
-    const { uid, authKey, closeModal } = this.props;
-
-    axios
-      .get('https://jour.life/api/api.php', {
-        params: {
-          key: apiKey,
-          request: 'deleteJournal',
-          uid,
-          authKey,
-          jid,
-        },
-      })
-      .then(result => this.setState(
-        {
-          results: result.data.result,
-          message: result.data.message,
-        },
-        () => {
-          if (result.data.result) {
-            closeModal();
-          }
-        },
-      ));
-  }
-
-  handleJournalChange(e) {
-    this.setState({ journal: e.target.value, charactersRemaining: 140 - e.target.value.length });
-  }
-
-  handleMoodChange(e) {
-    this.setState({ mood: e.target.value });
-  }
-
-  toggleDeleteModal() {
-    this.setState({ deleteModal: !this.state.deleteModal });
-  }
-
-  handleTaskChange = (i, e) => {
-    const { tasks } = this.state;
-    this.setState({
-      tasks: { ...tasks, [i]: e.target.value },
-    });
-  };
-
-  addTasks() {
-    const { tasks } = this.state;
-    if (!tasks) {
-      return;
-    }
-    const tasksArr = Object.keys(tasks).map(t => tasks[t]);
-    const { uid, authKey } = this.props;
-    axios
-      .get('https://jour.life/api/api.php', {
-        params: {
-          key: apiKey,
-          request: 'addTasks',
-          uid,
-          authKey,
-          tasks: tasksArr,
-        },
-      })
-      .then(result => this.setState({
-        results: result.data.result,
-        message: result.data.message,
-      }));
-  }
-
-  renderTasks() {
-    const { tasks } = this.state;
-
-    if (tasks[0].id) {
-      return tasks.map(journal => <Task content="hello" checkbox={false} />);
-    }
-  }
-
-  addPlaceholderTask = () => {
-    this.setState(prev => ({
-      taskLayout: [...prev.taskLayout, 'Add a task'],
-    }));
-  };
-
   render() {
     const {
       journal,
@@ -222,10 +236,10 @@ characters remaining
 
             {type === 'add' && (
               <div className="tasks">
-                <h3>Tasks</h3>
+                <h3>Add Tasks</h3>
                 {taskLayout.map((task, i) => (
                   <div id={`task-${i}`}>
-                    <Task
+                    <EmptyTask
                       placeholder={task}
                       id={i}
                       key={i}
@@ -239,6 +253,7 @@ characters remaining
                   <div className="add-text">Add a task</div>
                 </div>
               </div>
+              // <Tasks />
             )}
             {!results ? <div className="small-text error">{message}</div> : ''}
 

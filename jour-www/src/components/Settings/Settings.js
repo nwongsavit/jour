@@ -31,7 +31,7 @@ class Settings extends Component {
   }
 
   componentWillMount() {
-    document.title = "Jour - Settings";
+    document.title = 'Jour - Settings';
     const { isLoggedIn } = this.props;
     if (!isLoggedIn) {
       this.props.history.push('/login');
@@ -40,7 +40,7 @@ class Settings extends Component {
 
   handleCancelClick = () => {
     this.props.history.push('/calendar');
-  }
+  };
 
   handleSaveClick(e) {
     e.preventDefault();
@@ -65,12 +65,10 @@ class Settings extends Component {
       .get('https://jour.life/api/api.php', {
         params,
       })
-      .then(result => this.setState(
-        {
-          results: result.data.result,
-          message: result.data.message,
-        },
-      ))
+      .then(result => this.setState({
+        results: result.data.result,
+        message: result.data.message,
+      }))
       .catch((error) => {
         console.log('error :', error);
       });
@@ -151,10 +149,10 @@ class Settings extends Component {
           />
           <div className="confirmation-buttons">
             <Button type="submit" onClick={this.handleSaveClick}>
-            Save Changes
+              Save
             </Button>
             <Button variant="light" onClick={this.handleCancelClick}>
-            Cancel
+              Cancel
             </Button>
           </div>
         </Form>

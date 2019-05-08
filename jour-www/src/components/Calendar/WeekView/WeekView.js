@@ -155,12 +155,14 @@ class WeekView extends Component {
   render() {
     return (
       <div className="WeekView">
-        <ViewSelector
-          leftArrowHandler={this.previousWeek}
-          rightArrowHandler={this.nextWeek}
-          title={this.getTitle()}
-          picker
-        />
+        <div className="view-selector">
+          <ViewSelector
+            leftArrowHandler={this.previousWeek}
+            rightArrowHandler={this.nextWeek}
+            title={this.getTitle()}
+            picker
+          />
+        </div>
         {this.renderWeekDays()}
       </div>
     );
