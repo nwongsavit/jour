@@ -98,10 +98,12 @@ class Statistics extends Component {
           results: result.data.result,
           message: result.data.message,
           allTimeStats: result.data.stats,
-          journalCount: result.data.stats.journals[0]['count(*)'] || 0,
-          tasksCompletedCount: result.data.stats.tasks[0].completed || 0,
-          tasksCount: result.data.stats.tasks[0]['count(*)'] || 0,
-          moodData: formatPieChartData(result.data.stats.moods),
+          journalCount: result.data.stats.journals
+            ? result.data.stats.journals[0]['count(*)']
+            : 0,
+          tasksCompletedCount: result.data.stats.tasks ? result.data.stats.tasks[0].completed : 0,
+          tasksCount: result.data.stats.tasks ? result.data.stats.tasks[0]['count(*)'] : 0,
+          moodData: result.data.stats.moods ? formatPieChartData(result.data.stats.moods) : [],
         },
         () => {
           console.log('this.state.allTimeStats :', this.state.allTimeStats);

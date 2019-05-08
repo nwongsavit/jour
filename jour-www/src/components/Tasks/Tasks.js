@@ -27,6 +27,7 @@ class Tasks extends Component {
     if (tasks && tasks.length && tasks[0].id) {
       return tasks.map(task => <Task title={task.task} key={task.id} taskInfo={task} />);
     }
+    return <div>No tasks</div>;
   }
 
   render() {
