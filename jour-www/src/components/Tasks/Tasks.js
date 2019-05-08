@@ -38,13 +38,13 @@ class Tasks extends Component {
         {this.renderTasks()}
         {taskLayout.map((task, i) => (
           <div id={`task-${i}`}>
-            <Task placeholder={task} id={i} key={i} checkbox={false} />
+            <Task placeholder={task} id={i} key={i} />
           </div>
         ))}
-        <div className="add-task small-text" onClick={this.addPlaceholderTask}>
+        {/* <div className="add-task small-text" onClick={this.addPlaceholderTask}>
           <div className="plus">+</div>
           <div className="add-text">Add a task</div>
-        </div>
+        </div> */}
       </div>
     );
   }

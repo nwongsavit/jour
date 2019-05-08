@@ -236,7 +236,7 @@ characters remaining
 
             {type === 'add' && (
               <div className="tasks">
-                <h3>Tasks</h3>
+                <h3>Add Tasks</h3>
                 {taskLayout.map((task, i) => (
                   <div id={`task-${i}`}>
                     <EmptyTask

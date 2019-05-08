@@ -10,12 +10,6 @@ class EmptyTask extends Component {
     this.state = {};
   }
 
-  // onChange = (e) => {
-  //   // after every check, send api call
-  //   console.log('e.target.value :', e.target.value);
-  //   console.log('check');
-  // };
-
   handleInputChange(e) {
     this.setState({ content: e.target.value });
   }
