@@ -1026,5 +1026,145 @@
         </b>
     </p>
 </div>
+<hr>
+<div style="background-color:whitesmoke">
+    <h4>Request: getStatsAllTime</h4>
+    <p>required parameters:</p>
+    <ul>
+        <li>uid</li>
+        <li>authKey</li>
+    </ul>
+    <p>Sample call:
+        <b>https://www.jour.life/api/api.php?key=apikey&request=getStatsAllTime&uid=2&authKey=blah</b><br>
+        Sample response:
+        <b>
+        <pre>
+            {
+                "result": false,
+                "message": "Error: Missing required data. Please provide uid and authKey",
+                "needed": [
+                     "uid",
+                     "authKey"
+                ]
+            }
+        </pre>
+        </b>
+        Sample response:
+        <b>
+        <pre>
+            {
+                "result": false,
+                "message": "User Authentication failed,"
+            }
+        </pre>
+        </b>
+        Sample response:
+        <b>
+        <pre>
+           {
+              "result": true,
+              "message": "Success",
+              "stats": {
+                "moods": [
+                  {
+                    "mood": "angry",
+                    "count(*)": 2
+                  },
+                  {
+                    "mood": "happy",
+                    "count(*)": 3
+                  }
+                ],
+                "journals": [
+                  {
+                    "count(*)": 5
+                  }
+                ],
+                "tasks": [
+                  {
+                    "completed": 0,     //boolean value
+                    "count(*)": 4
+                  },
+                  {
+                    "completed": 1,     //boolean value
+                    "count(*)": 2
+                  }
+                ]
+              }
+           }
+        </pre>
+        </b>
+    </p>
+</div>
+<hr>
+<div style="background-color:lightgray">
+    <h4>Request: getStatsByYearWeek</h4>
+    <p>required parameters:</p>
+    <ul>
+        <li>uid</li>
+        <li>authKey</li>
+    </ul>
+    <p>Sample call:
+        <b>https://www.jour.life/api/api.php?key=apikey&request=getStatsByYearWeek&uid=2&authKey=blah&date=2019-05-05</b><br>
+        Sample response:
+        <b>
+        <pre>
+            {
+                "result": false,
+                "message": "Error: Missing required data. Please provide uid, date, and authKey",
+                "needed": [
+                     "uid",
+                     "authKey"
+                ]
+            }
+        </pre>
+        </b>
+        Sample response:
+        <b>
+        <pre>
+            {
+                "result": false,
+                "message": "User Authentication failed,"
+            }
+        </pre>
+        </b>
+        Sample response:
+        <b>
+        <pre>
+           {
+              "result": true,
+              "message": "Success",
+              "stats": {
+                "moods": [
+                  {
+                    "mood": "angry",
+                    "count(*)": 2
+                  },
+                  {
+                    "mood": "happy",
+                    "count(*)": 3
+                  }
+                ],
+                "journals": [
+                  {
+                    "count(*)": 5
+                  }
+                ],
+                "tasks": [
+                  {
+                    "completed": 0,     //boolean value
+                    "count(*)": 4
+                  },
+                  {
+                    "completed": 1,     //boolean value
+                    "count(*)": 2
+                  }
+                ]
+              }
+           }
+        </pre>
+        </b>
+    </p>
+</div>
 </body>
 </html>

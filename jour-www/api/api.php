@@ -13,7 +13,7 @@ include('db.php');
 include('users.php');
 include('journal.php');
 include ('tasks.php');
-
+include ('stats.php');
 //jour API
 
 //make sure link is set, if not send false result.
@@ -1005,7 +1005,7 @@ if ($_GET['request'] == "deleteTask") {
 
     $task = new tasks();
 
-    //every thing checks out, add the journal.
+    //every thing checks out, delete the task.
     if (!$task->deleteTask($_GET['uid'], $_GET['tid'])) {
 
         $error = array('result' => false, 'message' => "Unable to delete task.");
@@ -1015,6 +1015,104 @@ if ($_GET['request'] == "deleteTask") {
     } else {
 
         $result = array('result' => true, 'message' => "Success. Task deleted.");
+        echo json_encode($result);
+        return;
+
+    }
+
+}
+
+//**********************************************END TASK RELATED API CALLS********************************************************
+
+
+//**********************************************STATS RELATED API CALLS***********************************************************\
+
+if ($_GET['request'] == "getStatsAllTime") {
+    //make sure api call requirements are met.
+    if (!isset($_GET['uid']) || !isset($_GET['authKey'])) {
+        if (!isset($_GET['uid'])) {
+            $neededParams[] = "uid";
+        }
+        if (!isset($_GET['authKey'])) {
+            $neededParams[] = "authKey";
+        }
+        $error = array('result' => false, 'message' => "Error: Missing required data. Please provide user id and authKey.", 'needed' => $neededParams);
+        echo json_encode($error);
+        return;
+    }
+
+    //all required params have been provided.
+    //auth the user...
+    //check the auth key
+    $user = new users();
+    if (!$user->confirmAuthKey($_GET['uid'], $_GET['authKey'])) {
+
+        $error = array('result' => false, 'message' => "Unable to authenticate user.");
+        echo json_encode($error);
+        return;
+
+    }
+
+    $stats = new stats();
+
+    //every thing checks out, get the stats.
+    if (!$result = $stats->getStatsAllTime($_GET['uid'])) {
+
+        $error = array('result' => false, 'message' => "Unable to get mood stats");
+        echo json_encode($error);
+        return;
+
+    } else {
+
+        $result = array('result' => true, 'message' => "Success", 'stats' => $result);
+        echo json_encode($result);
+        return;
+
+    }
+
+}
+
+if ($_GET['request'] == "getStatsByYearWeek") {
+    //make sure api call requirements are met.
+    if (!isset($_GET['uid']) || !isset($_GET['authKey']) || !isset($_GET['date'])) {
+        if (!isset($_GET['uid'])) {
+            $neededParams[] = "uid";
+        }
+        if (!isset($_GET['authKey'])) {
+            $neededParams[] = "authKey";
+        }
+        if (!isset($_GET['date'])) {
+            $neededParams[] = "date";
+        }
+        $error = array('result' => false, 'message' => "Error: Missing required data. Please provide user id, date, and authKey.", 'needed' => $neededParams);
+        echo json_encode($error);
+        return;
+    }
+
+    //all required params have been provided.
+    //auth the user...
+    //check the auth key
+    $user = new users();
+    if (!$user->confirmAuthKey($_GET['uid'], $_GET['authKey'])) {
+
+        $error = array('result' => false, 'message' => "Unable to authenticate user.");
+        echo json_encode($error);
+        return;
+
+    }
+
+    $stats = new stats();
+
+    //every thing checks out, get the stats.
+    if (!$result = $stats->getStatsByYearWeek($_GET['uid'], $_GET['date'])) {
+
+        $error = array('result' => false, 'message' => "Unable to get stats");
+        echo json_encode($error);
+        return;
+
+    } else {
+
+        $result = array('result' => true, 'message' => "Success", 'stats' => $result);
         echo json_encode($result);
         return;
 
