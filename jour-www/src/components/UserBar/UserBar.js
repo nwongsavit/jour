@@ -11,6 +11,8 @@ class UserBar extends Component {
   constructor(props) {
     super(props);
     this.toggleDropdown = this.toggleDropdown.bind(this);
+    this.openDropdown = this.openDropdown.bind(this);
+    this.closeDropdown = this.closeDropdown.bind(this);
     this.state = {
       width: window.innerWidth,
       dropdown: false,
@@ -25,12 +27,28 @@ class UserBar extends Component {
     window.removeEventListener('resize', this.handleWindowSizeChange);
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.isLoggedIn !== this.props.isLoggedIn) {
+      this.setState({
+        dropdown: false,
+      });
+    }
+  }
+
   handleWindowSizeChange = () => {
     this.setState({ width: window.innerWidth });
   };
 
   toggleDropdown() {
     this.setState({ dropdown: !this.state.dropdown });
+  }
+
+  openDropdown() {
+    this.setState({ dropdown: true });
+  }
+
+  closeDropdown() {
+    this.setState({ dropdown: false });
   }
 
   render() {
@@ -44,7 +62,12 @@ class UserBar extends Component {
 
         <div className="user-container">
           {isLoggedIn ? (
-            <div className="user-info" onClick={this.toggleDropdown}>
+            <div
+              className="user-info"
+              onFocus={this.openDropdown}
+              onBlur={this.closeDropdown}
+              tabIndex="0"
+            >
               <FontAwesomeIcon className="profile-picture" icon="user" />
               {/* <img
                 src="https://www.dhresource.com/0x0s/f2-albu-g1-M01-BA-11-rBVaGFZPxxaAFYa-AAHcP0vLhWQ251.jpg/movie-jewelry-harry-potter-deathly-hallows.jpg"

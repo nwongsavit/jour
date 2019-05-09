@@ -34,6 +34,9 @@ class Entry extends Component {
       <div className="Entry" onClick={this.open}>
         <div className="content">{journalInfo.journal}</div>
         <div className="small-text">{journalInfo.postDate}</div>
+        <div className="small-text">
+          {journalInfo.mood.charAt(0).toUpperCase() + journalInfo.mood.slice(1)}
+        </div>
       </div>
     );
   }

@@ -33,9 +33,9 @@ function formatPieChartData(data) {
       value: value['count(*)'],
     })),
   );
-  console.log('formattedData :', formattedData);
   return formattedData;
 }
+
 class Statistics extends Component {
   constructor() {
     super();
@@ -52,6 +52,7 @@ class Statistics extends Component {
       },
       moodData: [],
       allTimeStats: [],
+      weekStats: [],
       stats: [],
       result: '',
       message: '',
@@ -60,8 +61,10 @@ class Statistics extends Component {
       week: true,
       allTime: false,
       journalCount: 0,
+      journalsDateCount: 0,
+      tasksDateCount: 0,
       tasksCompletedCount: 0,
-      tasksCount: 0,
+      tasksUncompletedCount: 0,
     };
   }
 
@@ -74,12 +77,53 @@ class Statistics extends Component {
   }
 
   componentDidMount() {
-    this.getJournalEntriesByWeek();
+    this.getStatsWeek();
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.selectedWeek !== this.state.selectedWeek) this.getJournalEntriesByWeek();
-    if (prevState.allTime !== this.state.allTime) this.getStatsAllTime();
+    const { selectedWeek, allTime, week } = this.state;
+    if (prevState.selectedWeek !== selectedWeek) this.getStatsWeek();
+    // if (prevState.allTime !== allTime && allTime) this.getStatsAllTime();
+    if (prevState.week !== week && week) this.getStatsWeek();
+  }
+
+  getStatsWeek() {
+    const { selectedWeek } = this.state;
+    const { uid, authKey } = this.props;
+    axios
+      .get('https://jour.life/api/api.php', {
+        params: {
+          key: apiKey,
+          request: 'getStatsByYearWeek',
+          uid,
+          authKey,
+          date: new Date(selectedWeek),
+        },
+      })
+      .then(result => this.setState(
+        {
+          results: result.data.result,
+          message: result.data.message,
+          weekStats: result.data.stats,
+          journalCount: result.data.stats.journals
+            ? result.data.stats.journals[0]['count(*)']
+            : 0,
+          tasksCompletedCount:
+              result.data.stats.tasks && result.data.stats.tasks[1] !== undefined
+                ? result.data.stats.tasks[1]['count(*)']
+                : 0,
+          tasksUncompletedCount: result.data.stats.tasks
+            ? result.data.stats.tasks[0]['count(*)']
+            : 0,
+          moodData: result.data.stats.moods
+            ? formatPieChartData(result.data.stats.moods)
+            : [{ name: 'No data', value: 1 }],
+        },
+        () => {
+          this.getJournalEntriesByWeek();
+          this.getTasksByWeek();
+        },
+      ));
   }
 
   getStatsAllTime() {
@@ -98,15 +142,40 @@ class Statistics extends Component {
           results: result.data.result,
           message: result.data.message,
           allTimeStats: result.data.stats,
-          journalCount: result.data.stats.journals[0]['count(*)'] || 0,
-          tasksCompletedCount: result.data.stats.tasks[0].completed || 0,
-          tasksCount: result.data.stats.tasks[0]['count(*)'] || 0,
-          moodData: formatPieChartData(result.data.stats.moods),
+          journalCount: result.data.stats.journals
+            ? result.data.stats.journals[0]['count(*)']
+            : 0,
+          tasksCompletedCount:
+              result.data.stats.tasks && result.data.stats.tasks !== undefined
+                ? result.data.stats.tasks[1]['count(*)']
+                : 0,
+          tasksUncompletedCount: result.data.stats.tasks
+            ? result.data.stats.tasks[0]['count(*)']
+            : 0,
+          moodData: result.data.stats.moods ? formatPieChartData(result.data.stats.moods) : [],
         },
-        () => {
-          console.log('this.state.allTimeStats :', this.state.allTimeStats);
-        },
+        () => {},
       ));
+  }
+
+  getTasksByWeek() {
+    const { selectedWeek } = this.state;
+    const { uid, authKey } = this.props;
+    axios
+      .get('https://jour.life/api/api.php', {
+        params: {
+          key: apiKey,
+          request: 'getTasksByYearWeek',
+          uid,
+          authKey,
+          date: format(new Date(selectedWeek), 'YYYY-MM-DD'),
+        },
+      })
+      .then(result => this.setState({
+        results: result.data.result,
+        message: result.data.message,
+        tasksDateCount: this.sortByDate(result.data.tasks, 'task_date'),
+      }));
   }
 
   getJournalEntriesByWeek() {
@@ -119,7 +188,6 @@ class Statistics extends Component {
         nostalgic: 0,
         sad: 0,
       },
-      moodData: [],
     });
     const { selectedWeek } = this.state;
     const { uid, authKey } = this.props;
@@ -137,33 +205,11 @@ class Statistics extends Component {
         {
           results: result.data.result,
           message: result.data.message,
-          journalInfo: result.data.journals,
+          journalsDateCount: this.sortByDate(result.data.journals, 'postDate'),
         },
-        () => {
-          this.sortByMood();
-        },
+        () => {},
       ));
   }
-
-  sortByMood = () => {
-    const { journalInfo, moodCount } = this.state;
-    if (!journalInfo) {
-      return;
-    }
-
-    journalInfo.forEach((journal) => {
-      moodCount[journal.mood] += 1;
-    });
-
-    let data = Object.assign(
-      Object.entries(moodCount).map(([key, value]) => ({ name: key, value })),
-    );
-
-    data = data.filter(d => d.value !== 0);
-    this.setState({
-      moodData: data,
-    });
-  };
 
   previousWeek = () => {
     const { selectedWeek } = this.state;
@@ -191,6 +237,43 @@ class Statistics extends Component {
     return `${start} - ${end}`;
   };
 
+  formatLineGraphData(data1, data2) {
+    const { selectedWeek } = this.state;
+    const formattedData = [];
+    for (
+      let day = startOfWeek(selectedWeek);
+      day < endOfWeek(selectedWeek);
+      day = addDays(day, 1)
+    ) {
+      const obj = {
+        name: format(day, 'MM/DD'),
+        Journals: data1[format(day, 'YYYY-MM-DD')],
+        Tasks: data2[format(day, 'YYYY-MM-DD')],
+      };
+      formattedData.push(obj);
+    }
+    return formattedData;
+  }
+
+  sortByDate(data, dateKey) {
+    const { selectedWeek } = this.state;
+    const sorted = {};
+    for (
+      let day = startOfWeek(selectedWeek);
+      day < endOfWeek(selectedWeek);
+      day = addDays(day, 1)
+    ) {
+      if (!data || !data.length || data === 'undefined') {
+        sorted[format(day, 'YYYY-MM-DD')] = 0;
+      } else {
+        const days = data.filter(d => d[dateKey].slice(0, 10) === format(day, 'YYYY-MM-DD'));
+        sorted[format(day, 'YYYY-MM-DD')] = days.length;
+      }
+    }
+
+    return sorted;
+  }
+
   render() {
     const {
       moodData,
@@ -199,71 +282,31 @@ class Statistics extends Component {
       allTimeStats,
       journalCount,
       tasksCompletedCount,
-      tasksCount,
+      tasksUncompletedCount,
+      journalsDateCount,
+      tasksDateCount,
       day,
       week,
     } = this.state;
 
-    const data = [
-      {
-        name: 'Page A',
-        uv: 4000,
-        amt: 2400,
-      },
-      {
-        name: 'Page B',
-        uv: 3000,
-        amt: 2210,
-      },
-      {
-        name: 'Page C',
-        uv: 2000,
-        amt: 2290,
-      },
-      {
-        name: 'Page D',
-        uv: 2780,
-        amt: 2000,
-      },
-      {
-        name: 'Page E',
-        uv: 1890,
-        amt: 2181,
-      },
-      {
-        name: 'Page F',
-        uv: 2390,
-        amt: 2500,
-      },
-      {
-        name: 'Page G',
-        uv: 3490,
-        amt: 2100,
-      },
-    ];
-    const tipStyle = {
-      display: 'flex',
-      color: '#fff',
-      background: '#000',
-      alignItems: 'center',
-      padding: '5px',
+    const lineGraphData = this.formatLineGraphData(journalsDateCount, tasksDateCount);
+
+    const MOOD_COLORS = {
+      Happy: '#0088FE',
+      Angry: '#00C49F',
+      Anxious: '#FFBB28',
+      Sad: '#FF8042',
+      Confident: '#ed424a',
+      Nostalgic: '#a64adb',
     };
-    const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
+    const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#000'];
+
     return (
       <div className="Statistics">
         <div className="statistics-header">
           <h3>Statistics</h3>
-          {week && (
-            <div className="view">
-              <ViewSelector
-                leftArrowHandler={this.previousWeek}
-                rightArrowHandler={this.nextWeek}
-                title={this.getTitle()}
-                picker={false}
-              />
-            </div>
-          )}
-          <ButtonGroup>
+
+          {/* <ButtonGroup>
             <Button
               variant="light"
               size="sm"
@@ -294,35 +337,91 @@ class Statistics extends Component {
             >
               All Time
             </Button>
-          </ButtonGroup>
+          </ButtonGroup> */}
         </div>
 
-        <div className="counters">
-          <Counter number={journalCount} item="Journals" />
-          <Counter number={tasksCompletedCount} item="Tasks Completed" />
-          <Counter number={tasksCount} item="Tasks" />
-        </div>
-        <ResponsiveContainer height={400} width="100%">
-          <PieChart>
-            <Pie
-              dataKey="value"
-              isAnimationActive={false}
-              data={moodData}
-              cx="50%"
-              cy="50%"
-              fill="#8884d8"
-              label
-            >
-              {moodData.map((entry, index) => (
-                <Cell fill={COLORS[index % COLORS.length]} />
-              ))}
-            </Pie>
-            <Tooltip />
-          </PieChart>
-        </ResponsiveContainer>
+        {week && (
+          <div className="view">
+            <ViewSelector
+              leftArrowHandler={this.previousWeek}
+              rightArrowHandler={this.nextWeek}
+              title={this.getTitle()}
+              picker={false}
+            />
+          </div>
+        )}
 
-        <div className="charts">
-          {/* <div className="chart1">
+        <div className="stats">
+          <div className="counters">
+            <Counter number={journalCount} item="Entries" icon="book" />
+            <Counter
+              number={`${tasksCompletedCount}/${tasksCompletedCount + tasksUncompletedCount}`}
+              item="Tasks Done"
+              icon="check-circle"
+            />
+            <Counter
+              number={tasksCompletedCount + tasksUncompletedCount}
+              item="Tasks"
+              icon="clipboard"
+            />
+          </div>
+          <div className="small-text charts">
+            <div className="line-chart">
+              <h5># of Entries and Tasks</h5>
+              <ResponsiveContainer height={300} width="100%">
+                <LineChart data={lineGraphData}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="name" />
+                  <YAxis />
+                  <Tooltip />
+                  <Legend />
+                  <Line type="monotone" dataKey="Journals" stroke="#00C49F" activeDot={{ r: 8 }} />
+                  <Line type="monotone" dataKey="Tasks" stroke="#0088FE" />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+
+            <div className="pie-chart">
+              <h5>Distribution of Moods</h5>
+              <ResponsiveContainer height={300} width="100%">
+                <PieChart>
+                  <Pie
+                    dataKey="value"
+                    isAnimationActive={false}
+                    data={moodData}
+                    fill="#8884d8"
+                    label={!!(moodData.length !== 0 && moodData[0].name !== 'No data')}
+                  >
+                    {moodData.map(entry => (
+                      <Cell fill={MOOD_COLORS[entry.name]} />
+                    ))}
+                  </Pie>
+                  <Legend />
+                  <Tooltip />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
+            {/* <div className="bar-chart">
+              <ResponsiveContainer height={400} width="100%">
+                <BarChart data={data}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="name" />
+                  <YAxis />
+                  <Tooltip />
+                  <Legend />
+                  <Bar dataKey="uv" fill="#82ca9d">
+                    {data.map((entry, index) => (
+                      <Cell fill={COLORS[index % COLORS.length]} />
+                    ))}
+                  </Bar>
+                </BarChart>
+              </ResponsiveContainer>
+            </div> */}
+          </div>
+        </div>
+
+        {/* <div className="charts"> */}
+        {/* <div className="chart1">
             <h3>Moods by Charts</h3>
             <ResponsiveContainer height={400} width="100%">
               <PieChart>
@@ -371,7 +470,7 @@ class Statistics extends Component {
               </LineChart>
             </ResponsiveContainer>
           </div> */}
-        </div>
+        {/* </div> */}
       </div>
     );
   }

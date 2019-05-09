@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Button } from 'react-bootstrap';
 import './Task.css';
 import { connect } from 'react-redux';
 import axios from 'axios';
@@ -13,10 +14,64 @@ class Task extends Component {
     this.state = {
       content: this.props.taskInfo.task || '',
       completed: this.props.taskInfo.completed,
+      actionBar: false,
       results: '',
       message: '',
     };
   }
+
+  handleDelete = () => {
+    const { uid, authKey, taskInfo } = this.props;
+
+    axios
+      .get('https://jour.life/api/api.php', {
+        params: {
+          key: apiKey,
+          request: 'deleteTask',
+          uid,
+          authKey,
+          tid: taskInfo.id,
+        },
+      })
+      .then(result => this.setState(
+        {
+          results: result.data.result,
+          message: result.data.message,
+        },
+        () => {
+          console.log('this.state.message :', this.state.message);
+          this.closeActionBar();
+          this.props.force();
+        },
+      ));
+  };
+
+  handleSave = () => {
+    const { content } = this.state;
+    const { uid, authKey, taskInfo } = this.props;
+
+    axios
+      .get('https://jour.life/api/api.php', {
+        params: {
+          key: apiKey,
+          request: 'editTask',
+          uid,
+          authKey,
+          task: content,
+          tid: taskInfo.id,
+        },
+      })
+      .then(result => this.setState(
+        {
+          results: result.data.result,
+          message: result.data.message,
+        },
+        () => {
+          console.log('this.state.message :', this.state.message);
+          this.closeActionBar();
+        },
+      ));
+  };
 
   toggleComplete = () => {
     const { completed } = this.state;
@@ -27,8 +82,6 @@ class Task extends Component {
     this.setState({
       completed: !completed,
     });
-
-    console.log('completed :', completed);
 
     axios
       .get('https://jour.life/api/api.php', {
@@ -51,12 +104,24 @@ class Task extends Component {
       ));
   };
 
+  closeActionBar = () => {
+    this.setState({
+      actionBar: false,
+    });
+  };
+
+  toggleActionBar = () => {
+    this.setState({
+      actionBar: !this.state.actionBar,
+    });
+  };
+
   handleInputChange(e) {
     this.setState({ content: e.target.value });
   }
 
   render() {
-    const { content, completed } = this.state;
+    const { content, completed, actionBar } = this.state;
     const { placeholder, onChange, taskInfo } = this.props;
     return (
       <div className="Task" id={`task-${taskInfo.id}`}>
@@ -64,11 +129,25 @@ class Task extends Component {
           content={content}
           placeholder={placeholder}
           onChange={this.handleInputChange}
-          onBlur={this.onCheck}
+          onFocus={this.toggleActionBar}
+          onBlur={this.toggleActionBar}
           checkbox
           completed={completed}
           onClick={this.toggleComplete}
         />
+        {actionBar ? (
+          <div className="action-bar">
+            <Button onMouseDown={this.handleSave}>Save</Button>
+            <Button variant="danger" onMouseDown={this.handleDelete}>
+              Delete
+            </Button>
+            <Button variant="light" onClick={this.toggleActionBar}>
+              Cancel
+            </Button>
+          </div>
+        ) : (
+          ''
+        )}
       </div>
     );
   }

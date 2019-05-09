@@ -19,8 +19,15 @@ class Calendar extends Component {
       journalInfo: {},
       tasks: {},
       isMobile: window.innerWidth <= 767,
+      delete: false,
     };
   }
+
+  force = (task) => {
+    this.setState({
+      delete: true,
+    });
+  };
 
   componentWillMount() {
     document.title = 'Jour - Calendar';
@@ -36,7 +43,7 @@ class Calendar extends Component {
     this.getTasks();
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState) {
     if (
       prevProps.selectedDate !== this.props.selectedDate
       || prevProps.modalType !== this.props.modalType
@@ -44,10 +51,17 @@ class Calendar extends Component {
       this.getJournalEntries();
       this.getTasks();
     }
+    if (prevState.delete !== this.state.delete) {
+      this.getTasks();
+    }
   }
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.handleWindowSizeChange);
+    this.props.dispatch({
+      type: 'SELECTED_STATE',
+      selectedDate: new Date(),
+    });
   }
 
   getTasks() {
@@ -66,6 +80,7 @@ class Calendar extends Component {
         results: result.data.result,
         message: result.data.message,
         tasks: result.data.tasks,
+        delete: false,
       }));
   }
 
@@ -106,7 +121,7 @@ class Calendar extends Component {
         <div className="agenda">
           <div className="small-text agendaDate">{format(selectedDate, 'MMMM DD, YYYY')}</div>
           <Entries journalInfo={journalInfo} />
-          <Tasks tasks={tasks} />
+          <Tasks tasks={tasks} force={this.force} />
           {/* <div className="tasks">
             <h3>Tasks</h3>
             <Task title="Finish presentation script" />
