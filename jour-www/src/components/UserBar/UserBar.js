@@ -83,7 +83,7 @@ class UserBar extends Component {
             </div>
           ) : (
             <div className="login-button">
-              <a href="/login">Login</a>
+              <a href="/login">Sign in</a>
             </div>
           )}
         </div>

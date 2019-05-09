@@ -27,7 +27,7 @@ class UserDropdown extends Component {
     return (
       <div className="UserDropdown">
         <div className="logout-button" onClick={this.handleLogInClick}>
-          Logout
+          Sign out
         </div>
       </div>
     );

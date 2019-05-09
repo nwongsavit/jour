@@ -42,7 +42,7 @@ class Settings extends Component {
     this.props.history.push('/calendar');
   };
 
-  handleSaveClick(e) {
+  async handleSaveClick(e) {
     e.preventDefault();
 
     const { name, password, email } = this.state;
@@ -52,16 +52,16 @@ class Settings extends Component {
       key: apiKey,
       request: 'editUser',
       uid,
-      authKey,
       email,
       name,
+      authKey,
     };
 
     if (password !== '') {
       params = { ...params, ...password };
     }
 
-    axios
+    await axios
       .get('https://jour.life/api/api.php', {
         params,
       })
@@ -73,11 +73,13 @@ class Settings extends Component {
         console.log('error :', error);
       });
 
-    axios
+    await axios
       .get('https://jour.life/api/api.php', {
         params: {
+          key: apiKey,
           request: 'getUser',
           uid,
+          authKey,
         },
       })
       .then(result => this.setState(
