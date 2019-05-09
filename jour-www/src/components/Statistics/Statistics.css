@@ -9,15 +9,22 @@
   justify-content: center;
 }
 
-.charts > * {
-  padding: 10px;
-}
+
 
 @media (min-width: 768px) {
   .charts {
     display: grid;
     grid-template-rows: auto;
     grid-template-columns: repeat(auto-fill, minmax(250px, 50%));
+  }
+  .charts > * {
+    padding: 10px;
+  }
+}
+
+@media (max-width: 767px) {
+  .line-chart > * {
+    margin-left: -25px;
   }
 }
 /* 
