@@ -11,7 +11,7 @@ class Entries extends Component {
         <Entry journalInfo={journal} key={journal.id} mood={journal.mood} />
       ));
     }
-    return <div>No entries</div>;
+    return <div>No entries to display.</div>;
   }
 
   render() {

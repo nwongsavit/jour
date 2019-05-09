@@ -29,7 +29,7 @@ class Tasks extends Component {
         <Task title={task.task} key={task.id} taskInfo={task} force={this.props.force} />
       ));
     }
-    return <div>No tasks</div>;
+    return <div>No tasks to display.</div>;
   }
 
   render() {
