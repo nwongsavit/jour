@@ -105,17 +105,20 @@ class Statistics extends Component {
           results: result.data.result,
           message: result.data.message,
           weekStats: result.data.stats,
-          journalCount: result.data.stats.journals
-            ? result.data.stats.journals[0]['count(*)']
-            : 0,
+          journalCount:
+              result.data.stats !== undefined && result.data.stats.journals
+                ? result.data.stats.journals[0]['count(*)']
+                : 0,
           tasksCompletedCount:
-              result.data.stats.tasks && result.data.stats.tasks[1] !== undefined
+              result.data.stats !== undefined
+              && result.data.stats.tasks
+              && result.data.stats.tasks[1] !== undefined
                 ? result.data.stats.tasks[1]['count(*)']
                 : 0,
-          tasksUncompletedCount: result.data.stats.tasks
+          tasksUncompletedCount: result.data.stats !== undefined && result.data.stats.tasks
             ? result.data.stats.tasks[0]['count(*)']
             : 0,
-          moodData: result.data.stats.moods
+          moodData: result.data.stats !== undefined && result.data.stats.moods
             ? formatPieChartData(result.data.stats.moods)
             : [{ name: 'No data', value: 1 }],
         },
@@ -292,10 +295,10 @@ class Statistics extends Component {
     const lineGraphData = this.formatLineGraphData(journalsDateCount, tasksDateCount);
 
     const MOOD_COLORS = {
-      Happy: '#0088FE',
+      Happy: '#FF8042',
       Angry: '#00C49F',
       Anxious: '#FFBB28',
-      Sad: '#FF8042',
+      Sad: '#0088FE',
       Confident: '#ed424a',
       Nostalgic: '#a64adb',
     };
