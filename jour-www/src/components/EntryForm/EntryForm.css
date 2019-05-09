@@ -15,7 +15,7 @@
 }
 
 .textbox-form > * {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .characters-remaining {
@@ -34,4 +34,5 @@
   margin: 15px;
   flex: 1 0 0;
   justify-content: space-between;
+  min-width: 100px;
 }

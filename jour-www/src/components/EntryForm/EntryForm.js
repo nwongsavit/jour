@@ -257,8 +257,8 @@ characters remaining
             )}
             {!results ? <div className="small-text error">{message}</div> : ''}
 
-            <div className="buttons">
-              <Button type="submit" block>
+            <div className="confirmation-buttons">
+              <Button type="submit">
                 Submit
               </Button>
 
