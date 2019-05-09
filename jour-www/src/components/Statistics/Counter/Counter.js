@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
 import './Counter.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 class Counter extends Component {
   render() {
-    const { number, item } = this.props;
+    const { number, item, icon } = this.props;
     return (
       <div className="Counter">
-        <div className="number">{number}</div>
-        <div className="small-text item">{item}</div>
+        <FontAwesomeIcon icon={icon} className="counter-icon" />
+        <div className="content">
+          <div className="number">{number}</div>
+          <div className="small-text item">{item}</div>
+        </div>
       </div>
     );
   }

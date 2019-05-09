@@ -16,6 +16,10 @@ import {
   faAngleDown,
   faThLarge,
   faUser,
+  faSpinner,
+  faCheckCircle,
+  faBook,
+  faClipboard,
 } from '@fortawesome/free-solid-svg-icons';
 import NavBar from '../NavBar/NavBar';
 import Add from '../Add/Add';
@@ -43,6 +47,10 @@ library.add(
   faThLarge,
   faAngleDown,
   faUser,
+  faSpinner,
+  faCheckCircle,
+  faBook,
+  faClipboard,
 );
 
 class App extends Component {

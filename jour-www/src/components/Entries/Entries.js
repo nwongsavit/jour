@@ -7,7 +7,9 @@ class Entries extends Component {
   renderJournalEntries() {
     const { journalInfo } = this.props;
     if (journalInfo && journalInfo.length && journalInfo[0].id) {
-      return journalInfo.map(journal => <Entry journalInfo={journal} key={journal.id} />);
+      return journalInfo.map(journal => (
+        <Entry journalInfo={journal} key={journal.id} mood={journal.mood} />
+      ));
     }
     return <div>No entries</div>;
   }

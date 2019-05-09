@@ -48,6 +48,10 @@ class Calendar extends Component {
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.handleWindowSizeChange);
+    this.props.dispatch({
+      type: 'SELECTED_STATE',
+      selectedDate: new Date(),
+    });
   }
 
   getTasks() {

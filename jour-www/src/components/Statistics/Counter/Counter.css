@@ -1,6 +1,31 @@
 .Counter {
-  flex: 1 0 0;
-  text-align: center;
+  display: flex;
+  /* text-align: center; */
+  align-items: center;
+  margin: 20px 40px;
+}
+
+@media (max-width: 767px) {
+  .Counter {
+    flex-direction: column;
+    text-align: center;
+  }
+  .counter-icon {
+    /* margin-right: 0; */
+  }
+}
+
+
+@media (min-width: 768px) {
+  .counter-icon {
+    margin-right: 30px;
+  }
+}
+
+.counter-icon {
+  font-size: 2em;
+  /* color: #6fb6d3; */
+  /* margin-right: 30px; */
 }
 
 .number {
