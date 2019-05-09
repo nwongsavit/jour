@@ -18,3 +18,9 @@
 .submitButton {
   background-color: #4a8aa4 !important;
 }
+
+.login-button > *
+{
+  color: inherit !important;
+  text-decoration: none !important;
+}

@@ -82,7 +82,9 @@ class UserBar extends Component {
               {dropdown ? <UserDropdown /> : ''}
             </div>
           ) : (
-            <div className="login-button">Login</div>
+            <div className="login-button">
+              <a href="/login">Sign in</a>
+            </div>
           )}
         </div>
       </div>
