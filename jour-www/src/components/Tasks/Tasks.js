@@ -25,7 +25,9 @@ class Tasks extends Component {
   renderTasks() {
     const { tasks } = this.props;
     if (tasks && tasks.length && tasks[0].id) {
-      return tasks.map(task => <Task title={task.task} key={task.id} taskInfo={task} />);
+      return tasks.map(task => (
+        <Task title={task.task} key={task.id} taskInfo={task} force={this.props.force} />
+      ));
     }
     return <div>No tasks</div>;
   }
@@ -39,7 +41,7 @@ class Tasks extends Component {
         {this.renderTasks()}
         {taskLayout.map((task, i) => (
           <div id={`task-${i}`}>
-            <Task placeholder={task} id={i} key={i} />
+            <Task placeholder={task} id={i} key={i} force={this.props.force} />
           </div>
         ))}
         {/* <div className="add-task small-text" onClick={this.addPlaceholderTask}>

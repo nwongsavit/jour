@@ -83,7 +83,7 @@ class Statistics extends Component {
   componentDidUpdate(prevProps, prevState) {
     const { selectedWeek, allTime, week } = this.state;
     if (prevState.selectedWeek !== selectedWeek) this.getStatsWeek();
-    if (prevState.allTime !== allTime && allTime) this.getStatsAllTime();
+    // if (prevState.allTime !== allTime && allTime) this.getStatsAllTime();
     if (prevState.week !== week && week) this.getStatsWeek();
   }
 
@@ -108,9 +108,10 @@ class Statistics extends Component {
           journalCount: result.data.stats.journals
             ? result.data.stats.journals[0]['count(*)']
             : 0,
-          tasksCompletedCount: result.data.stats.tasks
-            ? result.data.stats.tasks[1]['count(*)']
-            : 0,
+          tasksCompletedCount:
+              result.data.stats.tasks && result.data.stats.tasks[1] !== undefined
+                ? result.data.stats.tasks[1]['count(*)']
+                : 0,
           tasksUncompletedCount: result.data.stats.tasks
             ? result.data.stats.tasks[0]['count(*)']
             : 0,
@@ -144,9 +145,10 @@ class Statistics extends Component {
           journalCount: result.data.stats.journals
             ? result.data.stats.journals[0]['count(*)']
             : 0,
-          tasksCompletedCount: result.data.stats.tasks
-            ? result.data.stats.tasks[1]['count(*)']
-            : 0,
+          tasksCompletedCount:
+              result.data.stats.tasks && result.data.stats.tasks !== undefined
+                ? result.data.stats.tasks[1]['count(*)']
+                : 0,
           tasksUncompletedCount: result.data.stats.tasks
             ? result.data.stats.tasks[0]['count(*)']
             : 0,
@@ -304,7 +306,7 @@ class Statistics extends Component {
         <div className="statistics-header">
           <h3>Statistics</h3>
 
-          <ButtonGroup>
+          {/* <ButtonGroup>
             <Button
               variant="light"
               size="sm"
@@ -335,7 +337,7 @@ class Statistics extends Component {
             >
               All Time
             </Button>
-          </ButtonGroup>
+          </ButtonGroup> */}
         </div>
 
         {week && (
